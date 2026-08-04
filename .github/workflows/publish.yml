@@ -18,11 +18,6 @@ on:
 permissions:
   contents: read
 
-# Let a run finish rather than cancelling it mid-deploy; queued pushes coalesce.
-concurrency:
-  group: pages
-  cancel-in-progress: false
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -99,6 +94,13 @@ jobs:
     needs: build
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    # Only the deploy needs a mutex. Held workflow-wide it would also cover
+    # pull_request runs, which never reach this job, so a PR's checks would
+    # queue a push-to-main deploy behind them. Let a deploy finish rather than
+    # cancelling it mid-flight; queued pushes coalesce.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     permissions:
       pages: write
       id-token: write
