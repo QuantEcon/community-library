@@ -1,0 +1,110 @@
+# Publishes docs/ to GitHub Pages.
+#
+# The site is hand-written static HTML — there is no build step, so the job is
+# entirely checks: the things that break silently when the page is edited are
+# asserted here rather than eyeballed in a browser.
+#
+# Pages must be set to build from GitHub Actions for this to take effect:
+# Settings -> Pages -> Build and deployment -> Source: GitHub Actions.
+
+name: Publish
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Let a run finish rather than cancelling it mid-deploy; queued pushes coalesce.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check local references resolve
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd docs
+          missing=0
+          for f in *.html; do
+            for ref in $(grep -oE '(href|src)="[A-Za-z0-9._/-]+\.(html|css|js|png|svg|pdf|ipynb)"' "$f" \
+                         | sed -E 's/^(href|src)="//;s/"$//' | sort -u); do
+              [ -e "$ref" ] || { echo "::error file=docs/$f::references missing $ref"; missing=1; }
+            done
+          done
+          [ "$missing" -eq 0 ] || exit 1
+          echo "ok — every local reference resolves"
+
+      # An in-page link to a section that has been renamed still looks fine in
+      # the markup and lands you nowhere in the browser.
+      - name: Check in-page anchors resolve
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd docs
+          missing=0
+          for f in *.html; do
+            grep -oE 'id="[^"]+"'    "$f" | sed 's/id="//;s/"//'    | sort -u > /tmp/ids
+            grep -oE 'href="#[^"]+"' "$f" | sed 's/href="#//;s/"//' | sort -u > /tmp/targets
+            for t in $(comm -13 /tmp/ids /tmp/targets); do
+              echo "::error file=docs/$f::anchor #$t has no matching id"
+              missing=1
+            done
+          done
+          [ "$missing" -eq 0 ] || exit 1
+          echo "ok — every in-page anchor resolves"
+
+      # The contents rail is wired to the sections by matching data attributes.
+      # Drop one side and the rail silently stops highlighting.
+      - name: Check the contents rail is wired to its sections
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd docs
+          grep -oE 'data-navlink="[^"]+"' index.html | sed 's/.*="//;s/"//' | sort -u > /tmp/navlinks
+          grep -oE 'data-spy="[^"]+"'     index.html | sed 's/.*="//;s/"//' | sort -u > /tmp/spies
+          if ! diff -q /tmp/navlinks /tmp/spies >/dev/null; then
+            echo "::error file=docs/index.html::the rail's data-navlink values and the sections' data-spy values disagree"
+            diff /tmp/navlinks /tmp/spies || true
+            exit 1
+          fi
+          echo "ok — $(wc -l < /tmp/spies | tr -d ' ') sections wired to the rail"
+
+      # Fork PRs get a read-only token and cannot deploy, so the site is
+      # attached instead — the author can see the rendered result.
+      - name: Upload the built site for review
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-preview
+          path: docs
+          retention-days: 14
+
+      - name: Package the site for Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    needs: build
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
