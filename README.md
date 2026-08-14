@@ -2,7 +2,7 @@
 
 A community library of the field's baseline models, implemented and documented across the toolkits that can solve them — same model, multiple toolkits, side by side. Each implementation is authored and maintained by the project that built the toolkit.
 
-The library is hosted by QuantEcon and published at **<https://quantecon.github.io/community-library/>**. It began as Project B of [SCE Working Group 1 on Language and Formal Semantics](https://github.com/mmcky/sce-wg1) and now runs independently of the group, which continues to publish the baseline set and templates. This repository hosts the community website and the notebooks submitted by participating projects.
+The library is hosted by QuantEcon and published at **<https://quantecon.github.io/community-library/>**. It began as Project B of [SCE Working Group 1 on Language and Formal Semantics](https://github.com/econ-ark/sce-wg-1) and now runs independently of the group, which continues to publish the baseline set and templates. This repository hosts the community website and the notebooks submitted by participating projects.
 
 ## How it works
 
@@ -34,7 +34,7 @@ Publishing requires **Settings → Pages → Build and deployment → Source: Gi
 
 ## Status
 
-The repository structure, contribution guidelines, and the first baseline templates are in preparation. Until then, discussion happens in the [working group issue tracker](https://github.com/mmcky/sce-wg1/issues).
+The repository structure, contribution guidelines, and the first baseline templates are in preparation. Until then, discussion happens in the [working group issue tracker](https://github.com/econ-ark/sce-wg-1/issues).
 
 ## Licensing
 
