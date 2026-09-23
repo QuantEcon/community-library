@@ -5,40 +5,66 @@ For each model the library documents the model statement and the calibration, so
 Each implementation is authored and maintained by the project that built the toolkit and is open to review by the community.
 
 The library is hosted by QuantEcon and published at **<https://quantecon.github.io/community-library/>**. It is run in collaboration with the [SCE Working Group 1 on Language and Formal Semantics](https://github.com/econ-ark/sce-wg-1).
-This repository holds the community website and the notebooks submitted by participating projects.
+This repository holds the community website, the shared model descriptions and the implementations submitted by participating projects.
 
-## How it works
+## Start with a model
 
-The working group provides a set of baseline models. Each participating project chooses as many as its toolkit can solve — several or just one — and completes the model's template notebook in its own toolkit: the code, plus commentary where its method differs. The completed notebook is its tutorial. Baseline templates (a PDF and a notebook per model, with the model statement and explanatory text already written) are distributed from the working group website.
+Read the [buffer stock model description](models/buffer-stock/model-description.md)
+or its [PDF](models/buffer-stock/model-description.pdf), which covers model theory,
+calibration and numerical solution. The
+[HARK notebook](projects/HARK/BST/tutorial.ipynb) provides a runnable example
+with short explanations; its [instructions](projects/HARK/BST/README.md)
+give the installation and run commands.
 
-Four models seed the set:
+Keep the model and calibration fixed, and choose your own prose, solution
+method and runnable format. The [submission guide](models/buffer-stock/README.md#what-to-submit)
+explains where to put an implementation and how to document its use. The
+guide's CSV formats, metadata example and draft comparison tolerances are optional.
 
-| Baseline model | Model class |
+The working group has proposed five baseline models. Projects choose one or
+more that their toolkit can solve and also contribute a tutorial on a model
+of their own choosing.
+
+| Baseline model | Model class | Description |
+| --- | --- | --- |
+| [Buffer stock saving](models/buffer-stock/README.md) | Partial-equilibrium consumption–saving under income risk | Draft available |
+| Aiyagari · Krusell–Smith | Incomplete-markets heterogeneous agents | In preparation |
+| A two-asset HANK model | Heterogeneous-agent New Keynesian | In preparation |
+| A small New Keynesian DSGE model | Representative-agent DSGE | In preparation |
+| A baseline agent-based macro model | Macro from interacting heterogeneous agents | In preparation |
+
+## Where files belong
+
+| Directory | Purpose |
 | --- | --- |
-| Aiyagari · Krusell–Smith | Incomplete-markets heterogeneous agents |
-| A two-asset HANK model | Heterogeneous-agent New Keynesian |
-| A small New Keynesian DSGE model | Representative-agent DSGE |
-| A baseline agent-based macro model | Macro from interacting heterogeneous agents |
+| `models/<model>/` | The shared model description, its PDF and the submission guide. |
+| `projects/<toolkit>/<model>/` | A runnable implementation in the project's chosen format, with supporting code and results. |
+| `docs/` | The library website. |
+| `templates/` | The page layout used to produce model PDFs. |
 
-## The website
+For example, `projects/HARK/BST/` contains the HARK buffer stock implementation.
+Questions about a shared model description belong in
+the [working group issue tracker](https://github.com/econ-ark/sce-wg-1/issues).
 
-`docs/` holds the site — hand-written static HTML with no build step. Colours, typography and UI patterns come from the [QuantEcon book theme](https://github.com/QuantEcon/quantecon-book-theme), so the library sits alongside the lecture sites rather than beside them.
+## Website maintenance
 
-| Path | What it is |
-| --- | --- |
-| `docs/index.html` | the page |
-| `docs/site.css` | design tokens and components |
-| `docs/site.js` | contents-rail scrollspy |
-| `docs/assets/` | images |
+The website consists of static HTML, CSS and JavaScript in `docs/`. Its
+appearance follows the [QuantEcon book theme](https://github.com/QuantEcon/quantecon-book-theme).
+Edit `docs/index.html` for text, `docs/site.css` for appearance and
+`docs/site.js` for the contents navigation.
 
-`.github/workflows/publish.yml` checks the site on every push and pull request — local references resolve, in-page anchors resolve, and the contents rail is still wired to its sections — then deploys `docs/` to GitHub Pages from `main`. Pull requests get the same checks plus the built site as a downloadable artifact, so a change can be reviewed rendered.
+The [publishing workflow](.github/workflows/publish.yml) checks local file
+links, links to sections and the contents navigation on every push and pull
+request. It publishes `docs/` to GitHub Pages from `main`; pull requests
+provide a downloadable site preview. These checks cover the website;
+notebook execution is not yet automated.
 
-Publishing requires **Settings → Pages → Build and deployment → Source: GitHub Actions**.
-
-## Status
-
-The repository structure, contribution guidelines, and the first baseline templates are in preparation. Until then, discussion happens in the [working group issue tracker](https://github.com/econ-ark/sce-wg-1/issues).
+Publishing requires **Settings → Pages → Build and deployment → Source:
+GitHub Actions**. The [buffer stock guide](models/buffer-stock/README.md)
+gives the commands for generating the PDF from the model description.
 
 ## Licensing
 
-Text is CC-BY; code carries an OSI-approved licence. Contributions remain authored and maintained by their projects — the library curates and publishes; it does not own anyone's work or rank the toolkits.
+Text is CC-BY; code is released under an OSI-approved licence. Contributions remain
+authored and maintained by their projects. The library publishes the work
+with attribution and does not rank the toolkits.

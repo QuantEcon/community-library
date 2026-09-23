@@ -1,0 +1,12 @@
+# Notebook dependencies
+econ-ark==0.17.1
+numpy>=2.0
+scipy>=1.14
+pandas>=2
+matplotlib>=3.8
+ipykernel>=6
+PyYAML>=6
+
+# Optional numerical checks and automated notebook execution
+pytest>=8
+nbclient>=0.10

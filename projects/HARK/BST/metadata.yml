@@ -1,0 +1,20 @@
+toolkit: HARK
+toolkit_version: 0.17.1
+authors:
+- name: Akshay Shanker
+model: BST
+date: '2026-09-14'
+template_version: '0.1'
+template_source: https://github.com/QuantEcon/community-library/tree/main/models/buffer-stock
+software:
+  Python: 3.12.7
+  NumPy: 2.2.6
+  SciPy: 1.14.1
+  pandas: 2.2.3
+  matplotlib: 3.9.2
+method: Infinite-horizon endogenous grid iteration; linear consumption interpolation;
+  tolerance 1e-6.
+discretisation: Seven equiprobable positive values per income shock, plus zero income
+  with probability 0.005; 56 joint outcomes.
+grid: 960 asset points from 0.001 to 20, HARK nesting factor 3.
+target_mpc: Central difference with step 0.01.

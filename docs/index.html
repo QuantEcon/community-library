@@ -62,7 +62,7 @@
       <div class="host-rule" aria-hidden="true"></div>
       <span class="eyebrow">Working alongside</span>
       <ul class="alongside">
-        <li><strong>SCE Working Group 1</strong> — publishes the baseline set and templates.</li>
+        <li><strong>SCE Working Group 1</strong> — publishes the baseline model descriptions.</li>
       </ul>
     </div>
   </div>
@@ -99,7 +99,7 @@
       <li><a href="#why" data-navlink="why"><span class="n">01</span>Why</a></li>
       <li><a href="#library" data-navlink="library"><span class="n">02</span>The library</a></li>
       <li><a href="#how" data-navlink="how"><span class="n">03</span>How it works</a></li>
-      <li><a href="#templates" data-navlink="templates"><span class="n">04</span>Templates</a></li>
+      <li><a href="#templates" data-navlink="templates"><span class="n">04</span>Model descriptions</a></li>
       <li><a href="#ask" data-navlink="ask"><span class="n">05</span>The ask</a></li>
       <li><a href="#governance" data-navlink="governance"><span class="n">06</span>Who does what</a></li>
       <li><a href="#roadmap" data-navlink="roadmap"><span class="n">07</span>Roadmap</a></li>
@@ -152,12 +152,25 @@
         <span class="n">02</span>
         <h2>The library</h2>
       </div>
-      <p class="section-lede">The working group publishes a set of baseline models. Each project chooses as many as its toolkit can solve — several or just one — and submits a tutorial for each. Four models seed the set.</p>
+      <p class="section-lede">The working group publishes a set of baseline models. Each project chooses as many as its toolkit can solve — several or just one — and submits a tutorial for each. Five models seed the set.</p>
 
       <div class="models">
         <div class="models-head">
           <span class="eyebrow">Baseline set · v0 proposal</span>
-          <span class="eyebrow">Implementations · template</span>
+          <span class="eyebrow">Implementations · description</span>
+        </div>
+
+        <div class="model">
+          <div class="model-name">
+            <h3>Buffer stock saving</h3>
+            <p class="model-class">Partial-equilibrium consumption–saving under income risk</p>
+          </div>
+          <div class="slots" aria-label="HARK example and two open implementation slots">
+            <a class="slot" href="https://github.com/QuantEcon/community-library/blob/main/projects/HARK/BST/tutorial.ipynb">HARK example</a>
+            <span class="slot">open</span>
+            <span class="slot">open</span>
+          </div>
+          <div class="model-template"><a href="https://github.com/QuantEcon/community-library/blob/main/models/buffer-stock/model-description.pdf">description PDF ⟨draft⟩</a></div>
         </div>
 
         <div class="model">
@@ -170,7 +183,7 @@
             <span class="slot">open</span>
             <span class="slot">open</span>
           </div>
-          <div class="model-template">template ⟨draft⟩</div>
+          <div class="model-template">in preparation</div>
         </div>
 
         <div class="model">
@@ -183,7 +196,7 @@
             <span class="slot">open</span>
             <span class="slot">open</span>
           </div>
-          <div class="model-template">template ⟨draft⟩</div>
+          <div class="model-template">in preparation</div>
         </div>
 
         <div class="model">
@@ -196,7 +209,7 @@
             <span class="slot">open</span>
             <span class="slot">open</span>
           </div>
-          <div class="model-template">template ⟨draft⟩</div>
+          <div class="model-template">in preparation</div>
         </div>
 
         <div class="model">
@@ -209,7 +222,7 @@
             <span class="slot">open</span>
             <span class="slot">open</span>
           </div>
-          <div class="model-template">template ⟨draft⟩</div>
+          <div class="model-template">in preparation</div>
         </div>
 
         <a class="models-cta" href="https://github.com/econ-ark/sce-wg-1/issues">
@@ -217,7 +230,7 @@
           <span class="go">open an issue ↗</span>
         </a>
       </div>
-      <p class="footnote">Open slots fill as projects join — one per participating toolkit. A model earns its place in the set by being solved; each row's template pins what has to line up.</p>
+      <p class="footnote">Each model description states the shared assumptions and calibration. Each project chooses how to present its implementation.</p>
     </section>
 
     <section class="section" id="how" data-spy="how">
@@ -230,7 +243,7 @@
         <div class="card">
           <span class="eyebrow">Contribution 1</span>
           <h3>Baselines from the shared set</h3>
-          <p>Each project solves the baseline models it has chosen — same calibration, same reported objects — so results line up side by side and divergences are visible rather than buried.</p>
+          <p>Each project solves its chosen baseline models at the shared calibration and explains its numerical approach in its own words.</p>
         </div>
         <div class="card is-secondary">
           <span class="eyebrow">Contribution 2</span>
@@ -238,63 +251,61 @@
           <p>A tutorial of the project's own choosing, on the problems its toolkit was built for. A common baseline alone would flatten the differences that matter; this is where each project argues its own case.</p>
         </div>
       </div>
-      <p class="aside-note">Both are published in the toolkit's own notation — no house dialect — with per-model metadata, honest notes on tradeoffs, and CI that runs each implementation and flags breakage.</p>
+      <p class="aside-note">Both tutorials use the toolkit's own notation and include the authors, software versions and numerical settings needed to reproduce the results. Authors explain their method and any differences from the shared model.</p>
     </section>
 
     <section class="section" id="templates" data-spy="templates">
       <div class="section-head">
         <span class="n">04</span>
-        <h2>Baseline templates</h2>
+        <h2>Model descriptions and implementations</h2>
       </div>
-      <p class="section-lede">Each model in the set gets a baseline template: a precise statement of what the model <em class="term">is</em> — enough that results line up across toolkits — without prescribing how it should be solved.</p>
+      <p class="section-lede">Shared model descriptions belong in <code>models/&lt;model&gt;/</code>, with theory, calibration and numerical solution. Runnable implementations belong in <code>projects/&lt;toolkit&gt;/&lt;model&gt;/</code>; each project chooses its prose, method and format, such as a notebook or MyST document. Read the <a href="https://github.com/QuantEcon/community-library/tree/main/models/buffer-stock">buffer stock description</a> and run the <a href="https://github.com/QuantEcon/community-library/blob/main/projects/HARK/BST/tutorial.ipynb">HARK example</a>.</p>
 
       <div class="steps">
         <div class="step">
           <span class="n">01</span>
-          <h3>The set is published</h3>
-          <p>Each model is anchored on a published paper with its own calibration.</p>
+          <h3>Read the model</h3>
+          <p>The model description states the equations, common calibration and numerical solution.</p>
         </div>
         <div class="step">
           <span class="n">02</span>
-          <h3>Projects choose models</h3>
-          <p>One is enough, several are welcome; the choice is per model, with no obligation beyond it.</p>
+          <h3>Write a runnable implementation</h3>
+          <p>Keep the model and calibration fixed while choosing the method, prose and format.</p>
         </div>
         <div class="step">
           <span class="n">03</span>
-          <h3>A template notebook each</h3>
-          <p>Published as a PDF and a notebook, model statement and explanatory text already written.</p>
+          <h3>Check the results</h3>
+          <p>Explain the numerical checks used to assess the solution. Optional comparison tables are provided with the HARK example.</p>
         </div>
         <div class="step">
           <span class="n">04</span>
-          <h3>Implementations line up</h3>
-          <p>Each project completes the notebook in its own toolkit — and that notebook is its tutorial.</p>
+          <h3>Submit your tutorial</h3>
+          <p>Add your runnable files and instructions under your toolkit and model in <code>projects/</code>.</p>
         </div>
       </div>
 
       <div class="panels">
         <div class="panel">
-          <span class="eyebrow">The template pins</span>
+          <span class="eyebrow">What all submissions share</span>
           <ul>
-            <li>Functional forms, timing conventions, normalizations</li>
-            <li>Parameter values, and where they come from</li>
-            <li>Target moments of the exogenous processes</li>
-            <li>Which objects are reported, in what units</li>
-            <li>The tolerance at which two results count as agreeing</li>
+            <li>The model specifies functional forms, timing and normalisation.</li>
+            <li>The calibration states parameter values and their sources.</li>
+            <li>The income specification states the distribution and required moments.</li>
           </ul>
         </div>
         <div class="panel is-secondary">
-          <span class="eyebrow">The template leaves free</span>
+          <span class="eyebrow">What each author chooses</span>
           <ul>
-            <li>Solution method and algorithm</li>
-            <li>Grids, discretization, basis functions</li>
-            <li>How the exogenous process is discretized</li>
-            <li>Language, code structure, API</li>
-            <li>Everything the toolkit exists to do differently</li>
+            <li>Choose the solution method and algorithm.</li>
+            <li>Choose the grids or other function approximations.</li>
+            <li>Choose how to approximate the shock distributions.</li>
+            <li>Use the toolkit's language and notation.</li>
+            <li>Choose the prose and runnable format.</li>
           </ul>
         </div>
       </div>
 
-      <p class="section-note">Divergence beyond tolerance is documented and attributed to method — a result of the exercise, not a failure of it. A project that cannot match one element of a template contributes with a documented deviation rather than dropping out. <strong class="flag">Phase 1 publishes no timings and no ranking of toolkits.</strong></p>
+      <p class="section-note">The submission guide offers optional formats for result tables and metadata, together with draft comparison tolerances. Projects can use them to compare results or choose another form of presentation. Explain any part of the stated model that the toolkit cannot represent. <strong class="flag">Phase 1 publishes no timings and no ranking of toolkits.</strong></p>
     </section>
 
     <section class="section" id="ask" data-spy="ask">
@@ -307,7 +318,7 @@
           <h3>What each project provides</h3>
           <ul class="ask-list">
             <li>Agreement in principle to take part.</li>
-            <li>By <strong class="flag">end of 2026</strong>, at least one baseline model solved against its template, so results line up side by side.</li>
+            <li>By <strong class="flag">end of 2026</strong>, at least one baseline model solved using the shared description and calibration, so results line up side by side.</li>
             <li>An author's-choice showcase tutorial highlighting where the toolkit is strongest.</li>
             <li>Both contributions authored and maintained by the project — CC-BY for text, an OSI-approved licence for code.</li>
           </ul>
@@ -343,7 +354,7 @@
         <div class="role">
           <span class="eyebrow">Baseline set</span>
           <h3>SCE Working Group 1</h3>
-          <p>Builds and releases the baseline set and templates. The library is run in collaboration with the group; QuantEcon attends as a member to see where it can assist the group's semantics work.</p>
+          <p>Builds and releases the baseline set and its model descriptions. The library is run in collaboration with the group; QuantEcon attends as a member to see where it can assist the group's semantics work.</p>
         </div>
         <div class="role">
           <span class="eyebrow">Semantics</span>
@@ -369,7 +380,7 @@
             <li>Open-source repository, PRs welcome.</li>
             <li>Per-project tutorials and per-model metadata.</li>
             <li>CI runs the implementations and flags breakage.</li>
-            <li>An AI advisor MVP built on the corpus.</li>
+            <li>A first version of an AI advisor that uses the model tutorials.</li>
           </ul>
         </div>
         <div class="phase is-later">
@@ -392,20 +403,21 @@
         <span class="n">08</span>
         <h2>Contribute</h2>
       </div>
-      <p class="section-lede">The library is an open-source repository and takes pull requests from anyone, member or not; changes to a project's implementation merge at that project's discretion.</p>
+      <p class="section-lede">Start with the <a href="https://github.com/QuantEcon/community-library/blob/main/models/buffer-stock/README.md#what-to-submit">buffer stock submission guide</a>. Keep the model and calibration fixed, and submit a runnable implementation in your chosen format. Identify the authors and document the numerical settings and commands needed to reproduce the results; no particular metadata file or output format is required.</p>
+      <p>Anyone can submit a pull request. Add your files under <code>projects/&lt;toolkit&gt;/&lt;model&gt;/</code>; the <a href="https://github.com/QuantEcon/community-library/tree/main/projects/HARK/BST">HARK buffer stock example</a> uses <code>projects/HARK/BST/</code>. Changes to an existing project's tutorial remain subject to that project's approval.</p>
 
       <a class="repo-link" href="https://github.com/QuantEcon/community-library">
         <span class="about">
           <span class="name">QuantEcon/community-library</span>
-          <span class="desc">Hosted and published by QuantEcon · one model per directory: implementation, tutorial text and metadata together</span>
+          <span class="desc">Each project chooses the files and prose used to present its runnable implementation.</span>
         </span>
         <span class="go">clone ↗</span>
       </a>
 
       <div class="meta-grid">
         <div>
-          <span class="eyebrow">Templates</span>
-          <p>Distributed from this site — a PDF and a notebook per baseline model, versioned and credited to their author.</p>
+          <span class="eyebrow">Model and example</span>
+          <p>Read the <a href="https://github.com/QuantEcon/community-library/blob/main/models/buffer-stock/model-description.md">buffer stock description</a> or its <a href="https://github.com/QuantEcon/community-library/blob/main/models/buffer-stock/model-description.pdf">PDF</a>, then open the runnable <a href="https://github.com/QuantEcon/community-library/blob/main/projects/HARK/BST/tutorial.ipynb">HARK notebook</a>.</p>
         </div>
         <div>
           <span class="eyebrow">Licensing</span>
@@ -413,7 +425,7 @@
         </div>
         <div>
           <span class="eyebrow">Discussion</span>
-          <p>Open questions on templates and the baseline set are settled in the <a href="https://github.com/econ-ark/sce-wg-1/issues">working group issue tracker</a>.</p>
+          <p>Open questions on the model descriptions and baseline set are settled in the <a href="https://github.com/econ-ark/sce-wg-1/issues">working group issue tracker</a>.</p>
         </div>
       </div>
     </section>
@@ -449,7 +461,7 @@
         <li><span class="tbd">Code of conduct ⟨tbd⟩</span></li>
       </ul>
     </div>
-    <p class="footer-note">The Community Library is hosted by QuantEcon. It is run in collaboration with SCE Working Group 1 on Language and Formal Semantics, which publishes the baseline set and templates and leads the semantics track alongside Econ-ARK.</p>
+    <p class="footer-note">The Community Library is hosted by QuantEcon. It is run in collaboration with SCE Working Group 1 on Language and Formal Semantics, which publishes the baseline set and model descriptions and leads the semantics track alongside Econ-ARK.</p>
     <p class="footer-legal">© 2026 QuantEcon · CC-BY on text, OSI-approved licences on code</p>
   </div>
 </footer>
