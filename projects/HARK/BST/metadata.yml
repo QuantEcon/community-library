@@ -1,6 +1,7 @@
 toolkit: HARK
 toolkit_version: 0.17.1
-authors: []
+authors:
+- name: Akshay Shanker
 model: BST
 date: '2026-09-14'
 template_version: '0.1'
