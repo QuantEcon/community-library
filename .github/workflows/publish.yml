@@ -48,8 +48,11 @@ jobs:
           cd docs
           missing=0
           for f in *.html; do
-            grep -oE 'id="[^"]+"'    "$f" | sed 's/id="//;s/"//'    | sort -u > /tmp/ids
-            grep -oE 'href="#[^"]+"' "$f" | sed 's/href="#//;s/"//' | sort -u > /tmp/targets
+            # A page may have no in-page links (the talk's slides have none):
+            # grep exits 1 when nothing matches, which pipefail would turn
+            # into a failed step, so an empty match is allowed explicitly.
+            { grep -oE 'id="[^"]+"'    "$f" || true; } | sed 's/id="//;s/"//'    | sort -u > /tmp/ids
+            { grep -oE 'href="#[^"]+"' "$f" || true; } | sed 's/href="#//;s/"//' | sort -u > /tmp/targets
             for t in $(comm -13 /tmp/ids /tmp/targets); do
               echo "::error file=docs/$f::anchor #$t has no matching id"
               missing=1
