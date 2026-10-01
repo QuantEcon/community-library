@@ -495,8 +495,18 @@ a:hover { color: var(--qe-blue-dark); text-decoration: underline; }
   color: #999;
 }
 
+/* A slot a project has filled: solid where the open ones are dashed, and a
+   link to the solution or the pull request that adds it. */
+.slot.is-filled {
+  border-style: solid;
+  border-color: var(--qe-blue);
+  color: var(--qe-blue);
+}
+a.slot.is-filled:visited { color: var(--qe-blue); }
+a.slot.is-filled:hover { background: var(--qe-blue); color: #fff; text-decoration: none; }
+
 .model-template {
-  flex: 0 0 118px;
+  flex: 0 0 170px;
   text-align: right;
   font-family: var(--mono);
   font-size: .72rem;
