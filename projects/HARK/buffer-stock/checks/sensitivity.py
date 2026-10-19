@@ -88,7 +88,7 @@ def main():
                                       "kappa_1e-2": r["kappa_1e-2"], "kappa_slope": r["kappa_slope"]}
     lines.append("")
 
-    # 3. Shock discretisation (the element the template leaves free)
+    # 3. Shock discretisation (the element the model description leaves free)
     lines += ["## 3. Shock discretisation, HARK (960 points, top 20)", "",
               "| positive values per shock | maximum absolute consumption difference from baseline | target difference from baseline | target |", "| --- | --- | --- | --- |"]
     out["hark_shocks"] = {}

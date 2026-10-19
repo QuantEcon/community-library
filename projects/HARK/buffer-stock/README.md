@@ -15,7 +15,11 @@ python -m pip install -r requirements.txt
 Restart the kernel and run all cells. The notebook solves the model, plots
 consumption and expected resource growth, and checks the solution. Its final
 cell saves optional comparison tables and software settings in the working
-directory. Run it from this directory to refresh the files below.
+directory. Run it from this directory to refresh the files below. A run
+rewrites `metadata.yml` and the three files in `results/` with the run date
+and the local package versions, so Git shows them as changed even when the
+numbers agree. Commit them only to update the record; otherwise restore them
+with `git restore metadata.yml results`.
 
 | File or directory | Purpose |
 | --- | --- |
@@ -47,7 +51,10 @@ python -m checks.sensitivity
 `checks/hark_checks.py` contains the calculations used by those tests.
 `python -m checks.hark_checks` also writes the three comparison tables.
 `checks/expected.json` preserves an earlier verified HARK calculation for
-regression tests. The independent EGM code in `checks/` supports the optional numerical
+regression tests. Its software record describes that calculation, so it can
+differ from `metadata.yml`, which describes the latest notebook run; the
+tests check that the current environment reproduces the preserved values to
+within 1e-10. The independent EGM code in `checks/` supports the optional numerical
 comparisons.
 
 Other projects can choose their own prose, solution method and runnable

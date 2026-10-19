@@ -1,4 +1,4 @@
-"""An endogenous grid method solver written from the template's equations
+"""An endogenous grid method solver written from the model description's equations
 and independent of HARK; the oracle for the HARK consumption
 function.  The policy is a piecewise-linear function through the points
 (m_i, c_i) with the anchor (0, 0) at the natural borrowing constraint."""

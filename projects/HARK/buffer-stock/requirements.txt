@@ -1,5 +1,7 @@
 # Notebook dependencies
 econ-ark==0.17.1
+# HARK 0.17.1 imports sympy but does not declare it as a dependency
+sympy>=1.12
 numpy>=2.0
 scipy>=1.14
 pandas>=2
@@ -7,6 +9,5 @@ matplotlib>=3.8
 ipykernel>=6
 PyYAML>=6
 
-# Optional numerical checks and automated notebook execution
+# Optional numerical checks
 pytest>=8
-nbclient>=0.10

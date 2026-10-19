@@ -4,7 +4,7 @@ Run from projects/HARK/buffer-stock: python -m checks.hark_checks
 This writes the three result CSVs to the project's results/ directory.
 The tutorial notebook is self-contained and does not import this module.
 
-Code names map to the template as follows: m is normalised market
+Code names map to the model description as follows: m is normalised market
 resources, c consumption and a end-of-period assets. psi and theta are
 the permanent and full transitory shocks (psi and bold xi in the paper);
 rho is relative risk aversion (gamma in the paper). R is the interest

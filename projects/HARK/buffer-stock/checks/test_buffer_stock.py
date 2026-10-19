@@ -9,7 +9,7 @@ Oracles, with provenance:
     cfuncprop of the paper, with the perfect-foresight upper bound;
   * the target: equation mTargImplicit of the paper;
   * the consumption function: an endogenous grid method written from the
-    template's equations (independent_egm.py), on a finer grid.
+    model description's equations (independent_egm.py), on a finer grid.
 """
 import csv
 import json
