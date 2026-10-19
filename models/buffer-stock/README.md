@@ -14,8 +14,9 @@ and instructions needed to reproduce the results, and identify the authors
 and software versions in your chosen format.
 
 1. Link to the shared model description and use its calibration. Explain any part of the model that your toolkit cannot represent.
-2. Document the numerical settings and installation and run commands where readers can find them.
-3. Run the implementation from a fresh session and open a pull request adding your project directory.
+2. Report the results listed at the end of the model description: consumption at the sixteen common values of $m$, the target $\hat m$ and the MPC at the target with step $h=0.01$. Any format will do; the HARK files below are one.
+3. Document the numerical settings and installation and run commands where readers can find them.
+4. Run the implementation from a fresh session and open a pull request adding your project directory.
 
 ## The HARK example
 
@@ -31,9 +32,9 @@ Their names and arrangement are an example; projects choose their own files.
 | `results/conditions.csv` | The seven model conditions. |
 
 HARK also includes an environment file and optional numerical checks.
-The result tables, metadata example and tolerances below are **optional draft
-comparison conventions**. Projects can use them when comparing results or
-choose another way to present their calculations.
+The file layouts, metadata example and tolerances below are **optional draft
+comparison conventions**. Every implementation reports the numbers in item 2
+above; projects can present them in these files or in another way.
 
 ## Optional comparison files
 

@@ -11,15 +11,17 @@ This repository holds the community website, the shared model descriptions and t
 
 Read the [buffer stock model description](models/buffer-stock/model-description.md)
 or its [PDF](models/buffer-stock/model-description.pdf), which covers model theory,
-calibration and numerical solution. The
+calibration, numerical solution and the results each implementation
+reports. The
 [HARK notebook](projects/HARK/buffer-stock/tutorial.ipynb) provides a runnable example
 with short explanations; its [instructions](projects/HARK/buffer-stock/README.md)
 give the installation and run commands.
 
 Keep the model and calibration fixed, and choose your own prose, solution
 method and runnable format. The [submission guide](models/buffer-stock/README.md#what-to-submit)
-explains where to put an implementation and how to document its use. The
-guide's CSV formats, metadata example and draft comparison tolerances are optional.
+explains where to put an implementation, which results to report and how to
+document its use. The guide's CSV formats, metadata example and draft
+comparison tolerances are optional.
 
 The working group has proposed five baseline models. Projects choose one or
 more that their toolkit can solve and also contribute a tutorial on a model
