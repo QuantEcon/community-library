@@ -71,6 +71,4 @@ gives the commands for generating the PDF from the model description.
 
 ## Licensing
 
-Text is CC-BY; code is released under an OSI-approved licence. Contributions remain
-authored and maintained by their projects. The library publishes the work
-with attribution and does not rank the toolkits.
+Text is CC-BY; code carries an OSI-approved licence. Contributions remain authored and maintained by their projects — the library curates and publishes; it does not own anyone's work or rank the toolkits.
