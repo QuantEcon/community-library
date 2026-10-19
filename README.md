@@ -4,7 +4,7 @@ The Community Library is an open-source library of baseline models in computatio
 For each model the library documents the model statement and the calibration, so that implementations in different toolkits can be compared side by side.
 Each implementation is authored and maintained by the project that built the toolkit and is open to review by the community.
 
-The library is hosted by QuantEcon and published at **<https://quantecon.github.io/community-library/>**. It is run in collaboration with the [SCE Working Group 1 on Language and Formal Semantics](https://github.com/econ-ark/sce-wg-1).
+The library is hosted by QuantEcon and published at **<https://quantecon.github.io/community-library/>**. It is run in collaboration with the [SCE Working Group 1 on Language and Semantics](https://github.com/econ-ark/sce-wg-1).
 This repository holds the community website, the shared model descriptions and the implementations submitted by participating projects.
 
 ## Start with a model
@@ -51,7 +51,9 @@ the [working group issue tracker](https://github.com/econ-ark/sce-wg-1/issues).
 The website consists of static HTML, CSS and JavaScript in `docs/`. Its
 appearance follows the [QuantEcon book theme](https://github.com/QuantEcon/quantecon-book-theme).
 Edit `docs/index.html` for text, `docs/site.css` for appearance and
-`docs/site.js` for the contents navigation.
+`docs/site.js` for the contents navigation. `docs/sce-wg1-2026-10-01.html`
+is the Project B talk to SCE Working Group 1 (1 October 2026), a
+self-contained reveal.js deck.
 
 The [publishing workflow](.github/workflows/publish.yml) checks local file
 links, links to sections and the contents navigation on every push and pull

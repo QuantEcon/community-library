@@ -36,6 +36,7 @@
         <li><a href="#how">How it works</a></li>
         <li><a href="#governance">Governance</a></li>
         <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#presentations">Presentations</a></li>
         <li class="topnav-gh"><a class="gh" href="https://github.com/QuantEcon/community-library">GitHub&nbsp;↗</a></li>
       </ul>
     </nav>
@@ -52,7 +53,7 @@
         <a class="btn btn-solid" href="#library">Browse the library</a>
         <a class="btn btn-outline" href="#contribute">Bring your toolkit</a>
       </div>
-      <p class="hero-credit">Coordinated by <strong>Matt McKay</strong>, QuantEcon. Proposed at the <a href="https://econ-ark.github.io/cef_venice_2026/">CEF 2026 pre-conference</a>, Venice, 28 June 2026 — <a href="https://github.com/QuantEcon/conference-cef2026">slides and pitch</a>.</p>
+      <p class="hero-credit">Coordinated by <strong>Matt McKay</strong>, QuantEcon. Proposed at the <a href="https://econ-ark.github.io/cef_venice_2026/">CEF 2026 pre-conference</a>, Venice, 28 June 2026 — <a href="https://github.com/QuantEcon/conference-cef2026">slides and pitch</a>. Introduced to SCE Working Group 1 at its first full-group meeting, 1&nbsp;October&nbsp;2026 — <a href="sce-wg1-2026-10-01.html">slides</a>.</p>
     </div>
 
     <div class="host-card">
@@ -62,7 +63,7 @@
       <div class="host-rule" aria-hidden="true"></div>
       <span class="eyebrow">Working alongside</span>
       <ul class="alongside">
-        <li><strong>SCE Working Group 1</strong> — publishes the baseline model descriptions.</li>
+        <li><strong>SCE Working Group 1</strong> — publishes the baseline set and its model descriptions.</li>
       </ul>
     </div>
   </div>
@@ -99,11 +100,12 @@
       <li><a href="#why" data-navlink="why"><span class="n">01</span>Why</a></li>
       <li><a href="#library" data-navlink="library"><span class="n">02</span>The library</a></li>
       <li><a href="#how" data-navlink="how"><span class="n">03</span>How it works</a></li>
-      <li><a href="#templates" data-navlink="templates"><span class="n">04</span>Model descriptions</a></li>
+      <li><a href="#descriptions" data-navlink="descriptions"><span class="n">04</span>Descriptions</a></li>
       <li><a href="#ask" data-navlink="ask"><span class="n">05</span>The ask</a></li>
       <li><a href="#governance" data-navlink="governance"><span class="n">06</span>Who does what</a></li>
       <li><a href="#roadmap" data-navlink="roadmap"><span class="n">07</span>Roadmap</a></li>
-      <li><a href="#contribute" data-navlink="contribute"><span class="n">08</span>Contribute</a></li>
+      <li><a href="#presentations" data-navlink="presentations"><span class="n">08</span>Presentations</a></li>
+      <li><a href="#contribute" data-navlink="contribute"><span class="n">09</span>Contribute</a></li>
     </ul>
   </nav>
 
@@ -152,7 +154,7 @@
         <span class="n">02</span>
         <h2>The library</h2>
       </div>
-      <p class="section-lede">The working group publishes a set of baseline models. Each project chooses as many as its toolkit can solve — several or just one — and submits a tutorial for each. Five models seed the set.</p>
+      <p class="section-lede">The working group publishes a set of baseline models. Each project chooses as many as its toolkit can solve — several or just one — and submits a tutorial for each. Buffer-stock saving comes first; four more are proposed.</p>
 
       <div class="models">
         <div class="models-head">
@@ -162,15 +164,15 @@
 
         <div class="model">
           <div class="model-name">
-            <h3>Buffer stock saving</h3>
-            <p class="model-class">Partial-equilibrium consumption–saving under income risk</p>
+            <h3>Buffer-stock saving</h3>
+            <p class="model-class">Consumption–saving under income risk</p>
           </div>
-          <div class="slots" aria-label="HARK example and two open implementation slots">
-            <a class="slot" href="https://github.com/QuantEcon/community-library/blob/main/projects/HARK/BST/tutorial.ipynb">HARK example</a>
+          <div class="slots" aria-label="Three implementation slots: HARK, and two open">
+            <a class="slot is-filled" href="https://github.com/QuantEcon/community-library/blob/main/projects/HARK/BST/tutorial.ipynb" title="HARK's buffer-stock solution">HARK</a>
             <span class="slot">open</span>
             <span class="slot">open</span>
           </div>
-          <div class="model-template"><a href="https://github.com/QuantEcon/community-library/blob/main/models/buffer-stock/model-description.pdf">description PDF ⟨draft⟩</a></div>
+          <div class="model-template"><a href="https://github.com/QuantEcon/community-library/blob/main/models/buffer-stock/model-description.pdf">description ⟨draft⟩</a></div>
         </div>
 
         <div class="model">
@@ -183,7 +185,7 @@
             <span class="slot">open</span>
             <span class="slot">open</span>
           </div>
-          <div class="model-template">in preparation</div>
+          <div class="model-template">description ⟨planned⟩</div>
         </div>
 
         <div class="model">
@@ -196,7 +198,7 @@
             <span class="slot">open</span>
             <span class="slot">open</span>
           </div>
-          <div class="model-template">in preparation</div>
+          <div class="model-template">description ⟨planned⟩</div>
         </div>
 
         <div class="model">
@@ -209,7 +211,7 @@
             <span class="slot">open</span>
             <span class="slot">open</span>
           </div>
-          <div class="model-template">in preparation</div>
+          <div class="model-template">description ⟨planned⟩</div>
         </div>
 
         <div class="model">
@@ -222,12 +224,12 @@
             <span class="slot">open</span>
             <span class="slot">open</span>
           </div>
-          <div class="model-template">in preparation</div>
+          <div class="model-template">description ⟨planned⟩</div>
         </div>
 
-        <a class="models-cta" href="https://github.com/econ-ark/sce-wg-1/issues">
+        <a class="models-cta" href="https://github.com/econ-ark/sce-wg-1/issues/new?template=model-family.yml">
           <span>Propose a model — the set is a starting proposal, not a ceiling.</span>
-          <span class="go">open an issue ↗</span>
+          <span class="go">propose a model ↗</span>
         </a>
       </div>
       <p class="footnote">Each model description states the shared assumptions and calibration. Each project chooses how to present its implementation.</p>
@@ -254,7 +256,7 @@
       <p class="aside-note">Both tutorials use the toolkit's own notation and include the authors, software versions and numerical settings needed to reproduce the results. Authors explain their method and any differences from the shared model.</p>
     </section>
 
-    <section class="section" id="templates" data-spy="templates">
+    <section class="section" id="descriptions" data-spy="descriptions">
       <div class="section-head">
         <span class="n">04</span>
         <h2>Model descriptions and implementations</h2>
@@ -344,7 +346,7 @@
         <div class="role is-host">
           <span class="eyebrow">Host</span>
           <h3>QuantEcon</h3>
-          <p>Publishes and maintains the library, sets editorial standards for what goes in, and builds the shared tooling: local-run handlers for MATLAB, Octave and Julia, schema validators, converters between output formats.</p>
+          <p>Publishes and maintains the library, sets editorial standards for what goes in, and develops shared tooling in consultation with the projects, as part of <a href="https://quantecon.org/infrastructure/">QuantEcon's open-source infrastructure</a>.</p>
         </div>
         <div class="role">
           <span class="eyebrow">Authors</span>
@@ -380,7 +382,6 @@
             <li>Open-source repository, PRs welcome.</li>
             <li>Per-project tutorials and per-model metadata.</li>
             <li>CI runs the implementations and flags breakage.</li>
-            <li>A first version of an AI advisor that uses the model tutorials.</li>
           </ul>
         </div>
         <div class="phase is-later">
@@ -393,14 +394,34 @@
             <li>Cross-toolkit validation reports: where do the same model's outputs diverge?</li>
             <li>Library models expressed in a shared semantic representation, building on Econ-ARK's DP schema.</li>
             <li>Documentation of that design, plus a how-to tutorial.</li>
+            <li>Exploring an AI advisor built on the corpus.</li>
           </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="presentations" data-spy="presentations">
+      <div class="section-head">
+        <span class="n">08</span>
+        <h2>Presentations</h2>
+      </div>
+      <p class="section-lede">Talks introducing the library, newest first.</p>
+
+      <div class="meta-grid">
+        <div>
+          <span class="eyebrow">1 October 2026</span>
+          <p><strong>SCE Working Group 1</strong>, first full-group meeting. The six-minute introduction to Project B: <a href="sce-wg1-2026-10-01.html">slides</a>.</p>
+        </div>
+        <div>
+          <span class="eyebrow">28 June 2026</span>
+          <p><strong><a href="https://econ-ark.github.io/cef_venice_2026/">CEF 2026 pre-conference</a></strong>, Venice. Where the library was proposed: <a href="https://github.com/QuantEcon/conference-cef2026">slides and pitch</a>.</p>
         </div>
       </div>
     </section>
 
     <section class="section" id="contribute" data-spy="contribute">
       <div class="section-head">
-        <span class="n">08</span>
+        <span class="n">09</span>
         <h2>Contribute</h2>
       </div>
       <p class="section-lede">Start with the <a href="https://github.com/QuantEcon/community-library/blob/main/models/buffer-stock/README.md#what-to-submit">buffer stock submission guide</a>. Keep the model and calibration fixed, and submit a runnable implementation in your chosen format. Identify the authors and document the numerical settings and commands needed to reproduce the results; no particular metadata file or output format is required.</p>
@@ -425,7 +446,7 @@
         </div>
         <div>
           <span class="eyebrow">Discussion</span>
-          <p>Open questions on the model descriptions and baseline set are settled in the <a href="https://github.com/econ-ark/sce-wg-1/issues">working group issue tracker</a>.</p>
+          <p>Open questions on model descriptions and the baseline set are settled in the <a href="https://github.com/econ-ark/sce-wg-1/issues">working group issue tracker</a>.</p>
         </div>
       </div>
     </section>
@@ -458,10 +479,10 @@
         <li><a href="https://github.com/QuantEcon/community-library">Repository</a></li>
         <li><a href="https://econ-ark.github.io/sce-wg-1/">SCE WG1</a></li>
         <li><a href="https://econ-ark.github.io/cef_venice_2026/">CEF 2026</a></li>
-        <li><span class="tbd">Code of conduct ⟨tbd⟩</span></li>
+        <li><a href="https://econ-ark.github.io/sce-wg-1/code-of-conduct.html">Code of conduct</a></li>
       </ul>
     </div>
-    <p class="footer-note">The Community Library is hosted by QuantEcon. It is run in collaboration with SCE Working Group 1 on Language and Formal Semantics, which publishes the baseline set and model descriptions and leads the semantics track alongside Econ-ARK.</p>
+    <p class="footer-note">The Community Library is hosted by QuantEcon. It is run in collaboration with SCE Working Group 1 on Language and Semantics, which publishes the baseline set and its model descriptions and leads the semantics track alongside Econ-ARK.</p>
     <p class="footer-legal">© 2026 QuantEcon · CC-BY on text, OSI-approved licences on code</p>
   </div>
 </footer>
