@@ -53,3 +53,10 @@ comparisons.
 Other projects can choose their own prose, solution method and runnable
 format while retaining the shared model and calibration. See the
 [contribution guide](../../../models/buffer-stock/README.md).
+
+## Licence
+
+The code in this directory, including the notebook and `checks/`, is released
+under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0),
+the licence HARK uses. The model description it implements is licensed
+CC-BY-4.0.
