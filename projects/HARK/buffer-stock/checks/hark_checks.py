@@ -1,6 +1,6 @@
 """Optional HARK baseline calculation for numerical checks and sensitivity.
 
-Run from projects/HARK/BST: python -m checks.hark_checks
+Run from projects/HARK/buffer-stock: python -m checks.hark_checks
 This writes the three result CSVs to the project's results/ directory.
 The tutorial notebook is self-contained and does not import this module.
 
@@ -23,8 +23,8 @@ import numpy as np
 from scipy.optimize import brentq
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-BST_DIR = os.path.dirname(HERE)
-RESULTS = os.path.join(BST_DIR, "results")
+PROJECT_DIR = os.path.dirname(HERE)
+RESULTS = os.path.join(PROJECT_DIR, "results")
 
 
 def baseline_parameters():
@@ -218,7 +218,7 @@ def summarize_solution(params, agent):
     kappa_min, kappa_max = limiting_mpcs(p)
     factors = derived_factors(p, e_psi_inv_disc, e_psi_1mrho_disc)
     return {
-        "template_version": "0.1",
+        "model_description_version": "0.1",
         "computed_on": datetime.date.today().isoformat(),
         "hark_version": HARK.__version__,
         "python": platform.python_version(),
@@ -286,7 +286,7 @@ def write_results(out, directory=RESULTS):
         for name in ("m_target", "mpc_at_target", "kappa_min", "kappa_max"):
             writer.writerow([name, out[name]])
         writer.writerow(["E_psi_inv", out["E_psi_inv_discretised"]])
-        writer.writerow(["E_psi_1mrho", out["E_psi_1mrho_discretised"]])
+        writer.writerow(["E_psi_1mgamma", out["E_psi_1mrho_discretised"]])
     with open(os.path.join(directory, "conditions.csv"), "w", newline="") as f:
         writer = csv.writer(f, lineterminator="\n")
         writer.writerow(["name", "holds"])

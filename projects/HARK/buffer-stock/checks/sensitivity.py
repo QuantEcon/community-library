@@ -1,7 +1,7 @@
 """Sensitivity of the HARK baseline to the solver's own settings and to
 the shock discretisation.  Writes checks/sensitivity.md and checks/sensitivity.json.
 
-Run from projects/HARK/BST: python -m checks.sensitivity
+Run from projects/HARK/buffer-stock: python -m checks.sensitivity
 """
 import json
 import os
@@ -10,9 +10,9 @@ import sys
 import numpy as np
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-BST_DIR = os.path.dirname(HERE)
+PROJECT_DIR = os.path.dirname(HERE)
 # Allow the checks to run from either the HARK implementation or repository directory.
-sys.path.insert(0, BST_DIR)
+sys.path.insert(0, PROJECT_DIR)
 
 from checks import independent_egm as egm
 from checks import hark_checks as rm

@@ -2,10 +2,10 @@ toolkit: HARK
 toolkit_version: 0.17.1
 authors:
 - name: Akshay Shanker
-model: BST
+model: buffer-stock
 date: '2026-09-14'
-template_version: '0.1'
-template_source: https://github.com/QuantEcon/community-library/tree/main/models/buffer-stock
+model_description_version: '0.1'
+model_description: https://github.com/QuantEcon/community-library/tree/main/models/buffer-stock
 software:
   Python: 3.12.7
   NumPy: 2.2.6

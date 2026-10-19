@@ -23,9 +23,9 @@ import numpy as np
 import pytest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-BST_DIR = os.path.dirname(HERE)
+PROJECT_DIR = os.path.dirname(HERE)
 # Allow the checks to run from either the HARK implementation or repository directory.
-sys.path.insert(0, BST_DIR)
+sys.path.insert(0, PROJECT_DIR)
 
 from checks import independent_egm as egm
 from checks import hark_checks as rm
@@ -239,7 +239,7 @@ def test_recorded_hark_values_reproduce(params, agent, cfunc, atoms):
 
 def test_hark_checks_module_writes_three_csvs_in_project(tmp_path):
     """The optional calculation runs as a module and writes project results."""
-    project_dir = tmp_path / "BST"
+    project_dir = tmp_path / "buffer-stock"
     checks_dir = project_dir / "checks"
     checks_dir.mkdir(parents=True)
     shutil.copyfile(os.path.join(HERE, "hark_checks.py"), checks_dir / "hark_checks.py")
@@ -270,7 +270,7 @@ def test_hark_checks_module_writes_three_csvs_in_project(tmp_path):
         assert reader.fieldnames == ["name", "value"]
         rows = list(reader)
     assert [row["name"] for row in rows] == [
-        "m_target", "mpc_at_target", "kappa_min", "kappa_max", "E_psi_inv", "E_psi_1mrho",
+        "m_target", "mpc_at_target", "kappa_min", "kappa_max", "E_psi_inv", "E_psi_1mgamma",
     ]
     scalars = {row["name"]: float(row["value"]) for row in rows}
     for name in ("m_target", "mpc_at_target", "kappa_min", "kappa_max"):
@@ -279,7 +279,7 @@ def test_hark_checks_module_writes_three_csvs_in_project(tmp_path):
         assert abs(scalars[name] - stored[name]) < 1e-10
     assert abs(scalars["E_psi_inv"] - stored["E_psi_inv_discretised"]) < 1e-12
     # At baseline rho = 2, the two required discrete moments coincide.
-    assert abs(scalars["E_psi_1mrho"] - scalars["E_psi_inv"]) < 1e-12
+    assert abs(scalars["E_psi_1mgamma"] - scalars["E_psi_inv"]) < 1e-12
     with open(result_dir / "conditions.csv") as f:
         reader = csv.DictReader(f)
         assert reader.fieldnames == ["name", "holds"]

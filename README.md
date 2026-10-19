@@ -12,8 +12,8 @@ This repository holds the community website, the shared model descriptions and t
 Read the [buffer stock model description](models/buffer-stock/model-description.md)
 or its [PDF](models/buffer-stock/model-description.pdf), which covers model theory,
 calibration and numerical solution. The
-[HARK notebook](projects/HARK/BST/tutorial.ipynb) provides a runnable example
-with short explanations; its [instructions](projects/HARK/BST/README.md)
+[HARK notebook](projects/HARK/buffer-stock/tutorial.ipynb) provides a runnable example
+with short explanations; its [instructions](projects/HARK/buffer-stock/README.md)
 give the installation and run commands.
 
 Keep the model and calibration fixed, and choose your own prose, solution
@@ -42,7 +42,9 @@ of their own choosing.
 | `docs/` | The library website. |
 | `templates/` | The page layout used to produce model PDFs. |
 
-For example, `projects/HARK/BST/` contains the HARK buffer stock implementation.
+A model has the same directory name in both places: the buffer-stock
+description is in `models/buffer-stock/` and the HARK implementation in
+`projects/HARK/buffer-stock/`.
 Questions about a shared model description belong in
 the [working group issue tracker](https://github.com/econ-ark/sce-wg-1/issues).
 

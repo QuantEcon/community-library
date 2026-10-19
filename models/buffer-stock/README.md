@@ -4,11 +4,11 @@ Read the [model description](model-description.md) or its [PDF](model-descriptio
 for the theory, calibration and numerical solution. Keep the stated
 model and calibration fixed, and choose the solution method, prose and
 runnable format that suit your toolkit. The
-[HARK notebook](../../projects/HARK/BST/tutorial.ipynb) is one example.
+[HARK notebook](../../projects/HARK/buffer-stock/tutorial.ipynb) is one example.
 
 ## What to submit
 
-Add a runnable implementation under `projects/<toolkit>/BST/`. A notebook,
+Add a runnable implementation under `projects/<toolkit>/buffer-stock/`. A notebook,
 a MyST document with code, or another format is welcome. Include the code
 and instructions needed to reproduce the results, and identify the authors
 and software versions in your chosen format.
@@ -19,7 +19,7 @@ and software versions in your chosen format.
 
 ## The HARK example
 
-The implementation at `projects/HARK/BST/` uses the following files.
+The implementation at `projects/HARK/buffer-stock/` uses the following files.
 Their names and arrangement are an example; projects choose their own files.
 
 | File | Content |
@@ -66,7 +66,7 @@ relative risk aversion.
 | `kappa_min` | $\underline\kappa=\max\{0,1-\text{Þ}/\mathsf{R}\}$. |
 | `kappa_max` | $\overline\kappa=1-\wp^{1/\gamma}\text{Þ}/\mathsf{R}$. |
 | `E_psi_inv` | $\mathbb{E}[\psi^{-1}]$ under the solver's shock approximation. |
-| `E_psi_1mrho` | $\mathbb{E}[\psi^{1-\gamma}]$ under the solver's shock approximation. The existing CSV name uses `rho` for $\gamma$. |
+| `E_psi_1mgamma` | $\mathbb{E}[\psi^{1-\gamma}]$ under the solver's shock approximation. |
 
 Check that expected resource growth is positive at $\hat m-0.5$ and negative
 at $\hat m+0.5$. The target differs from a balanced-growth pseudo-target and
@@ -98,10 +98,10 @@ toolkit: "<toolkit name>"
 toolkit_version: "<version>"
 authors:
   - name: "<implementation author>"
-model: "BST"
+model: "buffer-stock"
 date: "<YYYY-MM-DD>"
-template_version: "0.1"
-template_source: "https://github.com/QuantEcon/community-library/tree/main/models/buffer-stock"
+model_description_version: "0.1"
+model_description: "https://github.com/QuantEcon/community-library/tree/main/models/buffer-stock"
 software: "<language version and package versions>"
 method: "<solution method and convergence criterion>"
 discretisation: "<shock approximation, number of points, and zero-income treatment>"
@@ -114,8 +114,8 @@ state the licence for your code.
 
 ## Optional comparison tolerances
 
-The [HARK results](../../projects/HARK/BST/results/) provide one comparison.
-Its [numerical checks](../../projects/HARK/BST/checks/sensitivity.md) show
+The [HARK results](../../projects/HARK/buffer-stock/results/) provide one comparison.
+Its [numerical checks](../../projects/HARK/buffer-stock/checks/sensitivity.md) show
 how grids, shock approximations and interpolation affect the results.
 
 The following optional draft thresholds can guide discussion of numerical
