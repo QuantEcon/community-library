@@ -1,7 +1,7 @@
 ---
 title: Buffer stock saving
 subtitle: Model description, version 0.1 (draft)
-date: '2026-09-14'
+date: '2026-10-20'
 license: CC-BY-4.0
 exports:
 - format: pdf
@@ -91,28 +91,28 @@ The positive shocks are log-normal with means normalised to one, $\log\psi\sim N
 Every implementation retains the calibration but approximates the two shock distributions with finitely many values of its own choosing that preserve their means and the zero-income probability. The paper's existence results require positive shocks bounded above and away from zero, which finite approximations with strictly positive $\psi$ and $\theta$ satisfy and the log-normal laws do not. Under this assumption, weak return impatience and finite value of autarky give a finite value function and a positive limiting consumption function,
 
 $$
-\wp^{1/\gamma}\frac{\text{\textbf{Þ}}}{\mathsf{R}}<1,\qquad
+\wp^{1/\gamma}\frac{\textbf{Þ}}{\mathsf{R}}<1,\qquad
 \beta\mathcal{G}^{1-\gamma}\mathbb{E}[\psi^{1-\gamma}]<1,
-\qquad \text{\textbf{Þ}}=(\mathsf{R}\beta)^{1/\gamma},
+\qquad \textbf{Þ}=(\mathsf{R}\beta)^{1/\gamma},
 $$
 
-where $\text{\textbf{Þ}}$ is the absolute patience factor, the growth factor of consumption under perfect foresight. Adding strong growth impatience, $(\text{\textbf{Þ}}/\mathcal{G})\mathbb{E}[\psi^{-1}]<1$, gives a unique target $\hat m$. The table lists these and the paper's four other conditions, each holding when its factor is below one, with values at the calibration from the continuous laws; all seven also hold under a seven-point equiprobable approximation. Each implementation solves the target equation with its own shock approximation and should confirm that the conditions hold under it.
+where $\textbf{Þ}$ is the absolute patience factor, the growth factor of consumption under perfect foresight. Adding strong growth impatience, $(\textbf{Þ}/\mathcal{G})\mathbb{E}[\psi^{-1}]<1$, gives a unique target $\hat m$. The table lists these and the paper's four other conditions, each holding when its factor is below one, with values at the calibration from the continuous laws; all seven also hold under a seven-point equiprobable approximation. Each implementation solves the target equation with its own shock approximation and should confirm that the conditions hold under it.
 
 | Condition | Factor | Value at the calibration |
 | --- | --- | --- |
 | Finite value of autarky | $\beta\mathcal{G}^{1-\gamma}\mathbb{E}[\psi^{1-\gamma}]$ | 0.941 |
-| Absolute impatience | $\text{\textbf{Þ}}$ | 0.999 |
-| Return impatience | $\text{\textbf{Þ}}/\mathsf{R}$ | 0.961 |
-| Weak return impatience | $\wp^{1/\gamma}\text{\textbf{Þ}}/\mathsf{R}$ | 0.068 |
+| Absolute impatience | $\textbf{Þ}$ | 0.999 |
+| Return impatience | $\textbf{Þ}/\mathsf{R}$ | 0.961 |
+| Weak return impatience | $\wp^{1/\gamma}\textbf{Þ}/\mathsf{R}$ | 0.068 |
 | Finite human wealth | $\mathcal{G}/\mathsf{R}$ | 0.990 |
-| Growth impatience | $\text{\textbf{Þ}}/\mathcal{G}$ | 0.970 |
-| Strong growth impatience | $(\text{\textbf{Þ}}/\mathcal{G})\mathbb{E}[\psi^{-1}]$ | 0.980 |
+| Growth impatience | $\textbf{Þ}/\mathcal{G}$ | 0.970 |
+| Strong growth impatience | $(\textbf{Þ}/\mathcal{G})\mathbb{E}[\psi^{-1}]$ | 0.980 |
 
 The consumption function is increasing and concave. Under weak return impatience its marginal propensity to consume (MPC) tends to $\overline\kappa$ as resources tend to zero and to $\underline\kappa$ as resources tend to infinity, where
 
 $$
-\underline\kappa=\max\!\left\{0,1-\frac{\text{\textbf{Þ}}}{\mathsf{R}}\right\},\qquad
-\overline\kappa=1-\wp^{1/\gamma}\frac{\text{\textbf{Þ}}}{\mathsf{R}},\qquad
+\underline\kappa=\max\!\left\{0,1-\frac{\textbf{Þ}}{\mathsf{R}}\right\},\qquad
+\overline\kappa=1-\wp^{1/\gamma}\frac{\textbf{Þ}}{\mathsf{R}},\qquad
 \underline\kappa m\leq\mathrm{c}(m)\leq\overline\kappa m.
 $$
 
