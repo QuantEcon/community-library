@@ -1,7 +1,7 @@
 """Sensitivity of the HARK baseline to the solver's own settings and to
 the shock discretisation.  Writes checks/sensitivity.md and checks/sensitivity.json.
 
-Run from projects/HARK/buffer-stock: python -m checks.sensitivity
+Run from solutions/buffer-stock/001-hark-egm: python -m checks.sensitivity
 """
 import json
 import os

@@ -1,18 +1,24 @@
 toolkit: HARK
 toolkit_version: 0.17.1
+method: EGM
+project: Econ-ARK
 authors:
 - name: Akshay Shanker
+maintainers:
+- akshayshanker
 model: buffer-stock
 date: '2026-10-20'
 model_description_version: '0.1'
-model_description: https://github.com/QuantEcon/community-library/tree/main/models/buffer-stock
+model_description: https://github.com/QuantEcon/community-library/tree/buffer-stock/v0.1/models/buffer-stock
+ai_level: 2
+ai_used_for: drafting, editing, code
 software:
   Python: 3.12.7
   NumPy: 2.5.4
   SciPy: 1.18.1
   pandas: 3.0.6
   matplotlib: 3.11.2
-method: Infinite-horizon endogenous grid iteration; linear consumption interpolation;
+method_details: Infinite-horizon endogenous grid iteration; linear consumption interpolation;
   tolerance 1e-6.
 discretisation: 7 equiprobable values for the permanent shock and 7 positive values
   for the transitory shock, plus zero income with probability 0.005; 56 joint outcomes.

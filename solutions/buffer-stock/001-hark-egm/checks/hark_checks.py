@@ -1,6 +1,6 @@
 """Optional HARK baseline calculation for numerical checks and sensitivity.
 
-Run from projects/HARK/buffer-stock: python -m checks.hark_checks
+Run from solutions/buffer-stock/001-hark-egm: python -m checks.hark_checks
 This writes the three result CSVs to the project's results/ directory.
 The tutorial notebook is self-contained and does not import this module.
 

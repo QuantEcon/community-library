@@ -13,19 +13,23 @@ python -m pip install -r requirements.txt
 ```
 
 Restart the kernel and run all cells. The notebook solves the model, plots
-consumption and expected resource growth, and checks the solution. Its final
-cell saves optional comparison tables and software settings in the working
-directory. Run it from this directory to refresh the files below. A run
-rewrites `metadata.yml` and the three files in `results/` with the run date
-and the local package versions, so Git shows them as changed even when the
-numbers agree. Commit them only to update the record; otherwise restore them
-with `git restore metadata.yml results`.
+consumption and expected resource growth, and checks the solution. Run from
+this directory, its final cell saves the three files in `results/` and
+refreshes the run date, package versions and numerical settings in
+`metadata.yml`; run from anywhere else, it saves nothing. Git can then show
+these files as changed even when the numbers agree. Commit them only to
+update the record; otherwise restore them with `git restore metadata.yml results`.
+
+`metadata.yml` also records the authors, the version of the model description
+this solution follows and its AI disclosure, which a run leaves
+unchanged. The [contributing guide](../../../CONTRIBUTING.md) explains them.
 
 | File or directory | Purpose |
 | --- | --- |
 | `tutorial.ipynb` | HARK implementation, plots and computed results. |
 | `requirements.txt` | Notebook packages and optional test tools. |
-| `metadata.yml`, `results/` | Saved settings and optional comparison tables. |
+| `metadata.yml` | Authors, the description version followed, AI disclosure, software and numerical settings. |
+| `results/` | Optional comparison tables. |
 | `checks/` | Optional numerical tests and a sensitivity study. |
 
 The calculation uses HARK 0.17.1, seven positive values per income shock

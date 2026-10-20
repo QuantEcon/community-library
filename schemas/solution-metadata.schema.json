@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/QuantEcon/community-library/blob/main/schemas/solution-metadata.schema.json",
+  "title": "Community Library solution metadata",
+  "description": "The metadata.yml every solution in solutions/<model>/<NNN>-<toolkit>-<method>/ includes. CONTRIBUTING.md explains each field. Fields beyond these are welcome; the HARK example records its software and numerical settings.",
+  "type": "object",
+  "required": ["toolkit", "method", "authors", "maintainers", "model_description_version", "ai_level"],
+  "properties": {
+    "toolkit": {
+      "description": "The toolkit the solution uses, or the language and main libraries if it uses none, such as Julia (no toolkit).",
+      "type": "string",
+      "minLength": 1
+    },
+    "method": {
+      "description": "A short name for the solution method, such as EGM, VFI or time iteration. The library table shows it.",
+      "type": "string",
+      "minLength": 1
+    },
+    "project": {
+      "description": "The toolkit project the solution is submitted on behalf of, such as Econ-ARK. Leave it out for a solution submitted by individuals.",
+      "type": "string",
+      "minLength": 1
+    },
+    "authors": {
+      "description": "The solution's authors.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "maintainers": {
+      "description": "The GitHub usernames of the people who maintain the solution and approve changes to it.",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "description": "A GitHub username, such as akshayshanker, without the @.",
+        "type": "string",
+        "pattern": "^[A-Za-z0-9](?:[A-Za-z0-9-]{0,38})$"
+      }
+    },
+    "model": {
+      "description": "The model's directory name, as in models/<model>/ and solutions/<model>/.",
+      "type": "string"
+    },
+    "model_description_version": {
+      "description": "The version of the model description this solution follows, MAJOR.MINOR.",
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    },
+    "model_description": {
+      "description": "A link to that version of the model description, such as its tag.",
+      "type": "string"
+    },
+    "ai_level": {
+      "description": "How the text and code were produced: 0 No AI, 1 AI-edited, 2 AI-assisted, 3 AI-generated. Report the highest category that applies to any substantial part.",
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 3,
+      "x-categories": [
+        { "level": 0, "word": "No AI", "summary": "No AI was used." },
+        { "level": 1, "word": "AI-edited", "summary": "People wrote it; AI suggested edits." },
+        { "level": 2, "word": "AI-assisted", "summary": "AI drafted some or most of it; people edited it throughout." },
+        { "level": 3, "word": "AI-generated", "summary": "AI drafted it; people edited it lightly." }
+      ]
+    },
+    "ai_used_for": {
+      "description": "What AI was used for, comma-separated, from: drafting, editing, code, derivation checks, literature, figures. Required when ai_level is above 0.",
+      "type": "string",
+      "pattern": "^(drafting|editing|code|derivation checks|literature|figures)(, (drafting|editing|code|derivation checks|literature|figures))*$"
+    },
+    "verified_by": {
+      "description": "The person who read the whole solution end to end and checked it against the model description. Leave the three verified_ fields out until someone has.",
+      "type": "string",
+      "minLength": 1
+    },
+    "verified_date": {
+      "description": "The date of that verification, YYYY-MM-DD.",
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "verified_version": {
+      "description": "The model description version the solution followed when it was verified. When it differs from model_description_version, the solution shows as not yet verified.",
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+$"
+    }
+  },
+  "dependentRequired": {
+    "verified_by": ["verified_date", "verified_version"],
+    "verified_date": ["verified_by", "verified_version"],
+    "verified_version": ["verified_by", "verified_date"]
+  },
+  "if": {
+    "properties": { "ai_level": { "minimum": 1 } },
+    "required": ["ai_level"]
+  },
+  "then": { "required": ["ai_used_for"] }
+}

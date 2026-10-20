@@ -1,0 +1,5 @@
+# For tools/build_pages.py and tools/check_metadata.py
+markdown-it-py==3.0.0
+mdit-py-plugins==0.4.2
+PyYAML==6.0.2
+jsonschema==4.23.0

@@ -1,8 +1,9 @@
 # Publishes docs/ to GitHub Pages.
 #
-# The site is hand-written static HTML — there is no build step, so the job is
-# entirely checks: the things that break silently when the page is edited are
-# asserted here rather than eyeballed in a browser.
+# The landing page is hand-written static HTML. The one build step renders each
+# model description into a page under docs/models/; the rest of the job is
+# checks: the things that break silently when a page is edited are asserted
+# here rather than eyeballed in a browser.
 #
 # Pages must be set to build from GitHub Actions for this to take effect:
 # Settings -> Pages -> Build and deployment -> Source: GitHub Actions.
@@ -24,16 +25,37 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the site tools
+        run: python -m pip install -r tools/requirements.txt
+
+      # Each model description becomes docs/models/<model>/index.html, with its
+      # PDF beside it. The pages are built here rather than committed.
+      - name: Build the model description pages
+        run: python tools/build_pages.py
+
+      # Versions, AI disclosure and verification: the description front matter,
+      # each implementation's metadata.yml and the library table must agree.
+      - name: Check versions and disclosure records
+        run: python tools/check_metadata.py
+
       - name: Check local references resolve
         shell: bash
         run: |
           set -euo pipefail
           cd docs
           missing=0
-          for f in *.html; do
-            for ref in $(grep -oE '(href|src)="[A-Za-z0-9._/-]+\.(html|css|js|png|svg|pdf|ipynb)"' "$f" \
+          for f in $(find . -name '*.html' | sort); do
+            dir=$(dirname "$f")
+            # A reference ending in / is a directory, served by its index.html.
+            for ref in $(grep -oE '(href|src)="[A-Za-z0-9._/-]+(\.(html|css|js|png|svg|pdf|ipynb)|/)"' "$f" \
                          | sed -E 's/^(href|src)="//;s/"$//' | sort -u); do
-              [ -e "$ref" ] || { echo "::error file=docs/$f::references missing $ref"; missing=1; }
+              target="$dir/$ref"
+              case "$ref" in */) target="${target}index.html" ;; esac
+              [ -e "$target" ] || { echo "::error file=docs/${f#./}::references missing $ref"; missing=1; }
             done
           done
           [ "$missing" -eq 0 ] || exit 1
@@ -47,14 +69,14 @@ jobs:
           set -euo pipefail
           cd docs
           missing=0
-          for f in *.html; do
+          for f in $(find . -name '*.html' | sort); do
             # A page may have no in-page links (the talk's slides have none):
             # grep exits 1 when nothing matches, which pipefail would turn
             # into a failed step, so an empty match is allowed explicitly.
             { grep -oE 'id="[^"]+"'    "$f" || true; } | sed 's/id="//;s/"//'    | sort -u > /tmp/ids
             { grep -oE 'href="#[^"]+"' "$f" || true; } | sed 's/href="#//;s/"//' | sort -u > /tmp/targets
             for t in $(comm -13 /tmp/ids /tmp/targets); do
-              echo "::error file=docs/$f::anchor #$t has no matching id"
+              echo "::error file=docs/${f#./}::anchor #$t has no matching id"
               missing=1
             done
           done
