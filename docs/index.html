@@ -167,12 +167,12 @@
             <h3>Buffer-stock saving</h3>
             <p class="model-class">Consumption–saving under income risk</p>
           </div>
-          <div class="slots" aria-label="Three implementation slots: HARK, in review, and two open">
-            <a class="slot is-filled" href="https://github.com/QuantEcon/community-library/pull/5" title="HARK's solution, in review in pull request #5">HARK · in review</a>
+          <div class="slots" aria-label="Three implementation slots: HARK, and two open">
+            <a class="slot is-filled" href="https://github.com/QuantEcon/community-library/blob/main/projects/HARK/buffer-stock/tutorial.ipynb" title="HARK's buffer-stock solution">HARK</a>
             <span class="slot">open</span>
             <span class="slot">open</span>
           </div>
-          <div class="model-template">description ⟨draft⟩</div>
+          <div class="model-template"><a href="https://github.com/QuantEcon/community-library/blob/main/models/buffer-stock/model-description.pdf">description ⟨draft⟩</a></div>
         </div>
 
         <div class="model">
@@ -232,7 +232,7 @@
           <span class="go">propose a model ↗</span>
         </a>
       </div>
-      <p class="footnote">Open slots fill as projects join — one per participating toolkit. A model earns its place in the set by being solved; each row's description pins what has to line up.</p>
+      <p class="footnote">Each model description states the shared assumptions and calibration. Each project chooses how to present its implementation.</p>
     </section>
 
     <section class="section" id="how" data-spy="how">
@@ -245,7 +245,7 @@
         <div class="card">
           <span class="eyebrow">Contribution 1</span>
           <h3>Baselines from the shared set</h3>
-          <p>Each project solves the baseline models it has chosen — same calibration, same reported objects — so results line up side by side and divergences are visible rather than buried.</p>
+          <p>Each project solves its chosen baseline models at the shared calibration, reports the results the model description lists, and explains its numerical approach in its own words.</p>
         </div>
         <div class="card is-secondary">
           <span class="eyebrow">Contribution 2</span>
@@ -253,63 +253,62 @@
           <p>A tutorial of the project's own choosing, on the problems its toolkit was built for. A common baseline alone would flatten the differences that matter; this is where each project argues its own case.</p>
         </div>
       </div>
-      <p class="aside-note">Both are published in the toolkit's own notation — no house dialect — with per-model metadata, honest notes on tradeoffs, and CI that runs each implementation and flags breakage.</p>
+      <p class="aside-note">Both tutorials use the toolkit's own notation and include the authors, software versions and numerical settings needed to reproduce the results. Authors explain their method and any differences from the shared model.</p>
     </section>
 
     <section class="section" id="descriptions" data-spy="descriptions">
       <div class="section-head">
         <span class="n">04</span>
-        <h2>Model descriptions</h2>
+        <h2>Model descriptions and implementations</h2>
       </div>
-      <p class="section-lede">Each model in the set gets a model description: a precise statement of what the model <em class="term">is</em> — enough that results line up across toolkits — without prescribing how it should be solved.</p>
+      <p class="section-lede">Shared model descriptions belong in <code>models/&lt;model&gt;/</code>, with theory, calibration and numerical solution. Runnable implementations belong in <code>projects/&lt;toolkit&gt;/&lt;model&gt;/</code>; each project chooses its prose, method and format, such as a notebook or MyST document. Read the <a href="https://github.com/QuantEcon/community-library/blob/main/models/buffer-stock/model-description.md">buffer stock description</a> and run the <a href="https://github.com/QuantEcon/community-library/blob/main/projects/HARK/buffer-stock/tutorial.ipynb">HARK example</a>.</p>
 
       <div class="steps">
         <div class="step">
           <span class="n">01</span>
-          <h3>The set is published</h3>
-          <p>Each model is anchored on a published paper with its own calibration.</p>
+          <h3>Read the model</h3>
+          <p>The model description states the equations, common calibration and numerical solution.</p>
         </div>
         <div class="step">
           <span class="n">02</span>
-          <h3>Projects choose models</h3>
-          <p>One is enough, several are welcome; the choice is per model, with no obligation beyond it.</p>
+          <h3>Write a runnable implementation</h3>
+          <p>Keep the model and calibration fixed while choosing the method, prose and format.</p>
         </div>
         <div class="step">
           <span class="n">03</span>
-          <h3>A description each</h3>
-          <p>Published as a page and a PDF: the model, its calibration, and what each solution reports.</p>
+          <h3>Report and check the results</h3>
+          <p>Report the results the model description lists, in any format, and explain the numerical checks used to assess the solution. Optional comparison tables are provided with the HARK example.</p>
         </div>
         <div class="step">
           <span class="n">04</span>
-          <h3>Implementations line up</h3>
-          <p>Each project writes its solution in its own toolkit and format — and that notebook is its tutorial.</p>
+          <h3>Submit your tutorial</h3>
+          <p>Add your runnable files and instructions under your toolkit and model in <code>projects/</code>.</p>
         </div>
       </div>
 
       <div class="panels">
         <div class="panel">
-          <span class="eyebrow">The description pins</span>
+          <span class="eyebrow">What all submissions share</span>
           <ul>
-            <li>Functional forms, timing conventions, normalizations</li>
-            <li>Parameter values, and where they come from</li>
-            <li>Target moments of the exogenous processes</li>
-            <li>Which objects are reported, in what units</li>
-            <li>The tolerance at which two results count as agreeing</li>
+            <li>The model specifies functional forms, timing and normalisation.</li>
+            <li>The calibration states parameter values and their sources.</li>
+            <li>The income specification states the distribution and required moments.</li>
+            <li>The model description lists the results each implementation reports.</li>
           </ul>
         </div>
         <div class="panel is-secondary">
-          <span class="eyebrow">The description leaves free</span>
+          <span class="eyebrow">What each author chooses</span>
           <ul>
-            <li>Solution method and algorithm</li>
-            <li>Grids, discretization, basis functions</li>
-            <li>How the exogenous process is discretized</li>
-            <li>Language, code structure, API</li>
-            <li>Everything the toolkit exists to do differently</li>
+            <li>Choose the solution method and algorithm.</li>
+            <li>Choose the grids or other function approximations.</li>
+            <li>Choose how to approximate the shock distributions.</li>
+            <li>Use the toolkit's language and notation.</li>
+            <li>Choose the prose and runnable format.</li>
           </ul>
         </div>
       </div>
 
-      <p class="section-note">Divergence beyond tolerance is documented and attributed to method — a result of the exercise, not a failure of it. A project that cannot match one element of a description contributes with a documented deviation rather than dropping out. <strong class="flag">Phase 1 publishes no timings and no ranking of toolkits.</strong></p>
+      <p class="section-note">Every implementation reports the results the model description lists. The submission guide offers optional formats for result tables and metadata, together with draft comparison tolerances; projects can use them or present the results in another form. Explain any part of the stated model that the toolkit cannot represent. <strong class="flag">Phase 1 publishes no timings and no ranking of toolkits.</strong></p>
     </section>
 
     <section class="section" id="ask" data-spy="ask">
@@ -322,7 +321,7 @@
           <h3>What each project provides</h3>
           <ul class="ask-list">
             <li>Agreement in principle to take part.</li>
-            <li>By <strong class="flag">end of 2026</strong>, at least one baseline model solved against its description, so results line up side by side.</li>
+            <li>By <strong class="flag">end of 2026</strong>, at least one baseline model solved using the shared description and calibration, so results line up side by side.</li>
             <li>An author's-choice showcase tutorial highlighting where the toolkit is strongest.</li>
             <li>Both contributions authored and maintained by the project — CC-BY for text, an OSI-approved licence for code.</li>
           </ul>
@@ -426,20 +425,21 @@
         <span class="n">09</span>
         <h2>Contribute</h2>
       </div>
-      <p class="section-lede">The library is an open-source repository and takes pull requests from anyone, member or not; changes to a project's implementation merge at that project's discretion.</p>
+      <p class="section-lede">Start with the <a href="https://github.com/QuantEcon/community-library/blob/main/models/buffer-stock/README.md#what-to-submit">buffer stock submission guide</a>. Keep the model and calibration fixed, submit a runnable implementation in your chosen format, and report the results the model description lists. Identify the authors and document the numerical settings and commands needed to reproduce the results; no particular metadata file or output format is required.</p>
+      <p>Anyone can submit a pull request. Add your files under <code>projects/&lt;toolkit&gt;/&lt;model&gt;/</code>; the <a href="https://github.com/QuantEcon/community-library/tree/main/projects/HARK/buffer-stock">HARK buffer-stock example</a> uses <code>projects/HARK/buffer-stock/</code>. Changes to an existing project's tutorial remain subject to that project's approval.</p>
 
       <a class="repo-link" href="https://github.com/QuantEcon/community-library">
         <span class="about">
           <span class="name">QuantEcon/community-library</span>
-          <span class="desc">Hosted and published by QuantEcon · one model per directory: implementation, tutorial text and metadata together</span>
+          <span class="desc">Hosted and published by QuantEcon · shared model descriptions in models/, each project's implementations in projects/</span>
         </span>
         <span class="go">clone ↗</span>
       </a>
 
       <div class="meta-grid">
         <div>
-          <span class="eyebrow">Model descriptions</span>
-          <p>Published with the library — a page and a PDF per baseline model, versioned and credited to their authors.</p>
+          <span class="eyebrow">Model and example</span>
+          <p>Read the <a href="https://github.com/QuantEcon/community-library/blob/main/models/buffer-stock/model-description.md">buffer stock description</a> or its <a href="https://github.com/QuantEcon/community-library/blob/main/models/buffer-stock/model-description.pdf">PDF</a>, then open the runnable <a href="https://github.com/QuantEcon/community-library/blob/main/projects/HARK/buffer-stock/tutorial.ipynb">HARK notebook</a>.</p>
         </div>
         <div>
           <span class="eyebrow">Licensing</span>
