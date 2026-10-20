@@ -906,7 +906,14 @@ a.slot.is-filled:hover { background: var(--qe-blue); color: #fff; text-decoratio
 .ai-level[data-level="3"] i:nth-child(-n+3),
 .ai-level[data-level="4"] i { background: var(--ai-ink); }
 
-.slot .ai-level { margin-left: 6px; }
+/* In a slot the segments carry their own "AI" label, in the bar's colour. */
+.slot .ai-level { margin-left: 10px; align-items: center; }
+.slot .ai-level::before {
+  content: "AI";
+  margin-right: 3px;
+  color: var(--ai-ink);
+  letter-spacing: .02em;
+}
 .slot .ai-level i { width: 7px; height: 7px; }
 a.slot.is-filled:hover .ai-level { --ai-ink: #fff; }
 /* A verified implementation's slot ends in a check mark. */
