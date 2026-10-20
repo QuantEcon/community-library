@@ -447,7 +447,6 @@ a:hover { color: var(--qe-blue-dark); text-decoration: underline; }
 /* 02 · The library --------------------------------------------------------- */
 
 .models {
-  container-type: inline-size;
   margin-top: 34px;
   border: 1px solid var(--line);
   border-radius: 5px;
@@ -467,7 +466,7 @@ a:hover { color: var(--qe-blue-dark); text-decoration: underline; }
 
 .model {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 28px;
   flex-wrap: wrap;
   padding: 22px 26px;
@@ -486,14 +485,14 @@ a:hover { color: var(--qe-blue-dark); text-decoration: underline; }
 }
 .model-class { margin-top: 4px; font-size: .87rem; color: var(--dim); }
 
-/* Slots share the row and wrap among themselves as solutions arrive,
-   rather than pushing the description column onto a line of its own. */
+/* One slot per line, filled ones first and open ones below, in a column of
+   equal-width boxes that lines up from row to row. On a narrow table the
+   column moves under the model's name. */
 .slots {
-  flex: 1 1 260px;
-  min-width: 0;
+  flex: 0 0 auto;
+  min-width: 260px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+  flex-direction: column;
   gap: 8px;
 }
 .slot {
@@ -1068,13 +1067,6 @@ a.slot.is-filled:hover .ai-level { --ai-ink: #fff; }
   .cta { padding: 56px 0; }
   .cta .wrap { gap: 32px; }
   .cta-actions { flex: 1 1 100%; }
-}
-
-/* Below this table width the slots move under the model's name (300px for the
-   name, 260px for the slots, the gap and the row's padding), so they line up
-   with it. It is the table's width, not the window's, that decides. */
-@container (max-width: 639px) {
-  .slots { justify-content: flex-start; }
 }
 
 @media (max-width: 480px) {
