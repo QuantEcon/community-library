@@ -89,8 +89,16 @@ box at the top right. To release a new version:
    saying what changed and whether solutions need to re-run.
 3. Rebuild the PDF from `models/<model>/` with `myst build --pdf`.
 4. After the pull request merges, tag the merge commit `<model>/v<version>`,
-   such as `buffer-stock/v0.1`, and publish a GitHub release for the tag with
-   the PDF attached.
+   such as `buffer-stock/v0.1`, and publish a GitHub release for the tag:
+   - attach the PDF taken from the merge commit, so the release carries
+     exactly the tagged PDF;
+   - mark a draft (0.x) as a pre-release;
+   - in the notes, say what the version contains (its changelog entry), link
+     the description's web page, give its status, AI category and
+     verification, name the solutions that follow it, and say whether
+     solutions need to re-run.
+
+   [AGENTS.md](AGENTS.md) has the commands.
 
 A solution states the version it follows in `model_description_version` and
 can link to that version's tag in `model_description`.
