@@ -103,10 +103,13 @@ model: "buffer-stock"
 date: "<YYYY-MM-DD>"
 model_description_version: "0.1"
 model_description: "https://github.com/QuantEcon/community-library/tree/main/models/buffer-stock"
-software: "<language version and package versions>"
+software:
+  "<language>": "<version>"
+  "<package>": "<version>"
 method: "<solution method and convergence criterion>"
 discretisation: "<shock approximation, number of points, and zero-income treatment>"
 grid: "<grid variables, bounds, number of points, and spacing>"
+target_mpc: "<how the MPC at the target is computed>"
 ```
 
 Describe settings in words if your method has no grid or does not discretise
