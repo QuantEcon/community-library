@@ -115,6 +115,7 @@ def test_conditions_hold_at_baseline_and_agree_with_hark(params, agent, atoms):
     for name in ["FVAC", "AIC", "RIC", "WRIC", "GIC", "GICMod", "FHWC"]:
         assert checks[name] is True, name
     hark = agent.conditions
+    assert hark["FVAC"] == checks["FVAC"]
     assert hark["GICRaw"] == checks["GIC"]
     assert hark["GICMod"] == checks["GICMod"]
     assert hark["RIC"] == checks["RIC"]
@@ -201,6 +202,8 @@ def test_mpc_at_target_between_limits(params, cfunc, atoms):
     kappa_min, kappa_max = rm.limiting_mpcs(params)
     kappa_hat = rm.mpc_central_difference(cfunc, m_hat)
     assert kappa_min < kappa_hat < kappa_max
+    # The reported MPC uses step 0.01 and must lie between the limits too.
+    assert kappa_min < rm.mpc_central_difference(cfunc, m_hat, 1e-2) < kappa_max
     # The interpolant is piecewise linear, so its derivative is the slope of
     # the segment containing m_hat; a central difference with step 1e-4 can
     # straddle one knot, and the segment slopes change by less than 1e-3
@@ -255,9 +258,29 @@ def test_hark_checks_module_writes_three_csvs_in_project(tmp_path):
     assert {path.name for path in result_dir.iterdir()} == {
         "cfunc.csv", "scalars.csv", "conditions.csv",
     }
+    assert_results_match_record(result_dir)
+
+
+def test_committed_results_match_record():
+    """The notebook writes results/; the committed files are the reported numbers."""
+    assert_results_match_record(os.path.join(PROJECT_DIR, "results"))
+
+
+def test_committed_metadata_credits_the_authors():
+    import yaml
+
+    with open(os.path.join(PROJECT_DIR, "metadata.yml")) as f:
+        metadata = yaml.safe_load(f)
+    assert metadata["model"] == "buffer-stock"
+    assert metadata["toolkit_version"] == "0.17.1"
+    assert metadata["authors"] and all(author.get("name") for author in metadata["authors"])
+
+
+def assert_results_match_record(result_dir):
+    """Check the three result CSVs against the preserved calculation."""
     with open(os.path.join(HERE, "expected.json")) as f:
         stored = json.load(f)
-    with open(result_dir / "cfunc.csv") as f:
+    with open(os.path.join(result_dir, "cfunc.csv")) as f:
         reader = csv.DictReader(f)
         assert reader.fieldnames == ["m", "c"]
         rows = list(reader)
@@ -265,7 +288,7 @@ def test_hark_checks_module_writes_three_csvs_in_project(tmp_path):
     np.testing.assert_allclose(
         [float(row["c"]) for row in rows], stored["c_on_grid"], rtol=0, atol=1e-10,
     )
-    with open(result_dir / "scalars.csv") as f:
+    with open(os.path.join(result_dir, "scalars.csv")) as f:
         reader = csv.DictReader(f)
         assert reader.fieldnames == ["name", "value"]
         rows = list(reader)
@@ -280,7 +303,7 @@ def test_hark_checks_module_writes_three_csvs_in_project(tmp_path):
     assert abs(scalars["E_psi_inv"] - stored["E_psi_inv_discretised"]) < 1e-12
     # At baseline rho = 2, the two required discrete moments coincide.
     assert abs(scalars["E_psi_1mgamma"] - scalars["E_psi_inv"]) < 1e-12
-    with open(result_dir / "conditions.csv") as f:
+    with open(os.path.join(result_dir, "conditions.csv")) as f:
         reader = csv.DictReader(f)
         assert reader.fieldnames == ["name", "holds"]
         rows = list(reader)
