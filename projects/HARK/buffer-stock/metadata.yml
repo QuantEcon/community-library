@@ -14,7 +14,7 @@ software:
   matplotlib: 3.11.2
 method: Infinite-horizon endogenous grid iteration; linear consumption interpolation;
   tolerance 1e-6.
-discretisation: Seven equiprobable positive values per income shock, plus zero income
-  with probability 0.005; 56 joint outcomes.
+discretisation: 7 equiprobable values for the permanent shock and 7 positive values
+  for the transitory shock, plus zero income with probability 0.005; 56 joint outcomes.
 grid: 960 asset points from 0.001 to 20, HARK nesting factor 3.
 target_mpc: Central difference with step 0.01.
