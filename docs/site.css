@@ -447,6 +447,7 @@ a:hover { color: var(--qe-blue-dark); text-decoration: underline; }
 /* 02 · The library --------------------------------------------------------- */
 
 .models {
+  container-type: inline-size;
   margin-top: 34px;
   border: 1px solid var(--line);
   border-radius: 5px;
@@ -488,7 +489,7 @@ a:hover { color: var(--qe-blue-dark); text-decoration: underline; }
 /* Slots share the row and wrap among themselves as solutions arrive,
    rather than pushing the description column onto a line of its own. */
 .slots {
-  flex: 1 1 220px;
+  flex: 1 1 260px;
   min-width: 0;
   display: flex;
   flex-wrap: wrap;
@@ -496,6 +497,7 @@ a:hover { color: var(--qe-blue-dark); text-decoration: underline; }
   gap: 8px;
 }
 .slot {
+  white-space: nowrap;
   border: 1px dashed #c9c9c9;
   border-radius: 4px;
   padding: 5px 11px;
@@ -514,13 +516,22 @@ a:hover { color: var(--qe-blue-dark); text-decoration: underline; }
 a.slot.is-filled:visited { color: var(--qe-blue); }
 a.slot.is-filled:hover { background: var(--qe-blue); color: #fff; text-decoration: none; }
 
-.model-template {
-  flex: 0 0 190px;
-  text-align: right;
+/* Where to get each model's description: a button to its page and the PDF
+   beside it, or a note while the description is planned. */
+.model-description {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  font-size: .87rem;
+}
+.model-description.is-planned {
   font-family: var(--mono);
   font-size: .72rem;
   color: var(--dim);
 }
+.btn-small { padding: 7px 14px; font-size: .84rem; }
 
 .models-cta {
   display: flex;
@@ -1053,12 +1064,17 @@ a.slot.is-filled:hover .ai-level { --ai-ink: #fff; }
   .fact + .fact { border-top: 1px solid #eaeaea; }
 
   .model { gap: 16px; }
-  .slots { justify-content: flex-start; }
-  .model-template { flex: 0 0 auto; text-align: left; }
 
   .cta { padding: 56px 0; }
   .cta .wrap { gap: 32px; }
   .cta-actions { flex: 1 1 100%; }
+}
+
+/* Below this table width the slots move under the model's name (300px for the
+   name, 260px for the slots, the gap and the row's padding), so they line up
+   with it. It is the table's width, not the window's, that decides. */
+@container (max-width: 639px) {
+  .slots { justify-content: flex-start; }
 }
 
 @media (max-width: 480px) {
