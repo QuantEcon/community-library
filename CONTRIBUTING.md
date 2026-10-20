@@ -142,5 +142,8 @@ means less trustworthy, which is the judgement these records avoid.
 In the version box, verification is a small label with a solid blue border
 once a person has verified the current version and a dashed grey one until
 then, matching the filled and open slots of the library table; the label's
-words say which. In the library table, a verified solution's slot ends in a
-check mark, and its tooltip gives the verification either way.
+words say which. In the library table, a verified solution's slot, and a
+verified description's button, carry a "✓ Verified" badge. A maintainer adds
+it by setting the element's `data-verified` to `"true"` and, for a slot,
+removing its "not yet verified" text; the metadata check reports any element
+that disagrees with the records.

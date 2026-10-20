@@ -98,7 +98,11 @@ def check_descriptions(problems, validator):
                 f"{changelog.relative_to(ROOT)}: the newest entry is for {entries[0][0]} ({entries[0][1]}), "
                 f"but {where} is version {version} ({plain(front['date'])})"
             )
-        descriptions[path.parent.name] = {"version": version, "all": {entry[0] for entry in entries}}
+        descriptions[path.parent.name] = {
+            "version": version,
+            "all": {entry[0] for entry in entries},
+            "verified": verified(options, version),
+        }
     return descriptions
 
 
@@ -189,9 +193,16 @@ def check_site(problems, descriptions, solutions):
         attrs, text = element["attrs"], " ".join(element["text"].split())
         if "data-model-description" in attrs:
             model = attrs["data-model-description"]
-            version = descriptions.get(model, {}).get("version")
+            description = descriptions.get(model, {})
+            version = description.get("version")
             if attrs.get("data-version") != version or f"v{version}" not in text:
                 problems.append(f"docs/index.html: the {model} description should show v{version}, as its front matter says")
+            wanted = "true" if description.get("verified") else "false"
+            if attrs.get("data-verified") != wanted:
+                problems.append(
+                    f"docs/index.html: the {model} description button has data-verified "
+                    f"{attrs.get('data-verified')!r}; its front matter gives {wanted!r}"
+                )
             continue
         where = attrs["data-solution"]
         record = solutions.get(where)
@@ -210,6 +221,11 @@ def check_site(problems, descriptions, solutions):
         for name, (found, wanted) in expected.items():
             if found != wanted:
                 problems.append(f"docs/index.html: the slot for {where} has {name} {found!r}; its metadata.yml gives {wanted!r}")
+        # The Verified badge is drawn from data-verified; until then the slot
+        # tells screen readers it is not yet verified.
+        if ("not yet verified" in text) == verified(record, version):
+            state = "remove its 'not yet verified' text" if verified(record, version) else "add ', not yet verified' for screen readers"
+            problems.append(f"docs/index.html: the slot for {where} should {state}, as its metadata.yml says")
     for where in sorted(set(solutions) - shown):
         problems.append(f"docs/index.html: add a slot for {where} to the library table")
 

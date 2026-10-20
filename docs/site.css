@@ -916,8 +916,26 @@ a.slot.is-filled:hover { background: var(--qe-blue); color: #fff; text-decoratio
 }
 .slot .ai-level i { width: 7px; height: 7px; }
 a.slot.is-filled:hover .ai-level { --ai-ink: #fff; }
-/* A verified implementation's slot ends in a check mark. */
-.slot-check { margin-left: 5px; }
+/* Once a person has verified a solution or a description against its current
+   version, it carries a "Verified" badge: the slot's or the button's own
+   colours, inverted. tools/check_metadata.py keeps data-verified in step with
+   the records. */
+.slot[data-verified="true"]::after,
+[data-model-description][data-verified="true"]::after {
+  content: "✓ Verified";
+  display: inline-block;
+  margin-left: 10px;
+  padding: 1px 7px;
+  border-radius: 3px;
+  font-family: var(--sans);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .02em;
+  vertical-align: 1px;
+}
+.slot[data-verified="true"]::after { background: var(--qe-blue); color: #fff; }
+a.slot[data-verified="true"]:hover::after { background: #fff; color: var(--qe-blue); }
+[data-model-description][data-verified="true"]::after { background: #fff; color: var(--qe-blue); }
 
 /* Read by screen readers, not shown. */
 .sr-only {
