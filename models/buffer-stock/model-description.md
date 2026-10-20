@@ -108,6 +108,8 @@ where $\textbf{Þ}$ is the absolute patience factor, the growth factor of consum
 | Growth impatience | $\textbf{Þ}/\mathcal{G}$ | 0.970 |
 | Strong growth impatience | $(\textbf{Þ}/\mathcal{G})\mathbb{E}[\psi^{-1}]$ | 0.980 |
 
+For weak return impatience the paper's calibration table prints $\wp^{1/\gamma}\textbf{Þ}\approx0.071$; the factor above also divides by $\mathsf{R}$.
+
 The consumption function is increasing and concave. Under weak return impatience its marginal propensity to consume (MPC) tends to $\overline\kappa$ as resources tend to zero and to $\underline\kappa$ as resources tend to infinity, where
 
 $$
