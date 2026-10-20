@@ -17,6 +17,7 @@ root:
 """
 import datetime
 import html
+import json
 import shutil
 import string
 from pathlib import Path
@@ -31,14 +32,13 @@ ROOT = Path(__file__).resolve().parent.parent
 REPOSITORY = "https://github.com/QuantEcon/community-library"
 SITE = "https://quantecon.github.io/community-library"
 
-# The labels for each AI-assistance level. CONTRIBUTING.md defines them, and
-# templates/plain_latex_wide/template.tex prints the same labels in the PDF.
-AI_LEVELS = {
-    0: "No AI",
-    1: "AI-assisted editing",
-    2: "AI-assisted drafting",
-    3: "AI-drafted, human-directed",
-    4: "AI-drafted, light human editing",
+# The word and one-line summary for each AI-assistance category, from the
+# schema. CONTRIBUTING.md defines the categories, and
+# templates/plain_latex_wide/template.tex prints the same words in the PDF.
+SCHEMA = ROOT / "schemas" / "solution-metadata.schema.json"
+AI_CATEGORIES = {
+    category["level"]: category
+    for category in json.loads(SCHEMA.read_text(encoding="utf-8"))["properties"]["ai_level"]["x-categories"]
 }
 
 
@@ -69,15 +69,18 @@ def long_date(value):
 
 
 def status_box(options, date):
-    """The version box: version, AI level and verification, as in the PDF."""
+    """The version box: version, AI category and verification, as in the PDF."""
     version = str(options["version"])
     status = "Released" if options["status"] == "released" else "Draft"
-    level = int(options["ai_level"])
-    segments = "".join("<i></i>" for _ in range(4))
+    category = AI_CATEGORIES[int(options["ai_level"])]
+    level = category["level"]
+    # The category's position between people and AI, then its word and summary.
+    stops = "".join('<i class="at"></i>' if stop == level else "<i></i>" for stop in range(len(AI_CATEGORIES)))
     lines = [
         f'<p class="doc-version"><strong>Version {version}</strong> · {status} · {long_date(date)}</p>',
-        f'<p class="doc-ai"><span class="ai-level" data-level="{level}" aria-hidden="true">{segments}</span>'
-        f" <span>AI {level}/4 · {AI_LEVELS[level]}</span></p>",
+        f'<p class="doc-ai"><span class="ai-position" aria-hidden="true">Human <span class="track">{stops}</span> AI</span>'
+        f' <span class="ai-chip" data-level="{level}">{category["word"]}</span></p>',
+        f'<p class="doc-ai-summary">{category["summary"]}</p>',
     ]
     if level > 0:
         lines.append(f'<p class="doc-ai-uses">Used for: {html.escape(options["ai_used_for"])}</p>')

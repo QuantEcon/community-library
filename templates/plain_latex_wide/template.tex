@@ -49,16 +49,22 @@
 [# if options.version #]
 % Version box at the top right of the first page: the version, status and
 % date, the AI-assistance level and the human-verification record, from the
-% front matter's options. CONTRIBUTING.md defines the levels; the web page
+% front matter's options. CONTRIBUTING.md defines the categories; the web page
 % that tools/build_pages.py builds shows the same box.
 \usepackage{eso-pic}
 \definecolor{qeblue}{HTML}{0072BC}
 \definecolor{aiink}{HTML}{5A5A5A}
 \definecolor{boxline}{HTML}{CCCCCC}
-% One neutral colour for the level: it describes process, not quality.
-\newcommand{\aion}{\textcolor{aiink}{\rule{5pt}{5pt}}\hspace{1.2pt}}
-\newcommand{\aioff}{\textcolor{aiink}{\rlap{\rule{5pt}{0.5pt}}\rlap{\rule[4.5pt]{5pt}{0.5pt}}%
-  \rlap{\rule{0.5pt}{5pt}}\hspace{4.5pt}\rule{0.5pt}{5pt}}\hspace{1.2pt}}
+% The AI-assistance category: its word in a neutral outlined chip, after a
+% marker on a line from Human to AI at the category's position (0 to 3). One
+% neutral colour: the category describes process, not quality.
+\newtcbox{\aichip}{on line, colframe=black!35, colback=white, coltext=aiink,
+  boxrule=0.5pt, arc=1pt, boxsep=0pt, left=2.5pt, right=2.5pt, top=1pt, bottom=1pt,
+  fontupper=\bfseries}
+\newcommand{\aiposition}[1]{\textcolor{aiink}{Human}~\tikz[baseline=-0.6ex]{%
+  \draw[black!30, line width=0.5pt] (0,0) -- (1.05cm,0);
+  \foreach \x in {0,1,2,3} {\fill[black!30] (\x*0.35cm,0) circle (0.7pt);}
+  \fill[aiink] (#1*0.35cm,0) circle (1.7pt);}~\textcolor{aiink}{AI}}
 % Solid blue once a person has verified this version, dashed grey until then.
 \newtcbox{\verifiedbox}{on line, colframe=qeblue, colback=white, coltext=qeblue,
   boxrule=0.5pt, arc=1pt, boxsep=0pt, left=3pt, right=3pt, top=1.5pt, bottom=1.5pt}
@@ -66,7 +72,7 @@
   borderline={0.5pt}{0pt}{black!30, dashed}, arc=1pt, boxsep=0pt,
   left=3pt, right=3pt, top=1.5pt, bottom=1.5pt}
 % The title starts below the box rather than beside it.
-\setlength{\droptitle}{-3em}
+\setlength{\droptitle}{-1.25em}
 [# endif #]
 
 [-IMPORTS-]
@@ -108,7 +114,9 @@
     \textbf{Version [-options.version-]} \textperiodcentered{} [# if options.status == "released" #]Released[# else #]Draft[# endif #][# if doc.date #] \textperiodcentered{} [-doc.date.day-]~\ifcase [-doc.date.month-] \or January\or February\or March\or
       April\or May\or June\or July\or August\or September\or October\or
       November\or December\fi~[-doc.date.year-][# endif #]\par
-    [# for i in range(4) #][# if i < options.ai_level #]\aion[# else #]\aioff[# endif #][# endfor #]~AI [-options.ai_level-]/4 \textperiodcentered{} [# if options.ai_level == 0 #]No AI[# elif options.ai_level == 1 #]AI-assisted editing[# elif options.ai_level == 2 #]AI-assisted drafting[# elif options.ai_level == 3 #]AI-drafted, human-directed[# else #]AI-drafted, light human editing[# endif #]\par
+    % The words and summaries repeat schemas/solution-metadata.schema.json.
+    \aiposition{[-options.ai_level-]}\hspace{6pt}[# if options.ai_level == 0 #]\aichip{No AI}[# elif options.ai_level == 1 #]\aichip{AI-edited}[# elif options.ai_level == 2 #]\aichip{AI-assisted}[# else #]\aichip{AI-generated}[# endif #]\par
+    [# if options.ai_level == 0 #]No AI was used.[# elif options.ai_level == 1 #]People wrote it; AI suggested edits.[# elif options.ai_level == 2 #]AI drafted some or most of it; people edited it throughout.[# else #]AI drafted it; people edited it lightly.[# endif #]\par
     [# if options.ai_level > 0 #]Used for: [-options.ai_used_for-]\par[# endif #]
     [# if options.verified_by and options.verified_version == options.version #]\verifiedbox{Human verified \textperiodcentered{} [-options.verified_by-], [-options.verified_date-]}[# else #]\unverifiedbox{Not yet verified for version [-options.version-]}[# endif #]
     \end{tcolorbox}

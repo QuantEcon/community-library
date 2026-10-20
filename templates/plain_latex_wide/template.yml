@@ -45,8 +45,8 @@ options:
     description: draft while the version is 0.x; released from 1.0.
   - id: ai_level
     type: number
-    title: AI-assistance level
-    description: How much AI was involved in producing the text, from 0 (none) to 4.
+    title: AI-assistance category
+    description: How the text was produced, 0 No AI, 1 AI-edited, 2 AI-assisted or 3 AI-generated.
   - id: ai_used_for
     type: string
     title: AI used for

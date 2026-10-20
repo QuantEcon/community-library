@@ -112,7 +112,7 @@ authors:
   - name: "<author>"
 maintainers: ["<GitHub username>"]
 model_description_version: "0.1"
-ai_level: <level, 0 to 4>
+ai_level: <category, 0 to 3>
 ai_used_for: "<uses, such as drafting, code; when the level is above 0>"
 # When submitted on behalf of a toolkit's project
 project: "<project name>"

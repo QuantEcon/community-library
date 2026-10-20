@@ -9,7 +9,7 @@ license: CC-BY-4.0
 options:
   version: '0.1'
   status: draft
-  ai_level: 3
+  ai_level: 2
   ai_used_for: drafting, editing
 exports:
 - format: pdf

@@ -9,7 +9,7 @@
     and follows a version its model description has had.
   * The library table in docs/index.html has a slot for every solution,
     labelled with its toolkit, method, submitter and version, and showing the
-    AI level and verification its metadata.yml records.
+    AI category and verification its metadata.yml records.
 
 CONTRIBUTING.md explains the rules. The publishing workflow runs this check on
 every push and pull request; to run it locally, from the repository root:
@@ -157,7 +157,7 @@ class LibraryTable(HTMLParser):
         attrs = dict(attrs)
         for record in self.open:
             record["depth"] += tag not in self.VOID
-            if "ai-level" in (attrs.get("class") or "").split():
+            if "ai-chip" in (attrs.get("class") or "").split():
                 record["ai_level"] = attrs.get("data-level")
         if "data-solution" in attrs or "data-model-description" in attrs:
             self.open.append({"attrs": attrs, "text": "", "depth": 0})
@@ -185,7 +185,7 @@ def slot_label(record):
     return f"{record['toolkit']} · {record['method']} · {submitter} · v{record['model_description_version']}"
 
 
-def check_site(problems, descriptions, solutions):
+def check_site(problems, descriptions, solutions, words):
     table = LibraryTable()
     table.feed((ROOT / "docs" / "index.html").read_text(encoding="utf-8"))
     shown = set()
@@ -213,9 +213,11 @@ def check_site(problems, descriptions, solutions):
         version = record["model_description_version"]
         if slot_label(record) not in text:
             problems.append(f"docs/index.html: label the slot for {where} '{slot_label(record)}', as its metadata.yml says")
+        if words[record["ai_level"]] not in text:
+            problems.append(f"docs/index.html: the slot for {where} should show '{words[record['ai_level']]}', as its metadata.yml says")
         expected = {
             "data-version": (attrs.get("data-version"), version),
-            "AI level": (element.get("ai_level"), str(record["ai_level"])),
+            "AI category": (element.get("ai_level"), str(record["ai_level"])),
             "data-verified": (attrs.get("data-verified"), "true" if verified(record, version) else "false"),
         }
         for name, (found, wanted) in expected.items():
@@ -235,7 +237,8 @@ def main():
     problems = []
     descriptions = check_descriptions(problems, description_validator(schema))
     solutions = check_solutions(problems, Draft202012Validator(schema), descriptions)
-    check_site(problems, descriptions, solutions)
+    words = {category["level"]: category["word"] for category in schema["properties"]["ai_level"]["x-categories"]}
+    check_site(problems, descriptions, solutions, words)
     for problem in problems:
         print(f"::error::{problem}")
     if problems:

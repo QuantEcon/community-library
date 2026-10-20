@@ -884,38 +884,58 @@ a.slot.is-filled:hover { background: var(--qe-blue); color: #fff; text-decoratio
   color: #999;
 }
 
-/* AI-assistance level ------------------------------------------------------ */
+/* AI-assistance category ------------------------------------------------- */
 
-/* Four segments, filled up to the level (CONTRIBUTING.md defines 0–4). One
-   neutral colour: the level describes process, so it carries no red-to-green
-   judgement, and it stays legible printed in greyscale. */
-.ai-level {
-  --ai-ink: var(--muted);
+/* The category's word (CONTRIBUTING.md defines the four) in a neutral outlined
+   chip. It names how the work was produced, so it carries no scale and no
+   red-to-green judgement, and it reads the same printed in greyscale. */
+.ai-chip {
+  display: inline-block;
+  padding: 0 7px;
+  border: 1px solid #b5b9bf;
+  border-radius: 3px;
+  font-family: var(--sans);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .01em;
+  line-height: 1.5;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.slot .ai-chip { margin-left: 10px; }
+a.slot.is-filled:hover .ai-chip { border-color: #fff; color: #fff; }
+
+/* On the description page and in the PDF, the chip also has a picture: a
+   marker on a line from Human to AI at the category's position. A position
+   rather than a fill, so it does not read as progress. */
+.ai-position {
   display: inline-flex;
-  gap: 2px;
-  vertical-align: -1px;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: .72rem;
+  color: var(--muted);
+  white-space: nowrap;
 }
-.ai-level i {
-  width: 9px;
-  height: 9px;
-  border: 1px solid var(--ai-ink);
-  border-radius: 1px;
+.ai-position .track {
+  position: relative;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 44px;
+  height: 10px;
 }
-.ai-level[data-level="1"] i:nth-child(-n+1),
-.ai-level[data-level="2"] i:nth-child(-n+2),
-.ai-level[data-level="3"] i:nth-child(-n+3),
-.ai-level[data-level="4"] i { background: var(--ai-ink); }
+.ai-position .track::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  border-top: 1px solid #b5b9bf;
+}
+.ai-position .track i { position: relative; width: 4px; height: 4px; border-radius: 50%; background: #b5b9bf; }
+.ai-position .track i.at { width: 9px; height: 9px; margin: 0 -2.5px; background: var(--muted); }
 
-/* In a slot the segments carry their own "AI" label, in the bar's colour. */
-.slot .ai-level { margin-left: 10px; align-items: center; }
-.slot .ai-level::before {
-  content: "AI";
-  margin-right: 3px;
-  color: var(--ai-ink);
-  letter-spacing: .02em;
-}
-.slot .ai-level i { width: 7px; height: 7px; }
-a.slot.is-filled:hover .ai-level { --ai-ink: #fff; }
 /* Once a person has verified a solution or a description against its current
    version, it carries a "Verified" badge: the slot's or the button's own
    colours, inverted. tools/check_metadata.py keeps data-verified in step with
@@ -985,7 +1005,8 @@ a.slot[data-verified="true"]:hover::after { background: #fff; color: var(--qe-bl
   color: var(--body-soft);
 }
 .doc-version strong { color: var(--ink); }
-.doc-ai { display: flex; align-items: center; gap: 8px; }
+.doc-ai { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.doc-ai-summary { color: var(--body-soft); }
 .doc-ai-uses { color: var(--muted); }
 /* Verification follows the library table's slots: solid blue once a person
    has verified this version, dashed grey until then, always with words. */

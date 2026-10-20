@@ -10,7 +10,7 @@ model: buffer-stock
 date: '2026-10-20'
 model_description_version: '0.1'
 model_description: https://github.com/QuantEcon/community-library/tree/buffer-stock/v0.1/models/buffer-stock
-ai_level: 3
+ai_level: 2
 ai_used_for: drafting, editing, code
 software:
   Python: 3.12.7

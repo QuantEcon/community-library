@@ -37,7 +37,7 @@ others are welcome.
 | `authors` | A list of the solution's authors, each with a `name`. |
 | `maintainers` | The GitHub usernames of the people who maintain the solution and approve changes to it. |
 | `model_description_version` | The version of the model description the solution follows, such as `"0.1"`. |
-| `ai_level` | How much AI was involved, from 0 to 4; see [AI disclosure and verification](#ai-disclosure-and-verification). |
+| `ai_level` | How the text and code were produced, from 0 to 3: No AI, AI-edited, AI-assisted or AI-generated; see [AI disclosure and verification](#ai-disclosure-and-verification). |
 | `ai_used_for` | What AI was used for, when `ai_level` is above 0. |
 
 Two more fields are added when they apply:
@@ -102,25 +102,25 @@ producing them and whether a person has verified them. Both describe the
 process. Neither claims that a document is free of errors, and neither ranks
 documents, toolkits or submitters.
 
-### AI-assistance level
+### AI-assistance category
 
-| Level | Meaning |
-| --- | --- |
-| 0 | No AI was used in the text or code. |
-| 1 | AI-assisted editing: people wrote every passage, and AI suggested wording, grammar or consistency fixes. |
-| 2 | AI-assisted drafting: people wrote most of it; AI drafted some passages, which people rewrote. |
-| 3 | AI-drafted, human-directed: AI drafted most of it to an outline and decisions from people, who edited it throughout. |
-| 4 | AI-drafted with light human editing. |
+| `ai_level` | Category | Meaning |
+| --- | --- | --- |
+| 0 | No AI | No AI was used in the text or code. |
+| 1 | AI-edited | People wrote every passage; AI suggested wording, grammar or consistency fixes. |
+| 2 | AI-assisted | AI drafted some or most of it to the authors' outline and decisions, and people rewrote or edited it throughout. |
+| 3 | AI-generated | AI drafted it, and people edited it lightly. |
 
-- The level describes how the text and code were produced. Choices about the
-  model, the calibration and the results always belong to the authors.
-- Report the highest level that applies to any substantial part, such as one
-  section or the code, so that one AI-drafted section is not averaged away.
-- When the level is above 0, list what AI was used for in `ai_used_for`,
+- The category describes how the text and code were produced. Choices about
+  the model, the calibration and the results always belong to the authors.
+- Report the highest category that applies to any substantial part, such as
+  one section or the code, so that one AI-drafted section is not averaged
+  away.
+- When `ai_level` is above 0, list what AI was used for in `ai_used_for`,
   comma-separated, from: `drafting`, `editing`, `code`, `derivation checks`,
   `literature`, `figures`.
 
-Authors state the level in their pull request, and the reviewer confirms it.
+Authors state the category in their pull request, and the reviewer confirms it.
 
 ### Human verification
 
@@ -134,10 +134,13 @@ verifies the new one.
 
 ### How they are shown
 
-The PDF's version box, the description's web page and each slot in the
-website's library table show the level as four segments, filled up to the
-level, in one neutral colour. A red-to-green scale would suggest that more AI
-means less trustworthy, which is the judgement these records avoid.
+Readers see the category's word, never the number. Each slot in the website's
+library table shows it in a neutral outlined chip, such as `AI-assisted`. The
+version box on the PDF and on the description's web page also shows a marker
+on a line from Human to AI at the category's position, and the category's
+one-line summary. The chip and the marker use one neutral colour: the category
+describes how the work was produced, so there is no scale to fill and no
+red-to-green judgement.
 
 In the version box, verification is a small label with a solid blue border
 once a person has verified the current version and a dashed grey one until

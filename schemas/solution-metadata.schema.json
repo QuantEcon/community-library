@@ -57,10 +57,16 @@
       "type": "string"
     },
     "ai_level": {
-      "description": "How much AI was involved in producing the text and code: 0 no AI, 1 AI-assisted editing, 2 AI-assisted drafting, 3 AI-drafted and human-directed, 4 AI-drafted with light human editing. Report the highest level that applies to any substantial part.",
+      "description": "How the text and code were produced: 0 No AI, 1 AI-edited, 2 AI-assisted, 3 AI-generated. Report the highest category that applies to any substantial part.",
       "type": "integer",
       "minimum": 0,
-      "maximum": 4
+      "maximum": 3,
+      "x-categories": [
+        { "level": 0, "word": "No AI", "summary": "No AI was used." },
+        { "level": 1, "word": "AI-edited", "summary": "People wrote it; AI suggested edits." },
+        { "level": 2, "word": "AI-assisted", "summary": "AI drafted some or most of it; people edited it throughout." },
+        { "level": 3, "word": "AI-generated", "summary": "AI drafted it; people edited it lightly." }
+      ]
     },
     "ai_used_for": {
       "description": "What AI was used for, comma-separated, from: drafting, editing, code, derivation checks, literature, figures. Required when ai_level is above 0.",
