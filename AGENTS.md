@@ -1,7 +1,8 @@
 # Working in the Community Library
 
 Instructions for coding agents and maintainers. [CONTRIBUTING.md](CONTRIBUTING.md)
-sets the rules for solutions, versions, AI disclosure and verification; read
+sets the rules for registering projects, proposing models, solutions,
+versions, AI disclosure and verification; read
 it first. This file gives the layout, the commands, and the maintainer
 procedures that build on those rules.
 

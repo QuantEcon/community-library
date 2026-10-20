@@ -1,15 +1,39 @@
 # Contributing to the Community Library
 
 The library takes pull requests from anyone, whether or not they are a member
-of the working group. A solution, a runnable implementation of one of the
-library's model descriptions, can come from a toolkit's project or from
-individual contributors, and one project can submit several. This guide
-covers what every solution records: which version of the model description it
-follows, who maintains it, how much AI was involved in producing it, and
-whether a person has verified it. Each model's submission guide, such as
+of the working group. There are three ways to contribute:
+
+- [Register a project](#registering-a-project), so that its toolkit has a
+  landing page in the library's directory.
+- [Submit a solution](#submitting-a-solution), a runnable implementation of
+  one of the library's model descriptions. Solutions come from toolkits'
+  projects or from individual contributors, and one project can submit
+  several.
+- [Propose a model](#proposing-a-model) for the community to solve, and
+  develop its description.
+
+Every solution records which version of the model description it follows,
+who maintains it, how much AI was involved in producing it, and whether a
+person has verified it. Each model's submission guide, such as
 [the one for buffer stock](models/buffer-stock/README.md), covers what to
 implement and report. How submissions are reviewed is being settled in
 [#6](https://github.com/QuantEcon/community-library/issues/6).
+
+## Registering a project
+
+Toolkit projects register to take part in the library, and each registered
+project gets a landing page in the library's directory of toolkits.
+Registering is an agreement in principle, and nothing in it is binding. It is
+not needed to submit a solution.
+
+To register, open an issue in the
+[working group's tracker](https://github.com/econ-ark/sce-wg-1/issues) with
+the [Register a toolkit](https://github.com/econ-ark/sce-wg-1/issues/new?template=register-toolkit.yml)
+form, one issue per toolkit. The landing page is built from the registration,
+so as well as the repository, link the toolkit's documentation, installation
+instructions and tutorials, and the place where its users ask for help. The
+issue is public, so leave out email addresses. To change the details later,
+edit the issue.
 
 ## Submitting a solution
 
@@ -44,7 +68,7 @@ Two more fields are added when they apply:
 
 | Field | Content |
 | --- | --- |
-| `project` | The toolkit project the solution is submitted on behalf of, such as `Econ-ARK`. Leave it out for a solution submitted by individuals. |
+| `project` | The toolkit project the solution is submitted on behalf of, such as `Econ-ARK`, named as in its [registration](#registering-a-project). Leave it out for a solution submitted by individuals. |
 | `verified_by`, `verified_date`, `verified_version` | Who verified the solution, when, and against which description version. Leave all three out until someone has. |
 
 [`schemas/solution-metadata.schema.json`](schemas/solution-metadata.schema.json)
@@ -65,6 +89,81 @@ and the description version, such as `HARK · EGM · Econ-ARK · v0.1`.
 
 A solution belongs to its authors. Changes to it, by anyone, need the
 approval of one of its maintainers.
+
+## Proposing a model
+
+A model description is the template that every solution of a model follows.
+It fixes the model, its calibration and the results each solution reports,
+and every toolkit that solves the model depends on it. The baseline set is a
+starting proposal, not a ceiling: anyone can propose a model for the
+community to solve and help develop its description.
+
+**The specification is the contribution.** Solutions from different toolkits
+can be compared only when they solve the same problem. A description that
+leaves a choice open by accident lets correct solutions disagree for reasons
+no reader can trace, and every solution inherits the gap. The library
+therefore asks more of a model description than of any one solution. Expect
+the specification to take more of the work than a first solution does.
+
+### What a description states
+
+The [buffer stock description](models/buffer-stock/model-description.md) is
+the example to follow. A description states each of the following, in its
+own words and notation.
+
+| Part | What it pins down |
+| --- | --- |
+| Sources | The paper the model follows, and which version of it when there are several, with the papers the model comes from. |
+| Model | The agents, preferences and functional forms; each shock and its distribution; the timing within a period; the constraints; any normalisation; and the equations or rules a solution satisfies, such as a Bellman equation, an Euler equation or the equilibrium conditions. |
+| Calibration | A value for every parameter, at a stated frequency, with its source. Nothing is left for the solver to choose. |
+| Conditions | The conditions under which a solution exists and is unique, with their values at the calibration, so that each solution can confirm they hold. |
+| Numerical solution | What a solution approximates; which choices are left to the solver, such as the method, the grids or the approximation of the shocks; and which of those choices can move the results. |
+| Results | A short list of numbers every solution reports, each defined exactly: where it is evaluated, with what step, and in what units or normalisation. |
+| Checks | Properties a correct solution has, such as monotonicity, bounds or limiting values, so that a reader can check one solution without another to compare it with. |
+
+### The standard a description meets
+
+Check the description against this list before asking for review.
+
+- **Complete.** Someone who has not read the source paper can implement the
+  model from the description alone, and every symbol is defined before it is
+  used.
+- **Unambiguous.** Two people who implement it independently solve the same
+  problem. Where toolkits commonly differ, such as in timing, the treatment
+  of a boundary or zero-probability event, or the approximation of a
+  distribution, the description either fixes the convention or says that
+  the choice is free and how it can move the results.
+- **Correct.** The equations, the conditions and their values at the
+  calibration have been checked against the sources, and any departure from
+  the source paper is stated and explained. A check by someone who did not
+  write the description can be recorded as
+  [human verification](#human-verification).
+- **Comparable.** The results do not depend on the method. They are
+  evaluated at fixed points, not on a solver's own grid, so that correct
+  solutions by different methods agree to within numerical error.
+- **Solvable by more than one toolkit.** Nothing in it relies on a feature
+  that only one toolkit has.
+- **A baseline.** It is a standard version of a model the field knows, kept
+  as small as its purpose allows, with a short list of results.
+
+We strongly recommend submitting a reference solution with the description,
+as buffer stock did with [HARK](solutions/buffer-stock/001-hark-egm/): one
+runnable solution that reports every result. It shows that the model can be
+solved, and it gives later solutions a baseline to verify their results
+against. Writing it is also the best test of the specification, since any
+choice the solver had to make that the description did not settle is a gap
+to close in the description.
+
+### Submitting a description
+
+Open a pull request that adds the description under `models/<model>/`, named
+in lowercase with hyphens, such as `buffer-stock`, and say in it what the
+model is, why it belongs in the library and which toolkits could solve it.
+The [buffer stock directory](models/buffer-stock/) shows the files to
+include. A new description starts as a draft at version 0.1, as
+[Versioning model descriptions](#versioning-model-descriptions) explains. To
+discuss a model before writing it up, open an issue with the working group's
+[model family form](https://github.com/econ-ark/sce-wg-1/issues/new?template=model-family.yml).
 
 ## Versioning model descriptions
 
