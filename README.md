@@ -9,7 +9,7 @@ This repository holds the community website, the shared model descriptions and t
 
 ## Start with a model
 
-Read the [buffer stock model description](models/buffer-stock/model-description.md)
+Read the [buffer stock model description](https://quantecon.github.io/community-library/models/buffer-stock/)
 or its [PDF](models/buffer-stock/model-description.pdf), which covers model theory,
 calibration, numerical solution and the results each implementation
 reports. The
@@ -20,8 +20,10 @@ give the installation and run commands.
 Keep the model and calibration fixed, and choose your own prose, solution
 method and runnable format. The [submission guide](models/buffer-stock/README.md#what-to-submit)
 explains where to put an implementation, which results to report and how to
-document its use. The guide's CSV formats, metadata example and draft
-comparison tolerances are optional.
+document its use. Every implementation includes a short `metadata.yml`
+recording its authors, the description version it follows and its AI
+disclosure; the [contributing guide](CONTRIBUTING.md) explains these, and the
+guide's CSV formats and draft comparison tolerances are optional.
 
 The working group has proposed five baseline models. Projects choose one or
 more that their toolkit can solve and also contribute a tutorial on a model
@@ -43,6 +45,8 @@ of their own choosing.
 | `projects/<toolkit>/<model>/` | A runnable implementation in the project's chosen format, with supporting code and results. |
 | `docs/` | The library website. |
 | `templates/` | The page layout used to produce model PDFs. |
+| `schemas/` | The schema each implementation's `metadata.yml` follows. |
+| `tools/` | Scripts that build the model description pages and check versions and disclosure records. |
 
 A model has the same directory name in both places: the buffer-stock
 description is in `models/buffer-stock/` and the HARK implementation in
@@ -59,11 +63,23 @@ Edit `docs/index.html` for text, `docs/site.css` for appearance and
 is the Project B talk to SCE Working Group 1 (1 October 2026), a
 self-contained reveal.js deck.
 
-The [publishing workflow](.github/workflows/publish.yml) checks local file
-links, links to sections and the contents navigation on every push and pull
-request. It publishes `docs/` to GitHub Pages from `main`; pull requests
-provide a downloadable site preview. These checks cover the website;
-notebook execution is not yet automated.
+Each model description also gets a page at `docs/models/<model>/`, built from
+its `model-description.md` by `tools/build_pages.py` with the PDF alongside.
+The pages are built when the site is published, not committed. To preview
+them:
+
+```sh
+python -m pip install -r tools/requirements.txt
+python tools/build_pages.py
+```
+
+The [publishing workflow](.github/workflows/publish.yml) builds those pages
+and runs `tools/check_metadata.py`, which checks that the descriptions, each
+implementation's `metadata.yml` and the library table agree on versions and
+disclosure. It then checks local file links, links to sections and the
+contents navigation on every push and pull request. It publishes `docs/` to
+GitHub Pages from `main`; pull requests provide a downloadable site preview.
+Notebook execution is not yet automated.
 
 Publishing requires **Settings → Pages → Build and deployment → Source:
 GitHub Actions**. The [buffer stock guide](models/buffer-stock/README.md)

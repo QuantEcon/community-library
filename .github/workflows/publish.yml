@@ -37,6 +37,11 @@ jobs:
       - name: Build the model description pages
         run: python tools/build_pages.py
 
+      # Versions, AI disclosure and verification: the description front matter,
+      # each implementation's metadata.yml and the library table must agree.
+      - name: Check versions and disclosure records
+        run: python tools/check_metadata.py
+
       - name: Check local references resolve
         shell: bash
         run: |

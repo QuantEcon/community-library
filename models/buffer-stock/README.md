@@ -1,7 +1,7 @@
 # Buffer stock saving
 
-Read the [model description](model-description.md) or its [PDF](model-description.pdf)
-for the theory, calibration and numerical solution. Keep the stated
+Read the [model description](https://quantecon.github.io/community-library/models/buffer-stock/)
+(its [source](model-description.md)) or its [PDF](model-description.pdf) for the theory, calibration and numerical solution. Keep the stated
 model and calibration fixed, and choose the solution method, prose and
 runnable format that suit your toolkit. The
 [HARK notebook](../../projects/HARK/buffer-stock/tutorial.ipynb) is one example.
@@ -10,13 +10,13 @@ runnable format that suit your toolkit. The
 
 Add a runnable implementation under `projects/<toolkit>/buffer-stock/`. A notebook,
 a MyST document with code, or another format is welcome. Include the code
-and instructions needed to reproduce the results, and identify the authors
-and software versions in your chosen format.
+and instructions needed to reproduce the results.
 
 1. Link to the shared model description and use its calibration. Explain any part of the model that your toolkit cannot represent.
 2. Report the results listed at the end of the model description: consumption at the sixteen common values of $m$, the target $\hat m$ and the MPC at the target with step $h=0.01$. Any format will do; the HARK files below are one.
-3. Document the numerical settings and installation and run commands where readers can find them.
-4. Run the implementation from a fresh session and open a pull request adding your project directory.
+3. Document the software versions, numerical settings, and installation and run commands where readers can find them.
+4. Add a `metadata.yml` recording the authors, the version of this description you follow and your AI disclosure; see [the metadata file](#the-metadata-file).
+5. Run the implementation from a fresh session and open a pull request adding your project directory.
 
 ## The HARK example
 
@@ -26,15 +26,16 @@ Their names and arrangement are an example; projects choose their own files.
 | File | Content |
 | --- | --- |
 | `tutorial.ipynb` | Runnable calculations, explanations and figures. |
-| `metadata.yml` | Software versions, model version and numerical settings. |
+| `metadata.yml` | Authors, the description version followed, AI disclosure, software versions and numerical settings. |
 | `results/cfunc.csv` | Consumption at a common set of resource values. |
 | `results/scalars.csv` | Target resources, MPCs and permanent-shock moments. |
 | `results/conditions.csv` | The seven model conditions. |
 
 HARK also includes an environment file and optional numerical checks.
-The file layouts, metadata example and tolerances below are **optional draft
-comparison conventions**. Every implementation reports the numbers in item 2
-above; projects can present them in these files or in another way.
+The CSV layouts and tolerances below are **optional draft comparison
+conventions**. Every implementation reports the numbers in item 2 above;
+projects can present them in these files or in another way. Every
+implementation also includes a `metadata.yml`.
 
 ## Optional comparison files
 
@@ -88,21 +89,33 @@ or `false`. Its notebook also displays the corresponding factors.
 | `GIC` | Growth impatience | $\text{Þ}/\mathcal{G}$ |
 | `GICMod` | Strong growth impatience | $(\text{Þ}/\mathcal{G})\mathbb{E}[\psi^{-1}]$ |
 
-## Optional metadata file
+## The metadata file
 
-Authors and numerical settings can be recorded in the implementation itself.
-For a separate `metadata.yml`, the following example uses the HARK file
-conventions. Replace the descriptions in angle brackets with your details.
+Every implementation includes a `metadata.yml`. The required fields are the
+authors, the description version followed, and the AI-assistance level with
+what AI was used for; the verification fields are added once a person has
+verified the implementation. The [contributing guide](../../CONTRIBUTING.md#submitting-an-implementation)
+explains each one, and the pull request's checks report any that are missing.
+The remaining fields below follow the HARK file and are optional. Replace the
+descriptions in angle brackets with your details.
 
 ```yaml
-toolkit: "<toolkit name>"
-toolkit_version: "<version>"
+# Required
 authors:
   - name: "<implementation author>"
+model_description_version: "0.1"
+ai_level: <level, 0 to 4>
+ai_used_for: "<uses, such as drafting, code; when the level is above 0>"
+# Once a person has verified the implementation
+verified_by: "<name>"
+verified_date: "<YYYY-MM-DD>"
+verified_version: "0.1"
+# Optional
+toolkit: "<toolkit name>"
+toolkit_version: "<version>"
 model: "buffer-stock"
 date: "<YYYY-MM-DD>"
-model_description_version: "0.1"
-model_description: "https://github.com/QuantEcon/community-library/tree/main/models/buffer-stock"
+model_description: "https://github.com/QuantEcon/community-library/tree/buffer-stock/v0.1/models/buffer-stock"
 software:
   "<language>": "<version>"
   "<package>": "<version>"
@@ -146,6 +159,10 @@ Edit `model-description.md` and build its PDF from `models/buffer-stock/`:
 myst build --pdf
 ```
 
-The build requires LaTeX and uses `../../templates/plain_latex_wide/`.
-Each project maintains its implementation in its own directory. The library
-website is maintained separately in `docs/`.
+The build requires LaTeX and uses `../../templates/plain_latex_wide/`. The
+library website builds the description's web page from the same file. Each
+change raises the version in the front matter's `options` and adds an entry
+to [CHANGELOG.md](CHANGELOG.md); the
+[contributing guide](../../CONTRIBUTING.md#versioning-model-descriptions)
+gives the steps. Each project maintains its implementation in its own
+directory.
