@@ -6,7 +6,7 @@
 <title>QuantEcon Community Library · Baseline models across toolkits</title>
 <meta name="description" content="A community library of the field's baseline models, implemented and documented across the toolkits that can solve them — same model, multiple toolkits, side by side. Hosted by QuantEcon.">
 <meta property="og:title" content="QuantEcon Community Library · Baseline models across toolkits">
-<meta property="og:description" content="Same model, multiple toolkits, side by side. Each implementation authored and maintained by the project that built the toolkit.">
+<meta property="og:description" content="Same model, multiple toolkits, side by side. Each solution authored and maintained by its submitters, whether a toolkit's project or individual contributors.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://quantecon.github.io/community-library/">
 <meta property="og:image" content="https://quantecon.github.io/community-library/assets/quantecon-logo.png">
@@ -48,7 +48,7 @@
     <div class="hero-main">
       <p class="hero-eyebrow">QuantEcon · Community Library</p>
       <h1>A community library of baseline economic models.</h1>
-      <p class="hero-lede">The canonical models of the field, implemented and documented across the toolkits that can solve them. Same model, multiple tools, side-by-side notation, honest commentary on tradeoffs — each implementation authored and maintained by the project that built the toolkit.</p>
+      <p class="hero-lede">The canonical models of the field, implemented and documented across the toolkits that can solve them. Same model, multiple tools, side-by-side notation, honest commentary on tradeoffs — each solution authored and maintained by its submitters, whether a toolkit's project or individual contributors.</p>
       <div class="hero-actions">
         <a class="btn btn-solid" href="#library">Browse the library</a>
         <a class="btn btn-outline" href="#contribute">Bring your toolkit</a>
@@ -59,7 +59,7 @@
     <div class="host-card">
       <img src="assets/quantecon-logo.png" alt="QuantEcon">
       <h2>Hosted by QuantEcon</h2>
-      <p>QuantEcon publishes the library, maintains its shared tooling, and curates what goes in. Toolkit content stays with the projects that write it.</p>
+      <p>QuantEcon publishes the library, maintains its shared tooling, and curates what goes in. Each solution stays with the people and projects that write it.</p>
       <div class="host-rule" aria-hidden="true"></div>
       <span class="eyebrow">Working alongside</span>
       <ul class="alongside">
@@ -168,7 +168,7 @@
             <p class="model-class">Consumption–saving under income risk</p>
           </div>
           <div class="slots" aria-label="Three implementation slots: HARK, and two open">
-            <a class="slot is-filled" href="https://github.com/QuantEcon/community-library/blob/main/projects/HARK/buffer-stock/tutorial.ipynb" data-implementation="projects/HARK/buffer-stock" data-version="0.1" data-verified="false" title="HARK's solution · follows description v0.1 · AI level 3 of 4 · not yet verified">HARK · v0.1<span class="ai-level" data-level="3" role="img" aria-label="AI level 3 of 4"><i></i><i></i><i></i><i></i></span><span class="sr-only">, not yet verified</span></a>
+            <a class="slot is-filled" href="https://github.com/QuantEcon/community-library/blob/main/solutions/buffer-stock/001-hark-egm/tutorial.ipynb" data-solution="solutions/buffer-stock/001-hark-egm" data-version="0.1" data-verified="false" title="001-hark-egm: HARK, by Econ-ARK (Akshay Shanker) · follows description v0.1 · AI level 3 of 4 · not yet verified">HARK · EGM · Econ-ARK · v0.1<span class="ai-level" data-level="3" role="img" aria-label="AI level 3 of 4"><i></i><i></i><i></i><i></i></span><span class="sr-only">, not yet verified</span></a>
             <span class="slot">open</span>
             <span class="slot">open</span>
           </div>
@@ -232,7 +232,7 @@
           <span class="go">propose a model ↗</span>
         </a>
       </div>
-      <p class="footnote">Each model description states the shared assumptions and calibration. Each project chooses how to present its implementation. A filled slot shows the description version the implementation follows and its <a href="https://github.com/QuantEcon/community-library/blob/main/CONTRIBUTING.md#ai-disclosure-and-verification">AI-assistance level</a>, from no segments filled to four; a check mark means a person has verified it.</p>
+      <p class="footnote">Each model description states the shared assumptions and calibration. Each project chooses how to present its implementation. A filled slot names the solution's toolkit, method and submitter, and shows the description version it follows and its <a href="https://github.com/QuantEcon/community-library/blob/main/CONTRIBUTING.md#ai-disclosure-and-verification">AI-assistance level</a>, from no segments filled to four; a check mark means a person has verified it.</p>
     </section>
 
     <section class="section" id="how" data-spy="how">
@@ -261,7 +261,7 @@
         <span class="n">04</span>
         <h2>Model descriptions and implementations</h2>
       </div>
-      <p class="section-lede">Shared model descriptions belong in <code>models/&lt;model&gt;/</code>, with theory, calibration and numerical solution. Runnable implementations belong in <code>projects/&lt;toolkit&gt;/&lt;model&gt;/</code>; each project chooses its prose, method and format, such as a notebook or MyST document. Read the <a href="models/buffer-stock/">buffer stock description</a> and run the <a href="https://github.com/QuantEcon/community-library/blob/main/projects/HARK/buffer-stock/tutorial.ipynb">HARK example</a>.</p>
+      <p class="section-lede">Shared model descriptions belong in <code>models/&lt;model&gt;/</code>, with theory, calibration and numerical solution. Runnable solutions belong in <code>solutions/&lt;model&gt;/</code>, each in a directory numbered in submission order, such as <code>001-hark-egm</code>; each submitter chooses the prose, method and format, such as a notebook or MyST document. Read the <a href="models/buffer-stock/">buffer stock description</a> and run the <a href="https://github.com/QuantEcon/community-library/blob/main/solutions/buffer-stock/001-hark-egm/tutorial.ipynb">HARK example</a>.</p>
 
       <div class="steps">
         <div class="step">
@@ -282,7 +282,7 @@
         <div class="step">
           <span class="n">04</span>
           <h3>Submit your tutorial</h3>
-          <p>Add your runnable files and instructions under your toolkit and model in <code>projects/</code>.</p>
+          <p>Add your runnable files, instructions and <code>metadata.yml</code> in a numbered directory under <code>solutions/&lt;model&gt;/</code>.</p>
         </div>
       </div>
 
@@ -351,8 +351,8 @@
         </div>
         <div class="role">
           <span class="eyebrow">Authors</span>
-          <h3>Participating projects</h3>
-          <p>Author and maintain their own implementations and tutorials — toolkit-specific content stays theirs, and merges to it happen at their discretion.</p>
+          <h3>Projects and contributors</h3>
+          <p>Toolkit projects and individual contributors author and maintain their own solutions and tutorials. A solution stays theirs, and changes to it need its maintainers' approval.</p>
         </div>
         <div class="role">
           <span class="eyebrow">Baseline set</span>
@@ -426,12 +426,12 @@
         <h2>Contribute</h2>
       </div>
       <p class="section-lede">Start with the <a href="https://github.com/QuantEcon/community-library/blob/main/models/buffer-stock/README.md#what-to-submit">buffer stock submission guide</a>. Keep the model and calibration fixed, submit a runnable implementation in your chosen format, and report the results the model description lists. Document the numerical settings and commands needed to reproduce the results, and include a short <code>metadata.yml</code> recording the authors, the description version followed and the AI disclosure, as the <a href="https://github.com/QuantEcon/community-library/blob/main/CONTRIBUTING.md">contributing guide</a> explains; the output format is your choice.</p>
-      <p>Anyone can submit a pull request. Add your files under <code>projects/&lt;toolkit&gt;/&lt;model&gt;/</code>; the <a href="https://github.com/QuantEcon/community-library/tree/main/projects/HARK/buffer-stock">HARK buffer-stock example</a> uses <code>projects/HARK/buffer-stock/</code>. Changes to an existing project's tutorial remain subject to that project's approval.</p>
+      <p>Anyone can submit a pull request, on behalf of a toolkit's project or as an individual. Add your files under <code>solutions/&lt;model&gt;/</code>, in a directory named <code>&lt;NNN&gt;-&lt;toolkit&gt;-&lt;method&gt;</code> with the next free number; the <a href="https://github.com/QuantEcon/community-library/tree/main/solutions/buffer-stock/001-hark-egm">HARK buffer-stock example</a> is <code>solutions/buffer-stock/001-hark-egm/</code>. Changes to an existing solution need its maintainers' approval.</p>
 
       <a class="repo-link" href="https://github.com/QuantEcon/community-library">
         <span class="about">
           <span class="name">QuantEcon/community-library</span>
-          <span class="desc">Hosted and published by QuantEcon · shared model descriptions in models/, each project's implementations in projects/</span>
+          <span class="desc">Hosted and published by QuantEcon · shared model descriptions in models/, submitted solutions in solutions/</span>
         </span>
         <span class="go">clone ↗</span>
       </a>
@@ -439,7 +439,7 @@
       <div class="meta-grid">
         <div>
           <span class="eyebrow">Model and example</span>
-          <p>Read the <a href="models/buffer-stock/">buffer stock description</a> or its <a href="models/buffer-stock/model-description.pdf">PDF</a>, then open the runnable <a href="https://github.com/QuantEcon/community-library/blob/main/projects/HARK/buffer-stock/tutorial.ipynb">HARK notebook</a>.</p>
+          <p>Read the <a href="models/buffer-stock/">buffer stock description</a> or its <a href="models/buffer-stock/model-description.pdf">PDF</a>, then open the runnable <a href="https://github.com/QuantEcon/community-library/blob/main/solutions/buffer-stock/001-hark-egm/tutorial.ipynb">HARK notebook</a>.</p>
         </div>
         <div>
           <span class="eyebrow">Licensing</span>

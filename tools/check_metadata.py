@@ -3,11 +3,13 @@
   * Each models/<model>/model-description.md states its version, status and
     AI disclosure in its front matter `options`, and the newest entry in its
     CHANGELOG.md is for that version and date.
-  * Each implementation, projects/<toolkit>/<model>/, has a metadata.yml that
-    satisfies schemas/implementation-metadata.schema.json and follows a
-    version its model description has had.
-  * The library table in docs/index.html shows the versions, AI levels and
-    verification those files record, for every implementation.
+  * Each solution, solutions/<model>/<NNN>-<toolkit>-<method>/, is named in
+    that form with a number not used by another solution of the model, and
+    has a metadata.yml that satisfies schemas/solution-metadata.schema.json
+    and follows a version its model description has had.
+  * The library table in docs/index.html has a slot for every solution,
+    labelled with its toolkit, method, submitter and version, and showing the
+    AI level and verification its metadata.yml records.
 
 CONTRIBUTING.md explains the rules. The publishing workflow runs this check on
 every push and pull request; to run it locally, from the repository root:
@@ -26,8 +28,11 @@ import yaml
 from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parent.parent
-SCHEMA = ROOT / "schemas" / "implementation-metadata.schema.json"
+SCHEMA = ROOT / "schemas" / "solution-metadata.schema.json"
 CHANGELOG_ENTRY = re.compile(r"^## (\d+\.\d+) — (\d{4}-\d{2}-\d{2})$", re.M)
+# A solution's directory: its submission number within the model, then a
+# label for people browsing. The metadata, not the name, is the record.
+SOLUTION_NAME = re.compile(r"^(\d{3})-[a-z0-9]+(-[a-z0-9]+)+$")
 DISCLOSURE_FIELDS = ("ai_level", "ai_used_for", "verified_by", "verified_date", "verified_version")
 
 
@@ -54,7 +59,7 @@ def schema_problems(validator, data, where):
 
 
 def description_validator(schema):
-    """Descriptions share the implementations' disclosure fields and rules."""
+    """Descriptions share the solutions' disclosure fields and rules."""
     return Draft202012Validator({
         "type": "object",
         "required": ["version", "status", "ai_level"],
@@ -97,11 +102,22 @@ def check_descriptions(problems, validator):
     return descriptions
 
 
-def check_implementations(problems, validator, descriptions):
-    """Return each implementation's metadata, keyed by its directory."""
-    implementations = {}
-    for directory in sorted(path for path in ROOT.glob("projects/*/*") if path.is_dir()):
+def check_solutions(problems, validator, descriptions):
+    """Return each solution's metadata, keyed by its directory."""
+    solutions, numbers = {}, {}
+    for directory in sorted(path for path in ROOT.glob("solutions/*/*") if path.is_dir()):
         where = directory.relative_to(ROOT).as_posix()
+        model = directory.parent.name
+        name = SOLUTION_NAME.match(directory.name)
+        if not name:
+            problems.append(
+                f"{where}: name the directory <NNN>-<toolkit>-<method>, such as 001-hark-egm, "
+                "with the next free three-digit number for the model"
+            )
+        else:
+            other = numbers.setdefault((model, name.group(1)), where)
+            if other != where:
+                problems.append(f"{where}: number {name.group(1)} is already used by {other}; take the next free number")
         path = directory / "metadata.yml"
         if not path.exists():
             problems.append(f"{where}: add a metadata.yml; CONTRIBUTING.md lists the required fields")
@@ -111,10 +127,8 @@ def check_implementations(problems, validator, descriptions):
         problems += found
         if found:
             continue
-        toolkit, model = directory.parent.name, directory.name
-        for field, expected in (("toolkit", toolkit), ("model", model)):
-            if data.get(field, expected) != expected:
-                problems.append(f"{where}/metadata.yml: {field} is {data[field]!r}, but the directory says {expected!r}")
+        if data.get("model", model) != model:
+            problems.append(f"{where}/metadata.yml: model is {data['model']!r}, but the directory says {model!r}")
         if model not in descriptions:
             problems.append(f"{where}: there is no model description at models/{model}/")
         elif data["model_description_version"] not in descriptions[model]["all"]:
@@ -122,8 +136,8 @@ def check_implementations(problems, validator, descriptions):
                 f"{where}/metadata.yml: model_description_version {data['model_description_version']} is not a "
                 f"version of models/{model}/; its CHANGELOG.md lists {', '.join(sorted(descriptions[model]['all']))}"
             )
-        implementations[where] = data
-    return implementations
+        solutions[where] = data
+    return solutions
 
 
 class LibraryTable(HTMLParser):
@@ -141,7 +155,7 @@ class LibraryTable(HTMLParser):
             record["depth"] += tag not in self.VOID
             if "ai-level" in (attrs.get("class") or "").split():
                 record["ai_level"] = attrs.get("data-level")
-        if "data-implementation" in attrs or "data-model-description" in attrs:
+        if "data-solution" in attrs or "data-model-description" in attrs:
             self.open.append({"attrs": attrs, "text": "", "depth": 0})
 
     def handle_endtag(self, tag):
@@ -161,7 +175,13 @@ def verified(record, version):
     return bool(record.get("verified_by")) and record.get("verified_version") == version
 
 
-def check_site(problems, descriptions, implementations):
+def slot_label(record):
+    """Toolkit, method and submitter: the project, or the first author's surname."""
+    submitter = record.get("project") or record["authors"][0]["name"].split()[-1]
+    return f"{record['toolkit']} · {record['method']} · {submitter} · v{record['model_description_version']}"
+
+
+def check_site(problems, descriptions, solutions):
     table = LibraryTable()
     table.feed((ROOT / "docs" / "index.html").read_text(encoding="utf-8"))
     shown = set()
@@ -173,15 +193,15 @@ def check_site(problems, descriptions, implementations):
             if attrs.get("data-version") != version or f"v{version}" not in text:
                 problems.append(f"docs/index.html: the {model} description should show v{version}, as its front matter says")
             continue
-        where = attrs["data-implementation"]
-        record = implementations.get(where)
+        where = attrs["data-solution"]
+        record = solutions.get(where)
         if record is None:
             problems.append(f"docs/index.html: {where} has a slot but no valid metadata.yml")
             continue
         shown.add(where)
         version = record["model_description_version"]
-        if f"v{version}" not in text:
-            problems.append(f"docs/index.html: the slot for {where} should show v{version}, as its metadata.yml says")
+        if slot_label(record) not in text:
+            problems.append(f"docs/index.html: label the slot for {where} '{slot_label(record)}', as its metadata.yml says")
         expected = {
             "data-version": (attrs.get("data-version"), version),
             "AI level": (element.get("ai_level"), str(record["ai_level"])),
@@ -190,7 +210,7 @@ def check_site(problems, descriptions, implementations):
         for name, (found, wanted) in expected.items():
             if found != wanted:
                 problems.append(f"docs/index.html: the slot for {where} has {name} {found!r}; its metadata.yml gives {wanted!r}")
-    for where in sorted(set(implementations) - shown):
+    for where in sorted(set(solutions) - shown):
         problems.append(f"docs/index.html: add a slot for {where} to the library table")
 
 
@@ -198,13 +218,13 @@ def main():
     schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
     problems = []
     descriptions = check_descriptions(problems, description_validator(schema))
-    implementations = check_implementations(problems, Draft202012Validator(schema), descriptions)
-    check_site(problems, descriptions, implementations)
+    solutions = check_solutions(problems, Draft202012Validator(schema), descriptions)
+    check_site(problems, descriptions, solutions)
     for problem in problems:
         print(f"::error::{problem}")
     if problems:
         sys.exit(1)
-    print(f"ok — {len(descriptions)} model description(s) and {len(implementations)} implementation(s) "
+    print(f"ok — {len(descriptions)} model description(s) and {len(solutions)} solution(s) "
           "carry valid versions and disclosure, and the library table matches them")
 
 

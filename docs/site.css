@@ -485,7 +485,16 @@ a:hover { color: var(--qe-blue-dark); text-decoration: underline; }
 }
 .model-class { margin-top: 4px; font-size: .87rem; color: var(--dim); }
 
-.slots { flex: 0 0 auto; display: flex; gap: 8px; }
+/* Slots share the row and wrap among themselves as solutions arrive,
+   rather than pushing the description column onto a line of its own. */
+.slots {
+  flex: 1 1 220px;
+  min-width: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
 .slot {
   border: 1px dashed #c9c9c9;
   border-radius: 4px;
@@ -1044,6 +1053,7 @@ a.slot.is-filled:hover .ai-level { --ai-ink: #fff; }
   .fact + .fact { border-top: 1px solid #eaeaea; }
 
   .model { gap: 16px; }
+  .slots { justify-content: flex-start; }
   .model-template { flex: 0 0 auto; text-align: left; }
 
   .cta { padding: 56px 0; }
@@ -1061,7 +1071,6 @@ a.slot.is-filled:hover .ai-level { --ai-ink: #fff; }
 
   body { font-size: 16px; }
   .models-head { gap: 8px; }
-  .slots { flex-wrap: wrap; }
 }
 
 @media print {

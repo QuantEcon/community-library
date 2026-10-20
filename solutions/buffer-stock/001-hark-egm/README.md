@@ -21,7 +21,7 @@ these files as changed even when the numbers agree. Commit them only to
 update the record; otherwise restore them with `git restore metadata.yml results`.
 
 `metadata.yml` also records the authors, the version of the model description
-this implementation follows and its AI disclosure, which a run leaves
+this solution follows and its AI disclosure, which a run leaves
 unchanged. The [contributing guide](../../../CONTRIBUTING.md) explains them.
 
 | File or directory | Purpose |
