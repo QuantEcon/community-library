@@ -46,6 +46,29 @@
 }
 \bibliographystyle{abbrvnat}
 
+[# if options.version #]
+% Version box at the top right of the first page: the version, status and
+% date, the AI-assistance level and the human-verification record, from the
+% front matter's options. CONTRIBUTING.md defines the levels; the web page
+% that tools/build_pages.py builds shows the same box.
+\usepackage{eso-pic}
+\definecolor{qeblue}{HTML}{0072BC}
+\definecolor{aiink}{HTML}{5A5A5A}
+\definecolor{boxline}{HTML}{CCCCCC}
+% One neutral colour for the level: it describes process, not quality.
+\newcommand{\aion}{\textcolor{aiink}{\rule{5pt}{5pt}}\hspace{1.2pt}}
+\newcommand{\aioff}{\textcolor{aiink}{\rlap{\rule{5pt}{0.5pt}}\rlap{\rule[4.5pt]{5pt}{0.5pt}}%
+  \rlap{\rule{0.5pt}{5pt}}\hspace{4.5pt}\rule{0.5pt}{5pt}}\hspace{1.2pt}}
+% Solid blue once a person has verified this version, dashed grey until then.
+\newtcbox{\verifiedbox}{on line, colframe=qeblue, colback=white, coltext=qeblue,
+  boxrule=0.5pt, arc=1pt, boxsep=0pt, left=3pt, right=3pt, top=1.5pt, bottom=1.5pt}
+\newtcbox{\unverifiedbox}{on line, enhanced, frame hidden, colback=white, coltext=black!55,
+  borderline={0.5pt}{0pt}{black!30, dashed}, arc=1pt, boxsep=0pt,
+  left=3pt, right=3pt, top=1.5pt, bottom=1.5pt}
+% The title starts below the box rather than beside it.
+\setlength{\droptitle}{-3em}
+[# endif #]
+
 [-IMPORTS-]
 
 % Keep notebook code inside the text margins.
@@ -75,6 +98,22 @@
 [# endif #]
 
 \begin{document}
+[# if options.version #]
+\AddToShipoutPictureFG*{\AtPageUpperLeft{%
+  \put(\LenToUnit{\paperwidth-1.25in-2.45in},\LenToUnit{-0.45in}){%
+    \begin{minipage}[t]{2.45in}\vspace{0pt}%
+    \begin{tcolorbox}[colback=white, colframe=boxline, boxrule=0.5pt, arc=2pt,
+      left=6pt, right=6pt, top=5pt, bottom=5pt, fontupper=\sffamily\scriptsize,
+      before upper={\setlength{\parindent}{0pt}\setlength{\parskip}{2pt}}]
+    \textbf{Version [-options.version-]} \textperiodcentered{} [# if options.status == "released" #]Released[# else #]Draft[# endif #][# if doc.date #] \textperiodcentered{} [-doc.date.day-]~\ifcase [-doc.date.month-] \or January\or February\or March\or
+      April\or May\or June\or July\or August\or September\or October\or
+      November\or December\fi~[-doc.date.year-][# endif #]\par
+    [# for i in range(4) #][# if i < options.ai_level #]\aion[# else #]\aioff[# endif #][# endfor #]~AI [-options.ai_level-]/4 \textperiodcentered{} [# if options.ai_level == 0 #]No AI[# elif options.ai_level == 1 #]AI-assisted editing[# elif options.ai_level == 2 #]AI-assisted drafting[# elif options.ai_level == 3 #]AI-drafted, human-directed[# else #]AI-drafted, light human editing[# endif #]\par
+    [# if options.ai_level > 0 #]Used for: [-options.ai_used_for-]\par[# endif #]
+    [# if options.verified_by and options.verified_version == options.version #]\verifiedbox{Human verified \textperiodcentered{} [-options.verified_by-], [-options.verified_date-]}[# else #]\unverifiedbox{Not yet verified for version [-options.version-]}[# endif #]
+    \end{tcolorbox}
+    \end{minipage}}}}
+[# endif #]
 \maketitle
 [# if parts.abstract #]\begin{abstract}[-parts.abstract-]\end{abstract}[# endif #]
 [# if options.logo #]

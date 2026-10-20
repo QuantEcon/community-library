@@ -1,8 +1,16 @@
 ---
 title: Buffer stock saving
-subtitle: Model description, version 0.1 (draft)
+subtitle: Model description
 date: '2026-10-20'
 license: CC-BY-4.0
+# The version box at the top right of the PDF and the web page reads these.
+# CONTRIBUTING.md explains each field; add a CHANGELOG.md entry with every
+# new version.
+options:
+  version: '0.1'
+  status: draft
+  ai_level: 3
+  ai_used_for: drafting, editing
 exports:
 - format: pdf
   template: ../../templates/plain_latex_wide

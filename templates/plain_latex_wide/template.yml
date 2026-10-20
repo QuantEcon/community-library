@@ -30,6 +30,39 @@ options:
     default: false
     title: Curvenote Logo
     description: Adds the Curvenote logo after the abstract.
+  # The version box at the top right of the first page; CONTRIBUTING.md
+  # explains each field.
+  - id: version
+    type: string
+    title: Version
+    description: The model description's version, MAJOR.MINOR. Setting it draws the version box.
+  - id: status
+    type: choice
+    choices:
+      - draft
+      - released
+    title: Status
+    description: draft while the version is 0.x; released from 1.0.
+  - id: ai_level
+    type: number
+    title: AI-assistance level
+    description: How much AI was involved in producing the text, from 0 (none) to 4.
+  - id: ai_used_for
+    type: string
+    title: AI used for
+    description: Comma-separated uses, from drafting, editing, code, derivation checks, literature and figures.
+  - id: verified_by
+    type: string
+    title: Verified by
+    description: The person who read the whole description and checked it against its sources.
+  - id: verified_date
+    type: string
+    title: Verification date
+    description: The date of that verification, YYYY-MM-DD.
+  - id: verified_version
+    type: string
+    title: Verified version
+    description: The version that was verified; the box shows "not yet verified" when it differs from version.
 files:
   - template.tex
   - curvenote.png
