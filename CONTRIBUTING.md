@@ -95,8 +95,9 @@ approval of one of its maintainers.
 A model description is the template that every solution of a model follows.
 It fixes the model, its calibration and the results each solution reports,
 and every toolkit that solves the model depends on it. The baseline set is a
-starting proposal, not a ceiling: anyone can propose a model for the
-community to solve and help develop its description.
+starting proposal, not a ceiling. Proposing a model is for domain experts:
+people who know the model and its literature well enough to state it
+precisely, for the community to solve.
 
 **The specification is the contribution.** Solutions from different toolkits
 can be compared only when they solve the same problem. A description that
