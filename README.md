@@ -60,15 +60,17 @@ the [working group issue tracker](https://github.com/econ-ark/sce-wg-1/issues).
 The website consists of static HTML, CSS and JavaScript in `docs/`. Its
 appearance follows the [QuantEcon book theme](https://github.com/QuantEcon/quantecon-book-theme).
 Edit `docs/index.html` for text, `docs/site.css` for appearance and
-`docs/site.js` for the contents navigation. `docs/sce-wg1-2026-10-01.html`
+`docs/site.js` for the contents navigation. `docs/contributing/index.html` is
+the contributing guide for people; `CONTRIBUTING.md` holds the full rules, for
+contributors and coding agents, so a change to a rule there updates the page
+too. `docs/sce-wg1-2026-10-01.html`
 is the Project B talk to SCE Working Group 1 (1 October 2026), a
 self-contained reveal.js deck.
 
 Each model description also gets a page at `docs/models/<model>/`, built from
 its `model-description.md` by `tools/build_pages.py` with the PDF alongside.
-The contributing guide gets one too, at `docs/contributing/`, built from
-`CONTRIBUTING.md`. The pages are built when the site is published, not
-committed. To preview them:
+The pages are built when the site is published, not committed. To preview
+them:
 
 ```sh
 python -m pip install -r tools/requirements.txt

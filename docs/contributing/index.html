@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contribute · QuantEcon Community Library</title>
+<meta name="description" content="Register your toolkit, submit a solution or propose a model for the QuantEcon Community Library.">
+<meta property="og:title" content="Contribute · QuantEcon Community Library">
+<meta property="og:description" content="Register your toolkit, submit a solution or propose a model for the QuantEcon Community Library.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://quantecon.github.io/community-library/contributing/">
+<meta property="og:image" content="https://quantecon.github.io/community-library/assets/quantecon-logo.png">
+<link rel="canonical" href="https://quantecon.github.io/community-library/contributing/">
+<link rel="icon" href="../assets/quantecon-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&family=Source+Sans+Pro:wght@300;400;600;700&family=Source+Code+Pro:wght@400;500&display=swap">
+<link rel="stylesheet" href="../site.css">
+<script src="../site.js" defer></script>
+</head>
+<body>
+
+<!-- The guide for people. CONTRIBUTING.md holds the full rules, for
+     contributors and coding agents; when a rule there changes, update this
+     page to match. tools/check_metadata.py checks the AI categories below
+     against the schema. -->
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="../">
+      <img src="../assets/quantecon-logo.png" alt="QuantEcon">
+      <span class="brand-rule" aria-hidden="true"></span>
+      <span class="brand-label">Community Library</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="topnav">
+        <li><a href="../#library">The library</a></li>
+        <li><a href="../#how">How it works</a></li>
+        <li><a href="../#governance">Governance</a></li>
+        <li><a href="../#roadmap">Roadmap</a></li>
+        <li><a href="../#presentations">Presentations</a></li>
+        <li><a href="./" aria-current="page">Contributing</a></li>
+        <li class="topnav-gh"><a class="gh" href="https://github.com/QuantEcon/community-library">GitHub&nbsp;↗</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-main">
+      <p class="hero-eyebrow">Community Library · Contributing</p>
+      <h1>Contribute to the library.</h1>
+      <p class="hero-lede">Anyone can take part, whether or not you are in the working group. Register your toolkit, solve one of the library's models, or propose a new model for the community to solve.</p>
+    </div>
+  </div>
+</section>
+
+<section class="paths" aria-labelledby="paths-title">
+  <div class="wrap">
+    <h2 class="sr-only" id="paths-title">Ways to contribute</h2>
+    <div class="cards">
+      <a class="card" href="#register">
+        <span class="eyebrow">For toolkit projects</span>
+        <h3>Register a project</h3>
+        <p>Give your toolkit a landing page in the library's directory. Agreement in principle is all it takes.</p>
+        <span class="go">How to register →</span>
+      </a>
+      <a class="card" href="#solution">
+        <span class="eyebrow">For anyone</span>
+        <h3>Submit a solution</h3>
+        <p>Solve one of the library's models with your toolkit, in the format you prefer, and add it with a pull request.</p>
+        <span class="go">The four steps →</span>
+      </a>
+      <a class="card is-secondary" href="#propose">
+        <span class="eyebrow">For anyone</span>
+        <h3>Propose a model</h3>
+        <p>Write a model description: the precise template that every toolkit's solution of the model follows.</p>
+        <span class="go">What makes a good one →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="wrap layout">
+
+  <nav class="rail" aria-label="Contents">
+    <div class="rail-head eyebrow">Contents</div>
+    <ul>
+      <li><a href="#register" data-navlink="register"><span class="n">01</span>Register a project</a></li>
+      <li><a href="#solution" data-navlink="solution"><span class="n">02</span>Submit a solution</a></li>
+      <li><a href="#propose" data-navlink="propose"><span class="n">03</span>Propose a model</a></li>
+      <li><a href="#versions" data-navlink="versions"><span class="n">04</span>Versions</a></li>
+      <li><a href="#ai" data-navlink="ai"><span class="n">05</span>AI and verification</a></li>
+    </ul>
+  </nav>
+
+  <main class="main" id="main">
+
+    <section class="section" id="register" data-spy="register">
+      <div class="section-head">
+        <span class="n">01</span>
+        <h2>Register a project</h2>
+      </div>
+      <p class="section-lede">Registering puts your toolkit in the library's directory, with a landing page of its own. It is an agreement in principle: nothing in it is binding, and you don't need it to submit a solution.</p>
+
+      <div class="steps">
+        <div class="step">
+          <span class="n">01</span>
+          <h3>Open the form</h3>
+          <p>Fill in <a href="https://github.com/econ-ark/sce-wg-1/issues/new?template=register-toolkit.yml">Register a toolkit</a> in the working group's tracker, one issue per toolkit.</p>
+        </div>
+        <div class="step">
+          <span class="n">02</span>
+          <h3>Add your links</h3>
+          <p>Documentation, installation, tutorials and where users ask for help. Your landing page is built from them.</p>
+        </div>
+        <div class="step">
+          <span class="n">03</span>
+          <h3>Keep it current</h3>
+          <p>Edit the issue whenever the details change.</p>
+        </div>
+      </div>
+
+      <div class="section-actions">
+        <a class="btn btn-solid" href="https://github.com/econ-ark/sce-wg-1/issues/new?template=register-toolkit.yml">Register a toolkit ↗</a>
+        <span class="section-actions-note">The issue is public, so leave out email addresses.</span>
+      </div>
+    </section>
+
+    <section class="section" id="solution" data-spy="solution">
+      <div class="section-head">
+        <span class="n">02</span>
+        <h2>Submit a solution</h2>
+      </div>
+      <p class="section-lede">A solution is a runnable implementation of one of the library's models. Keep the model and its calibration fixed; the method, the prose and the format are yours. Submit on behalf of a toolkit's project or as an individual.</p>
+
+      <div class="steps">
+        <div class="step">
+          <span class="n">01</span>
+          <h3>Read the model</h3>
+          <p>Start with its description and submission guide, such as <a href="../models/buffer-stock/">buffer stock's</a>.</p>
+        </div>
+        <div class="step">
+          <span class="n">02</span>
+          <h3>Solve it</h3>
+          <p>A notebook, a MyST document or another runnable format, reporting the results the description lists.</p>
+        </div>
+        <div class="step">
+          <span class="n">03</span>
+          <h3>Add <code>metadata.yml</code></h3>
+          <p>A short file: the authors and maintainers, the description version you follow, and your AI disclosure.</p>
+        </div>
+        <div class="step">
+          <span class="n">04</span>
+          <h3>Open a pull request</h3>
+          <p>Add your directory under <code>solutions/&lt;model&gt;/</code>. A check names any missing field.</p>
+        </div>
+      </div>
+
+      <figure class="anatomy">
+        <figcaption class="eyebrow">Naming your directory</figcaption>
+        <p class="anatomy-path"><code>solutions/buffer-stock/<b>001</b>-<b>hark</b>-<b>egm</b>/</code></p>
+        <dl class="anatomy-key">
+          <div><dt><code>001</code></dt><dd>The next free number among the model's solutions.</dd></div>
+          <div><dt><code>hark</code></dt><dd>Your toolkit, or your language if you use none.</dd></div>
+          <div><dt><code>egm</code></dt><dd>Your method, such as <code>vfi</code> or <code>egm</code>.</dd></div>
+        </dl>
+      </figure>
+
+      <p class="callout"><strong>Your solution stays yours.</strong> You author and maintain it, and changes to it, by anyone, need a maintainer's approval. How submissions are reviewed is being settled in <a href="https://github.com/QuantEcon/community-library/issues/6">#6</a>.</p>
+    </section>
+
+    <section class="section" id="propose" data-spy="propose">
+      <div class="section-head">
+        <span class="n">03</span>
+        <h2>Propose a model</h2>
+      </div>
+      <p class="section-lede">A model description is the template every solution of a model follows: the model, its calibration and the results each solution reports. The baseline set is a starting proposal, not a ceiling, and anyone can propose a model for it.</p>
+
+      <blockquote class="principle">
+        <p class="principle-head">The specification is the contribution.</p>
+        <p>Solutions from different toolkits can be compared only when they solve the same problem. A gap in the description lets correct solutions disagree for reasons no one can trace, and every solution inherits it. So the library asks more of a description than of any one solution.</p>
+      </blockquote>
+
+      <h3 class="sub-head">A good description is</h3>
+      <dl class="payoff-grid">
+        <div><dt>Complete</dt><dd>Someone who hasn't read the source paper can implement the model from the description alone.</dd></div>
+        <div><dt>Unambiguous</dt><dd>Two people implementing it independently solve the same problem, with any free choice named.</dd></div>
+        <div><dt>Correct</dt><dd>Checked against its sources, with any departure from the paper stated and explained.</dd></div>
+        <div><dt>Comparable</dt><dd>Results are evaluated at fixed points, so correct solutions by any method agree.</dd></div>
+        <div><dt>Solvable by more than one toolkit</dt><dd>Nothing in it relies on a feature that only one toolkit has.</dd></div>
+        <div><dt>A baseline</dt><dd>A standard version of a model the field knows, kept as small as its purpose allows.</dd></div>
+      </dl>
+
+      <h3 class="sub-head">What it pins down</h3>
+      <ul class="chips" aria-label="The parts of a model description">
+        <li>Sources</li>
+        <li>Model</li>
+        <li>Calibration</li>
+        <li>Conditions</li>
+        <li>Numerical solution</li>
+        <li>Results</li>
+        <li>Checks</li>
+      </ul>
+      <p class="section-note">The <a href="../models/buffer-stock/">buffer stock description</a> states each of these and is the example to follow.</p>
+
+      <div class="panels">
+        <div class="panel">
+          <span class="eyebrow">Strongly recommended</span>
+          <h3>Submit a reference solution with it</h3>
+          <p>One runnable solution that reports every result, as buffer stock has with HARK. It shows that the model can be solved, gives later solutions a baseline to verify against, and is the best test of the specification.</p>
+        </div>
+        <div class="panel is-secondary">
+          <span class="eyebrow">How to submit</span>
+          <h3>Open a pull request</h3>
+          <p>Add the description under <code>models/&lt;model&gt;/</code>, following the buffer stock directory, and say what the model is, why it belongs and which toolkits could solve it. It starts as draft v0.1.</p>
+        </div>
+      </div>
+
+      <div class="section-actions">
+        <a class="btn btn-outline" href="https://github.com/econ-ark/sce-wg-1/issues/new?template=model-family.yml">Discuss a model first ↗</a>
+        <span class="section-actions-note">Optional: talk an idea through with the working group before writing it up.</span>
+      </div>
+    </section>
+
+    <section class="section" id="versions" data-spy="versions">
+      <div class="section-head">
+        <span class="n">04</span>
+        <h2>Versions</h2>
+      </div>
+      <p class="section-lede">Each model description has its own version number, so every solution can say exactly which one it follows.</p>
+
+      <div class="roles versions">
+        <div class="role">
+          <span class="eyebrow">0.x</span>
+          <h3>Draft</h3>
+          <p>Until the working group releases it as 1.0. Every change to a draft raises the minor version.</p>
+        </div>
+        <div class="role">
+          <span class="eyebrow">1.0 → 1.1</span>
+          <h3>Minor version</h3>
+          <p>A touch-up: clearer wording, a corrected typo, an added note. The results are unchanged.</p>
+        </div>
+        <div class="role">
+          <span class="eyebrow">1.1 → 2.0</span>
+          <h3>Major version</h3>
+          <p>The model, the calibration or the reported results changed, so solutions re-run.</p>
+        </div>
+      </div>
+      <p class="section-note">Each version has an entry in the model's changelog, and is tagged and released with its PDF.</p>
+    </section>
+
+    <section class="section" id="ai" data-spy="ai">
+      <div class="section-head">
+        <span class="n">05</span>
+        <h2>AI and verification</h2>
+      </div>
+      <p class="section-lede">Every description and solution says how much AI helped produce it and whether a person has verified it. Both describe the process: neither claims that a document is free of errors, and neither ranks documents, toolkits or submitters.</p>
+
+      <ul class="ai-scale" aria-label="The four AI-assistance categories">
+        <li><span class="ai-position" aria-hidden="true">Human <span class="track"><i class="at"></i><i></i><i></i><i></i></span> AI</span><span class="ai-chip" data-level="0">No AI</span><span class="ai-summary">No AI was used.</span></li>
+        <li><span class="ai-position" aria-hidden="true">Human <span class="track"><i></i><i class="at"></i><i></i><i></i></span> AI</span><span class="ai-chip" data-level="1">AI-edited</span><span class="ai-summary">People wrote it; AI suggested edits.</span></li>
+        <li><span class="ai-position" aria-hidden="true">Human <span class="track"><i></i><i></i><i class="at"></i><i></i></span> AI</span><span class="ai-chip" data-level="2">AI-assisted</span><span class="ai-summary">AI drafted some or most of it; people edited it throughout.</span></li>
+        <li><span class="ai-position" aria-hidden="true">Human <span class="track"><i></i><i></i><i></i><i class="at"></i></span> AI</span><span class="ai-chip" data-level="3">AI-generated</span><span class="ai-summary">AI drafted it; people edited it lightly.</span></li>
+      </ul>
+      <p class="section-note">Report the highest category that applies to any substantial part, such as one section or the code. Choices about the model, the calibration and the results always belong to the authors.</p>
+
+      <div class="panels">
+        <div class="panel">
+          <span class="eyebrow">Human verification</span>
+          <h3>A named person checked it end to end</h3>
+          <p>Against its sources: a description against the papers it cites, a solution against its description. Verification belongs to one version, so a new version shows as not yet verified until someone checks it.</p>
+          <p class="verify-states"><span class="doc-verified is-verified">Human verified</span> <span class="doc-verified">Not yet verified</span></p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<section class="cta">
+  <div class="wrap">
+    <div class="cta-copy">
+      <p class="cta-eyebrow">The full rules</p>
+      <h2>Working with a coding agent?</h2>
+      <p>CONTRIBUTING.md has every field, check and release step in full, written for contributors and their agents alike. AGENTS.md adds the commands.</p>
+    </div>
+    <div class="cta-actions">
+      <a class="btn btn-light" href="https://github.com/QuantEcon/community-library/blob/main/CONTRIBUTING.md">Read CONTRIBUTING.md</a>
+      <a class="btn btn-ghost" href="https://github.com/QuantEcon/community-library/blob/main/AGENTS.md">Read AGENTS.md</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <img src="../assets/quantecon-logo.png" alt="QuantEcon">
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://quantecon.org">QuantEcon</a></li>
+        <li><a href="https://github.com/QuantEcon/community-library">Repository</a></li>
+        <li><a href="https://econ-ark.github.io/sce-wg-1/">SCE WG1</a></li>
+        <li><a href="https://econ-ark.github.io/sce-wg-1/code-of-conduct.html">Code of conduct</a></li>
+      </ul>
+    </div>
+    <p class="footer-note">The Community Library is hosted by QuantEcon. It is run in collaboration with SCE Working Group 1 on Language and Semantics, which publishes the baseline set and its model descriptions and leads the semantics track alongside Econ-ARK.</p>
+    <p class="footer-legal">© 2026 QuantEcon · CC-BY on text, OSI-approved licences on code</p>
+  </div>
+</footer>
+
+</body>
+</html>

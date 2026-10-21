@@ -1,10 +1,9 @@
 # Publishes docs/ to GitHub Pages.
 #
 # The landing page is hand-written static HTML. The one build step renders each
-# model description into a page under docs/models/, and CONTRIBUTING.md into
-# docs/contributing/; the rest of the job is checks: the things that break
-# silently when a page is edited are asserted here rather than eyeballed in a
-# browser.
+# model description into a page under docs/models/; the rest of the job is
+# checks: the things that break silently when a page is edited are asserted
+# here rather than eyeballed in a browser.
 #
 # Pages must be set to build from GitHub Actions for this to take effect:
 # Settings -> Pages -> Build and deployment -> Source: GitHub Actions.
@@ -34,9 +33,8 @@ jobs:
         run: python -m pip install -r tools/requirements.txt
 
       # Each model description becomes docs/models/<model>/index.html, with its
-      # PDF beside it, and CONTRIBUTING.md becomes docs/contributing/index.html.
-      # The pages are built here rather than committed.
-      - name: Build the model description and contributing pages
+      # PDF beside it. The pages are built here rather than committed.
+      - name: Build the model description pages
         run: python tools/build_pages.py
 
       # Versions, AI disclosure and verification: the description front matter,
@@ -92,14 +90,16 @@ jobs:
         run: |
           set -euo pipefail
           cd docs
-          grep -oE 'data-navlink="[^"]+"' index.html | sed 's/.*="//;s/"//' | sort -u > /tmp/navlinks
-          grep -oE 'data-spy="[^"]+"'     index.html | sed 's/.*="//;s/"//' | sort -u > /tmp/spies
-          if ! diff -q /tmp/navlinks /tmp/spies >/dev/null; then
-            echo "::error file=docs/index.html::the rail's data-navlink values and the sections' data-spy values disagree"
-            diff /tmp/navlinks /tmp/spies || true
-            exit 1
-          fi
-          echo "ok — $(wc -l < /tmp/spies | tr -d ' ') sections wired to the rail"
+          for f in index.html contributing/index.html; do
+            grep -oE 'data-navlink="[^"]+"' "$f" | sed 's/.*="//;s/"//' | sort -u > /tmp/navlinks
+            grep -oE 'data-spy="[^"]+"'     "$f" | sed 's/.*="//;s/"//' | sort -u > /tmp/spies
+            if ! diff -q /tmp/navlinks /tmp/spies >/dev/null; then
+              echo "::error file=docs/$f::the rail's data-navlink values and the sections' data-spy values disagree"
+              diff /tmp/navlinks /tmp/spies || true
+              exit 1
+            fi
+            echo "ok — $f: $(wc -l < /tmp/spies | tr -d ' ') sections wired to the rail"
+          done
 
       # Fork PRs get a read-only token and cannot deploy, so the site is
       # attached instead — the author can see the rendered result.

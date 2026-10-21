@@ -967,7 +967,7 @@ a.slot[data-verified="true"]:hover::after { background: #fff; color: var(--qe-bl
   white-space: nowrap;
 }
 
-/* Model description and contributing pages (built by tools/build_pages.py) -- */
+/* Model description pages (built by tools/build_pages.py) ------------------- */
 
 .doc { padding: calc(var(--bar-h) + 56px) 0 88px; }
 
@@ -1022,14 +1022,7 @@ a.slot[data-verified="true"]:hover::after { background: #fff; color: var(--qe-bl
 .doc-verified.is-verified { border-style: solid; border-color: var(--qe-blue); color: var(--qe-blue); }
 .doc-levels { font-size: .78rem; }
 
-/* The contributing guide lists its sections in the version box's place. */
-.doc-contents { font-size: .92rem; }
-.doc-contents ul { display: grid; gap: 4px; }
-
 .doc-body { max-width: 74ch; font-size: 1.02rem; line-height: 1.7; }
-/* The contributing guide is mostly tables and lists, which read better across
-   the full column than in a description's measure. */
-.doc-body.is-wide { max-width: none; }
 .doc-body h2 {
   margin: 52px 0 16px;
   font-family: var(--serif);
@@ -1066,19 +1059,6 @@ a.slot[data-verified="true"]:hover::after { background: #fff; color: var(--qe-bl
 }
 .doc-body th { font-weight: 600; color: var(--ink); border-bottom-color: var(--bar-line); }
 
-/* The contributing guide's file names, fields and commands. */
-.doc-body code { font-family: var(--mono); font-size: .86em; color: var(--ink); }
-.doc-body pre {
-  margin: 1.3em 0;
-  padding: 14px 18px;
-  overflow-x: auto;
-  background: #f7f7f7;
-  border: 1px solid var(--line-soft);
-  border-radius: 5px;
-  font-size: .9rem;
-  line-height: 1.55;
-}
-
 .doc-body .footnotes-sep { margin: 52px 0 18px; border: 0; border-top: 1px solid var(--line); }
 .doc-body .footnotes { font-size: .9rem; color: var(--body-soft); }
 .doc-body .footnotes-list { list-style: decimal; }
@@ -1097,6 +1077,131 @@ a.slot[data-verified="true"]:hover::after { background: #fff; color: var(--qe-bl
   .doc-title h1 { font-size: 2rem; }
   .doc-status { flex: 1 1 100%; }
 }
+
+/* Contributing page -------------------------------------------------------- */
+
+/* The guide for people, docs/contributing/index.html. It is built from the
+   landing page's parts (cards, steps, panels, roles, the rail) and adds the
+   few below. */
+
+.topnav a[aria-current="page"] { color: var(--qe-blue); }
+
+/* The three ways to contribute, each card one link. */
+.paths { padding-top: 48px; }
+.paths .cards { margin-top: 0; }
+a.card {
+  display: flex;
+  flex-direction: column;
+  color: var(--body-soft);
+  transition: border-color .15s linear;
+}
+a.card:visited { color: var(--body-soft); }
+a.card:hover { border-color: var(--ink); border-top-color: var(--qe-blue); text-decoration: none; }
+a.card.is-secondary:hover { border-top-color: var(--qe-red); }
+a.card p { flex: 1; }
+a.card .go {
+  margin-top: 18px;
+  font-family: var(--mono);
+  font-size: .76rem;
+  color: var(--qe-blue);
+}
+
+.sub-head {
+  margin: 40px 0 18px;
+  font-family: var(--serif);
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 1.18rem;
+}
+
+.section-actions {
+  margin-top: 26px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 20px;
+}
+.section-actions-note { font-size: .9rem; color: var(--muted); }
+
+.step code, .panel code, .anatomy code { font-family: var(--mono); font-size: .88em; }
+
+.panel h3 {
+  font-family: var(--serif);
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+.panel p { font-size: .94rem; color: var(--body-soft); line-height: 1.6; }
+
+/* A solution's directory name, taken apart. */
+.anatomy {
+  margin: 28px 0 0;
+  padding: 22px 26px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+}
+.anatomy figcaption { display: block; margin-bottom: 12px; }
+.anatomy-path { font-size: 1.05rem; color: var(--muted); white-space: nowrap; overflow-x: auto; }
+.anatomy-path b { font-weight: 500; color: var(--qe-blue); }
+.anatomy-key {
+  margin: 16px 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px 28px;
+}
+.anatomy-key div { display: flex; gap: 10px; align-items: baseline; }
+.anatomy-key dt { color: var(--qe-blue); }
+.anatomy-key dd { margin: 0; font-size: .9rem; color: var(--muted); line-height: 1.5; }
+
+/* The one idea in "Propose a model" a reader must not skim past. */
+.principle {
+  margin: 30px 0 0;
+  padding: 24px 28px;
+  border-left: 4px solid var(--qe-blue);
+  background: #f5f9fc;
+  border-radius: 0 5px 5px 0;
+}
+.principle-head {
+  margin-bottom: 8px;
+  font-family: var(--serif);
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 1.4rem;
+  line-height: 1.25;
+}
+.principle p:last-child { font-size: .98rem; color: var(--body-soft); line-height: 1.65; max-width: 70ch; }
+
+.versions { margin-top: 28px; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips li {
+  padding: 5px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: .88rem;
+  color: var(--ink);
+}
+
+/* The AI categories in order, each at its place on the line from Human to AI. */
+.ai-scale {
+  margin-top: 28px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+}
+.ai-scale li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 14px 22px;
+  border-top: 1px solid var(--line-soft);
+}
+.ai-scale li:first-child { border-top: 0; }
+.ai-scale .ai-chip { min-width: 96px; text-align: center; }
+.ai-summary { font-size: .94rem; color: var(--body-soft); }
+
+.verify-states { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 10px; }
 
 /* Responsive --------------------------------------------------------------- */
 
@@ -1145,6 +1250,7 @@ a.slot[data-verified="true"]:hover::after { background: #fff; color: var(--qe-bl
 
   body { font-size: 16px; }
   .models-head { gap: 8px; }
+  .anatomy-path { font-size: .86rem; }
 }
 
 @media print {
