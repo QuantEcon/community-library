@@ -10,6 +10,8 @@
   * The library table in docs/index.html has a slot for every solution,
     labelled with its toolkit, method, submitter and version, and showing the
     AI category and verification its metadata.yml records.
+  * The contributing page, docs/contributing/index.html, shows each AI
+    category with the word and summary the schema gives it.
 
 CONTRIBUTING.md explains the rules. The publishing workflow runs this check on
 every push and pull request; to run it locally, from the repository root:
@@ -232,13 +234,28 @@ def check_site(problems, descriptions, solutions, words):
         problems.append(f"docs/index.html: add a slot for {where} to the library table")
 
 
+def check_guide(problems, categories):
+    """The contributing page repeats the AI categories by hand; keep it in step."""
+    page = (ROOT / "docs" / "contributing" / "index.html").read_text(encoding="utf-8")
+    for category in categories:
+        shown = f'<span class="ai-chip" data-level="{category["level"]}">{category["word"]}</span>'
+        summary = f'<span class="ai-summary">{category["summary"]}</span>'
+        if shown not in page or summary not in page:
+            problems.append(
+                f"docs/contributing/index.html: show category {category['level']} as "
+                f"'{category['word']}' with the summary '{category['summary']}', as the schema says"
+            )
+
+
 def main():
     schema = json.loads(SCHEMA.read_text(encoding="utf-8"))
     problems = []
     descriptions = check_descriptions(problems, description_validator(schema))
     solutions = check_solutions(problems, Draft202012Validator(schema), descriptions)
-    words = {category["level"]: category["word"] for category in schema["properties"]["ai_level"]["x-categories"]}
+    categories = schema["properties"]["ai_level"]["x-categories"]
+    words = {category["level"]: category["word"] for category in categories}
     check_site(problems, descriptions, solutions, words)
+    check_guide(problems, categories)
     for problem in problems:
         print(f"::error::{problem}")
     if problems:

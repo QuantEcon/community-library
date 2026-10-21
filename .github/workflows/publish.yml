@@ -90,14 +90,16 @@ jobs:
         run: |
           set -euo pipefail
           cd docs
-          grep -oE 'data-navlink="[^"]+"' index.html | sed 's/.*="//;s/"//' | sort -u > /tmp/navlinks
-          grep -oE 'data-spy="[^"]+"'     index.html | sed 's/.*="//;s/"//' | sort -u > /tmp/spies
-          if ! diff -q /tmp/navlinks /tmp/spies >/dev/null; then
-            echo "::error file=docs/index.html::the rail's data-navlink values and the sections' data-spy values disagree"
-            diff /tmp/navlinks /tmp/spies || true
-            exit 1
-          fi
-          echo "ok — $(wc -l < /tmp/spies | tr -d ' ') sections wired to the rail"
+          for f in index.html contributing/index.html; do
+            grep -oE 'data-navlink="[^"]+"' "$f" | sed 's/.*="//;s/"//' | sort -u > /tmp/navlinks
+            grep -oE 'data-spy="[^"]+"'     "$f" | sed 's/.*="//;s/"//' | sort -u > /tmp/spies
+            if ! diff -q /tmp/navlinks /tmp/spies >/dev/null; then
+              echo "::error file=docs/$f::the rail's data-navlink values and the sections' data-spy values disagree"
+              diff /tmp/navlinks /tmp/spies || true
+              exit 1
+            fi
+            echo "ok — $f: $(wc -l < /tmp/spies | tr -d ' ') sections wired to the rail"
+          done
 
       # Fork PRs get a read-only token and cannot deploy, so the site is
       # attached instead — the author can see the rendered result.

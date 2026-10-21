@@ -109,7 +109,7 @@ def build(model_dir, md, template):
         changelog=f"{REPOSITORY}/blob/main/models/{model}/CHANGELOG.md",
         source=f"{REPOSITORY}/blob/main/models/{model}/model-description.md",
         guide=f"{REPOSITORY}/blob/main/models/{model}/README.md",
-        levels=f"{REPOSITORY}/blob/main/CONTRIBUTING.md#ai-disclosure-and-verification",
+        levels="../../contributing/#ai",
         license=html.escape(front["license"]),
         content=content,
     )
