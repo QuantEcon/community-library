@@ -66,8 +66,9 @@ self-contained reveal.js deck.
 
 Each model description also gets a page at `docs/models/<model>/`, built from
 its `model-description.md` by `tools/build_pages.py` with the PDF alongside.
-The pages are built when the site is published, not committed. To preview
-them:
+The contributing guide gets one too, at `docs/contributing/`, built from
+`CONTRIBUTING.md`. The pages are built when the site is published, not
+committed. To preview them:
 
 ```sh
 python -m pip install -r tools/requirements.txt

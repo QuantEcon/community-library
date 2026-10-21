@@ -967,7 +967,7 @@ a.slot[data-verified="true"]:hover::after { background: #fff; color: var(--qe-bl
   white-space: nowrap;
 }
 
-/* Model description pages (built by tools/build_pages.py) ------------------- */
+/* Model description and contributing pages (built by tools/build_pages.py) -- */
 
 .doc { padding: calc(var(--bar-h) + 56px) 0 88px; }
 
@@ -1022,6 +1022,10 @@ a.slot[data-verified="true"]:hover::after { background: #fff; color: var(--qe-bl
 .doc-verified.is-verified { border-style: solid; border-color: var(--qe-blue); color: var(--qe-blue); }
 .doc-levels { font-size: .78rem; }
 
+/* The contributing guide lists its sections in the version box's place. */
+.doc-contents { font-size: .92rem; }
+.doc-contents ul { display: grid; gap: 4px; }
+
 .doc-body { max-width: 74ch; font-size: 1.02rem; line-height: 1.7; }
 .doc-body h2 {
   margin: 52px 0 16px;
@@ -1058,6 +1062,19 @@ a.slot[data-verified="true"]:hover::after { background: #fff; color: var(--qe-bl
   vertical-align: top;
 }
 .doc-body th { font-weight: 600; color: var(--ink); border-bottom-color: var(--bar-line); }
+
+/* The contributing guide's file names, fields and commands. */
+.doc-body code { font-family: var(--mono); font-size: .86em; color: var(--ink); }
+.doc-body pre {
+  margin: 1.3em 0;
+  padding: 14px 18px;
+  overflow-x: auto;
+  background: #f7f7f7;
+  border: 1px solid var(--line-soft);
+  border-radius: 5px;
+  font-size: .9rem;
+  line-height: 1.55;
+}
 
 .doc-body .footnotes-sep { margin: 52px 0 18px; border: 0; border-top: 1px solid var(--line); }
 .doc-body .footnotes { font-size: .9rem; color: var(--body-soft); }

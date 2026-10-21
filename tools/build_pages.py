@@ -1,4 +1,4 @@
-"""Build a web page for each model description.
+"""Build a web page for each model description, and one for CONTRIBUTING.md.
 
 For every models/<model>/model-description.md this writes
 docs/models/<model>/index.html and copies the description's PDF beside it.
@@ -7,6 +7,10 @@ stylesheet and header, and shows the same version box: the version, status
 and date, the AI-assistance level and the human-verification record, all
 read from the front matter's `options`. MathJax renders the equations, as it
 does when GitHub shows the Markdown.
+
+CONTRIBUTING.md becomes docs/contributing/index.html, with its sections
+listed where a description's version box sits. The file stays the source,
+for people reading the repository and for coding agents alike.
 
 The publishing workflow runs this before it checks and deploys docs/, so the
 generated pages are not committed. To preview them, run from the repository
@@ -18,6 +22,7 @@ root:
 import datetime
 import html
 import json
+import re
 import shutil
 import string
 from pathlib import Path
@@ -31,6 +36,7 @@ from mdit_py_plugins.footnote import footnote_plugin
 ROOT = Path(__file__).resolve().parent.parent
 REPOSITORY = "https://github.com/QuantEcon/community-library"
 SITE = "https://quantecon.github.io/community-library"
+GUIDE = ROOT / "CONTRIBUTING.md"
 
 # The word and one-line summary for each AI-assistance category, from the
 # schema. CONTRIBUTING.md defines the categories, and
@@ -61,6 +67,11 @@ def markdown():
     md.use(footnote_plugin)
     md.use(anchors_plugin, min_level=2, max_level=3, permalink=True, permalinkSymbol="#")
     return md
+
+
+def wrap_tables(content):
+    """Wide tables scroll inside their own box on a phone instead of the page."""
+    return content.replace("<table>", '<div class="table-wrap"><table>').replace("</table>", "</table></div>")
 
 
 def long_date(value):
@@ -97,9 +108,7 @@ def status_box(options, date):
 def build(model_dir, md, template):
     front, body = split_front_matter((model_dir / "model-description.md").read_text(encoding="utf-8"))
     project = yaml.safe_load((model_dir / "myst.yml").read_text(encoding="utf-8"))["project"]
-    content = md.render(body)
-    # Wide tables scroll inside their own box on a phone instead of the page.
-    content = content.replace("<table>", '<div class="table-wrap"><table>').replace("</table>", "</table></div>")
+    content = wrap_tables(md.render(body))
     model = model_dir.name
     page = template.substitute(
         title=html.escape(front["title"]),
@@ -109,7 +118,7 @@ def build(model_dir, md, template):
         changelog=f"{REPOSITORY}/blob/main/models/{model}/CHANGELOG.md",
         source=f"{REPOSITORY}/blob/main/models/{model}/model-description.md",
         guide=f"{REPOSITORY}/blob/main/models/{model}/README.md",
-        levels=f"{REPOSITORY}/blob/main/CONTRIBUTING.md#ai-disclosure-and-verification",
+        levels="../../contributing/#ai-disclosure-and-verification",
         license=html.escape(front["license"]),
         content=content,
     )
@@ -120,12 +129,66 @@ def build(model_dir, md, template):
     return out / "index.html"
 
 
+def point_links_at_repository(tokens):
+    """Repoint the guide's links to files, which are relative to CONTRIBUTING.md.
+
+    On GitHub they resolve within the repository; on the site they would point
+    into docs/. Each goes to the file on GitHub instead, or, for a model
+    description, to its page on the site. A link to a missing file stops the
+    build, since the page would carry it as a dead link.
+    """
+    for token in tokens:
+        for child in token.children or []:
+            if child.type != "link_open":
+                continue
+            href = child.attrGet("href")
+            if re.match(r"[a-z]+:|#", href):
+                continue
+            path, _, anchor = href.partition("#")
+            target = ROOT / path
+            if not target.exists():
+                raise SystemExit(f"CONTRIBUTING.md links to {href}, which does not exist")
+            if target.name == "model-description.md":
+                url = f"../models/{target.parent.name}/"
+            else:
+                url = f"{REPOSITORY}/{'tree' if target.is_dir() else 'blob'}/main/{target.relative_to(ROOT).as_posix()}"
+            child.attrSet("href", url + (f"#{anchor}" if anchor else ""))
+
+
+def build_guide(md, template):
+    heading, body = GUIDE.read_text(encoding="utf-8").split("\n", 1)
+    title = heading.removeprefix("# ")
+    env = {}
+    tokens = md.parse(body, env)
+    point_links_at_repository(tokens)
+    # The guide's sections, from the ids the anchors plugin gave its headings.
+    contents = [
+        f'<li><a href="#{token.attrGet("id")}">{html.escape(tokens[i + 1].content)}</a></li>'
+        for i, token in enumerate(tokens)
+        if token.type == "heading_open" and token.tag == "h2"
+    ]
+    page = template.substitute(
+        title=html.escape(title),
+        url=f"{SITE}/contributing/",
+        source=f"{REPOSITORY}/blob/main/CONTRIBUTING.md",
+        agents=f"{REPOSITORY}/blob/main/AGENTS.md",
+        contents="<ul>\n" + "\n".join(contents) + "\n</ul>",
+        content=wrap_tables(md.renderer.render(tokens, md.options, env)),
+    )
+    out = ROOT / "docs" / "contributing"
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "index.html").write_text(page, encoding="utf-8")
+    return out / "index.html"
+
+
 def main():
     md = markdown()
     template = string.Template((ROOT / "tools" / "model-page.html").read_text(encoding="utf-8"))
     for model_dir in sorted((ROOT / "models").iterdir()):
         if (model_dir / "model-description.md").exists():
             print(f"built {build(model_dir, md, template).relative_to(ROOT)}")
+    template = string.Template((ROOT / "tools" / "contributing-page.html").read_text(encoding="utf-8"))
+    print(f"built {build_guide(md, template).relative_to(ROOT)}")
 
 
 if __name__ == "__main__":
