@@ -87,6 +87,10 @@ website, which a maintainer can add. The slot is labelled with the toolkit,
 the method, the submitter (the `project`, or else the first author's surname)
 and the description version, such as `HARK · EGM · Econ-ARK · v0.1`.
 
+If any of this gets in the way, open an issue or a draft pull request with
+what you have, and the library team will help bring the solution into the
+library.
+
 A solution belongs to its authors. Changes to it, by anyone, need the
 approval of one of its maintainers.
 

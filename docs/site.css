@@ -1123,7 +1123,7 @@ a.card .go {
 }
 .section-actions-note { font-size: .9rem; color: var(--muted); }
 
-.step code, .panel code, .anatomy code { font-family: var(--mono); font-size: .88em; }
+.flow code, .panel code, .anatomy code { font-family: var(--mono); font-size: .88em; }
 
 .panel h3 {
   font-family: var(--serif);
@@ -1133,6 +1133,76 @@ a.card .go {
   margin-bottom: 8px;
 }
 .panel p { font-size: .94rem; color: var(--body-soft); line-height: 1.6; }
+
+/* A path's steps as a flow: numbered nodes joined by arrows, left to right,
+   and top to bottom on a phone. */
+.flow {
+  margin: 34px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: 28px;
+}
+.flow li { position: relative; }
+.flow-node {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-bottom: 16px;
+  border: 1.5px solid var(--qe-blue);
+  border-radius: 50%;
+  background: #fff;
+  font-family: var(--mono);
+  font-size: .8rem;
+  color: var(--qe-blue);
+}
+/* The connector runs from this node into the gap, ending in an arrowhead
+   just short of the next node. */
+.flow li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 16px;
+  left: 46px;
+  right: -16px;
+  border-top: 1.5px solid var(--bar-line);
+}
+.flow li:not(:last-child)::before {
+  content: "";
+  position: absolute;
+  top: 12.5px;
+  right: -16px;
+  width: 8px;
+  height: 8px;
+  border-top: 1.5px solid var(--bar-line);
+  border-right: 1.5px solid var(--bar-line);
+  transform: rotate(45deg);
+}
+.flow h3 {
+  font-size: .98rem;
+  color: var(--ink);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.flow p { font-size: .9rem; color: var(--muted); line-height: 1.55; }
+
+/* An offer of help, with the button that takes it. */
+.help {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 28px;
+  padding: 20px 24px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+}
+.help p { flex: 1 1 320px; font-size: .95rem; color: var(--body-soft); line-height: 1.6; }
+.help strong { color: var(--ink); }
 
 /* A solution's directory name, taken apart. */
 .anatomy {
@@ -1214,6 +1284,15 @@ a.card .go {
 
 @media (max-width: 820px) {
   :root { --gutter: 24px; }
+
+  /* The flow turns to run down the page, the connector now vertical. */
+  .flow { grid-auto-flow: row; gap: 0; }
+  .flow li { padding: 0 0 24px 54px; }
+  .flow li:last-child { padding-bottom: 0; }
+  .flow-node { position: absolute; left: 0; top: 0; margin: 0; }
+  .flow h3 { padding-top: 5px; }
+  .flow li:not(:last-child)::after { top: 42px; bottom: 8px; left: 16.5px; right: auto; border-top: 0; border-left: 1.5px solid var(--bar-line); }
+  .flow li:not(:last-child)::before { top: auto; bottom: 8px; left: 13px; right: auto; transform: rotate(135deg); }
 
   /* The section links live in the contents rail on wide screens and would
      overflow the 50px bar here; the repository link is the one that has no
