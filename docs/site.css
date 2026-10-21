@@ -532,6 +532,31 @@ a.slot.is-filled:hover { background: var(--qe-blue); color: #fff; text-decoratio
 }
 .btn-small { padding: 7px 14px; font-size: .84rem; }
 
+/* Models whose descriptions are still to come: one greyed line each, with no
+   slots until there is a description to implement. */
+.models-planned {
+  padding: 10px 26px;
+  line-height: 1.5;
+  background: #fafafa;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line-soft);
+}
+.planned-list li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px 14px;
+  padding: 11px 26px;
+}
+.planned-list li + li { border-top: 1px solid var(--line-soft); }
+.planned-list h3 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1rem;
+  color: #767676;
+}
+.planned-list .model-class { margin-top: 0; }
+
 .models-cta {
   display: flex;
   align-items: center;
