@@ -33,9 +33,15 @@ python tools/check_metadata.py
 ```
 
 The publishing workflow, `.github/workflows/publish.yml`, runs these, then
-checks that local links, in-page anchors and the contents rail resolve. To
-preview the site, serve `docs/` after building the pages; links to
-directories such as `models/buffer-stock/` need a server:
+checks that local links, in-page anchors and the contents rail resolve. A
+pull request from a branch of this repository is also published as a live
+preview at `https://quantecon.github.io/community-library/pr-<number>/`,
+commented on the pull request with links to the pages it changes; share the
+address with anyone who should see a page before it merges. The preview is
+removed when the pull request closes. A fork's pull request gets the built
+site as the workflow's `site-preview` artifact instead. To preview the site
+locally, serve `docs/` after building the pages; links to directories such as
+`models/buffer-stock/` need a server:
 
 ```sh
 python -m http.server 8000 --directory docs
