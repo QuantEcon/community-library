@@ -5,24 +5,22 @@
 # checks: the things that break silently when a page is edited are asserted
 # here rather than eyeballed in a browser.
 #
-# The site is served from the gh-pages branch, the scheme QuantEcon.manual
-# uses. A push to main publishes docs/ to the branch's root. A pull request
-# from a branch of this repository publishes the same build to pr-<number>/,
-# served at https://quantecon.github.io/community-library/pr-<number>/, so
-# that reviewers, and the people a page is about, can read it before it
-# merges; the address is commented on the pull request, with links to the
-# pages it changes, and the folder is removed when the pull request closes.
-# A pull request from a fork has a read-only token, so it gets the built site
-# as a workflow artifact instead.
+# Pages must be set to build from GitHub Actions for this to take effect:
+# Settings -> Pages -> Build and deployment -> Source: GitHub Actions.
 #
-# Pages must be set to serve the branch for this to take effect:
-# Settings -> Pages -> Build and deployment -> Source: Deploy from a branch,
-# branch gh-pages, folder / (root).
-#
-# Every job that writes gh-pages shares one concurrency group:
-# peaceiris/actions-gh-pages pushes from a SHA read at job start, so two
-# writers at once lose one commit (QuantEcon.manual#121). The build runs
-# lock-free; only the few seconds of writing take the lock.
+# A pull request from a branch of this repository is also deployed to
+# Cloudflare Pages, at https://pr-<number>.<project>.pages.dev, so that
+# reviewers, and the people a page is about, can read it before it merges. The
+# address is the same for every push and is posted as a comment on the pull
+# request. Previews live outside the repository, so they add nothing to its
+# size. This uses QuantEcon's shared action and needs, once:
+#   a Cloudflare Pages project named as PREVIEW_PROJECT below, created by
+#     direct upload (docs/user/actions/preview-cloudflare.md in
+#     QuantEcon/actions walks through it);
+#   the repository secrets CLOUDFLARE_API_TOKEN (Account: Cloudflare Pages:
+#     Edit) and CLOUDFLARE_ACCOUNT_ID.
+# A pull request from a fork gets no secrets, so the action skips it and the
+# built site is attached as a workflow artifact instead.
 
 name: Publish
 
@@ -30,21 +28,22 @@ on:
   push:
     branches: [main]
   pull_request:
-    types: [opened, synchronize, reopened]
-  # Only to remove a closed pull request's preview: this event carries the
-  # base branch's permissions, and the job checks out gh-pages, never the
-  # pull request's code.
-  pull_request_target:
-    types: [closed]
   workflow_dispatch:
 
 permissions:
   contents: read
 
+env:
+  # The Cloudflare Pages project the previews deploy to; its name is in every
+  # preview address.
+  PREVIEW_PROJECT: community-library
+
 jobs:
   build:
-    if: github.event_name != 'pull_request_target'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write   # the preview's comment
     steps:
       - uses: actions/checkout@v4
 
@@ -124,159 +123,58 @@ jobs:
             echo "ok — $f: $(wc -l < /tmp/spies | tr -d ' ') sections wired to the rail"
           done
 
-      # The built site, for the publish and preview jobs below; on a fork's
-      # pull request, which cannot publish, it is what the author downloads
-      # to see the rendered result.
-      - name: Upload the built site
+      # Fork PRs get a read-only token and no secrets, so the site is
+      # attached as well — the author can see the rendered result.
+      - name: Upload the built site for review
+        if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: site-preview
           path: docs
           retention-days: 14
 
-  publish:
+      # The preview action runs wrangler, which needs Node 22 or later.
+      - name: Set up Node for the preview
+        if: github.event_name == 'pull_request'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # lectures-dir is empty because this is not a lecture site: the comment
+      # then carries the preview address alone.
+      - name: Deploy the pull request's preview
+        if: github.event_name == 'pull_request'
+        uses: quantecon/actions/preview-cloudflare@v0.12.0
+        with:
+          cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          cloudflare-account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          project-name: ${{ env.PREVIEW_PROJECT }}
+          build-dir: docs
+          lectures-dir: ''
+
+      - name: Package the site for Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
     needs: build
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    # Only the deploy needs a mutex. Held workflow-wide it would also cover
+    # pull_request runs, which never reach this job, so a PR's checks would
+    # queue a push-to-main deploy behind them. Let a deploy finish rather than
+    # cancelling it mid-flight; queued pushes coalesce.
     concurrency:
-      group: gh-pages
+      group: pages
       cancel-in-progress: false
     permissions:
-      contents: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: site-preview
-          path: docs
-
-      # keep_files leaves the pr-<number>/ previews in place. It also leaves
-      # a page that has been deleted or renamed, so remove such a file from
-      # gh-pages by hand.
-      - name: Publish the site
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs
-          keep_files: true
-          force_orphan: false
-
-  preview:
-    needs: build
-    # A fork's pull request gets the checks above but no preview: its token
-    # is read-only, so the push would fail, and a fork's build should never
-    # hold the gh-pages lock.
-    if: >-
-      github.event_name == 'pull_request'
-      && github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ubuntu-latest
-    concurrency:
-      group: gh-pages
-      cancel-in-progress: false
-    permissions:
-      contents: write
-      pull-requests: write
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: site-preview
-          path: docs
-
-      - name: Publish the preview
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs
-          destination_dir: pr-${{ github.event.number }}
-          force_orphan: false
-
-      # The address, and a link to each page the pull request changes, so a
-      # reviewer lands on what changed rather than on the landing page.
-      - name: Comment the preview's address
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const number = context.payload.pull_request.number;
-            const base = `https://quantecon.github.io/community-library/pr-${number}`;
-            const sha = context.payload.pull_request.head.sha.substring(0, 7);
-
-            const files = await github.paginate(github.rest.pulls.listFiles, {
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: number,
-            });
-            const pages = new Set();
-            for (const f of files) {
-              if (f.status === 'removed') continue;
-              let m;
-              // A hand-written page, served at its path; an index at its directory.
-              if ((m = f.filename.match(/^docs\/(.*\.html)$/))) {
-                pages.add(m[1].replace(/(^|\/)index\.html$/, '$1'));
-              }
-              // A model description, built to docs/models/<model>/.
-              if ((m = f.filename.match(/^models\/([^/]+)\/model-description\.md$/))) {
-                pages.add(`models/${m[1]}/`);
-              }
-            }
-
-            let body = `**Site preview** · [${base}/](${base}/) (${sha})`;
-            if (pages.size) {
-              const links = [...pages].sort().map(p => `- [${p || 'index'}](${base}/${p})`);
-              body += `\n\n**Changed pages:**\n${links.join('\n')}`;
-            }
-            body += `\n\nThe preview is updated on every push and removed when the pull request closes.`;
-
-            // One comment per pull request, updated in place.
-            const marker = '<!-- site-preview -->';
-            const comments = await github.paginate(github.rest.issues.listComments, {
-              owner: context.repo.owner, repo: context.repo.repo, issue_number: number,
-            });
-            const mine = comments.find(c => c.body && c.body.includes(marker));
-            const full = `${marker}\n${body}`;
-            if (mine) {
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner, repo: context.repo.repo, comment_id: mine.id, body: full,
-              });
-            } else {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner, repo: context.repo.repo, issue_number: number, body: full,
-              });
-            }
-
-  remove-preview:
-    if: github.event_name == 'pull_request_target'
-    runs-on: ubuntu-latest
-    concurrency:
-      group: gh-pages
-      cancel-in-progress: false
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          fetch-depth: 1
-
-      - name: Remove the pull request's preview
-        env:
-          PR_DIR: pr-${{ github.event.number }}
-        run: |
-          set -euo pipefail
-          if [ ! -d "$PR_DIR" ]; then
-            echo "no $PR_DIR on gh-pages; nothing to remove"
-            exit 0
-          fi
-          git rm -r -q "$PR_DIR"
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -q -m "Remove the preview of pull request #${{ github.event.number }}"
-          # Another writer may have pushed meanwhile; rebase and retry.
-          for attempt in 1 2 3; do
-            git push && break
-            git pull --rebase origin gh-pages
-            sleep 5
-          done
-          git fetch origin gh-pages
-          if git ls-tree -d --name-only origin/gh-pages "$PR_DIR" | grep -q .; then
-            echo "::error::$PR_DIR is still on origin/gh-pages"
-            exit 1
-          fi
+      - id: deployment
+        uses: actions/deploy-pages@v4
