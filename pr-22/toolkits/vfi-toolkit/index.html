@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VFI Toolkit · Toolkit directory · QuantEcon Community Library</title>
+<meta name="description" content="VFI Toolkit in the QuantEcon Community Library's toolkit directory: what the MATLAB toolkit for value function iteration does, the models it solves, its capabilities, and where to find its documentation, examples and forum.">
+<meta property="og:title" content="VFI Toolkit · QuantEcon Community Library">
+<meta property="og:description" content="A MATLAB toolkit for heterogeneous-agent, life-cycle and OLG models by value function iteration, solved on the GPU. Its page in the Community Library's toolkit directory.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://quantecon.github.io/community-library/toolkits/vfi-toolkit/">
+<meta property="og:image" content="https://quantecon.github.io/community-library/assets/quantecon-logo.png">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://quantecon.github.io/community-library/toolkits/vfi-toolkit/">
+<link rel="icon" href="../../assets/quantecon-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&family=Source+Sans+Pro:wght@300;400;600;700&family=Source+Code+Pro:wght@400;500&display=swap">
+<link rel="stylesheet" href="../../site.css">
+<script src="../../site.js" defer></script>
+</head>
+<body>
+
+<!-- A toolkit's page in the library's directory. It introduces the toolkit
+     and points at the project's own site, documentation and forum; it does
+     not repeat them. The project keeps editorial control over how its
+     toolkit is presented here, so change the page with its maintainers'
+     agreement. The facts come from the project's repositories and website
+     at the date in the footer of the page; AGENTS.md says how to add a page
+     for another toolkit. -->
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="../../">
+      <img src="../../assets/quantecon-logo.png" alt="QuantEcon">
+      <span class="brand-rule" aria-hidden="true"></span>
+      <span class="brand-label">Community Library</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="topnav">
+        <li><a href="../../#library">The library</a></li>
+        <li><a href="../" aria-current="page">Toolkits</a></li>
+        <li><a href="../../#how">How it works</a></li>
+        <li><a href="../../contributing/">Contributing</a></li>
+        <li class="topnav-gh"><a class="gh" href="https://github.com/vfitoolkit/VFIToolkit-matlab">Toolkit on GitHub&nbsp;↗</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<section class="hero tk-hero">
+  <div class="wrap">
+    <div class="hero-main">
+      <p class="hero-eyebrow"><a href="../">Toolkit directory</a> · MATLAB</p>
+      <h1>VFI Toolkit</h1>
+      <p class="hero-lede">A MATLAB toolkit for solving macroeconomic models by value function iteration. You write the model's return function and grids; the toolkit solves the dynamic programming problem on the GPU, computes the agent distribution, evaluates the statistics you ask for, and finds the general equilibrium and the transition path. Its home ground is heterogeneous-agent, life-cycle and overlapping-generations models.</p>
+      <div class="hero-actions">
+        <a class="btn btn-solid" href="https://www.vfitoolkit.com/">vfitoolkit.com ↗</a>
+        <a class="btn btn-outline" href="https://www.vfitoolkit.com/updates-blog/2021/an-introduction-to-life-cycle-models/">Start with the life-cycle introduction ↗</a>
+      </div>
+      <p class="hero-credit">Written and maintained by <strong>Robert Kirkby</strong>. Open source under the GPL-3.0 since 2015, with its <a href="https://github.com/vfitoolkit/VFIToolkit-matlab">code</a>, <a href="https://github.com/vfitoolkit/VFItoolkit-matlab-examples">examples</a> and <a href="https://github.com/vfitoolkit/vfitoolkit-matlab-replication">replications</a> on GitHub and a <a href="https://discourse.vfitoolkit.com/">forum</a> for questions.</p>
+    </div>
+
+    <aside class="host-card tk-card" aria-label="VFI Toolkit at a glance">
+      <span class="tk-mark" aria-hidden="true">VFI</span>
+      <h2>At a glance</h2>
+      <dl class="tk-facts">
+        <div><dt>Language</dt><dd>MATLAB. A Julia version is in development</dd></div>
+        <div><dt>Hardware</dt><dd>NVIDIA GPU through the Parallel Computing Toolbox; a CPU mode covers small, basic problems</dd></div>
+        <div><dt>Method</dt><dd>Value function iteration on discretised state spaces</dd></div>
+        <div><dt>Licence</dt><dd>GPL-3.0</dd></div>
+        <div><dt>Cite</dt><dd>Kirkby, <a href="https://doi.org/10.1007/s10614-015-9544-1">A Toolkit for Value Function Iteration</a>, <em>Computational Economics</em> 49 (2017)</dd></div>
+      </dl>
+      <div class="host-rule" aria-hidden="true"></div>
+      <span class="eyebrow">Links</span>
+      <ul class="tk-links">
+        <li><a href="https://www.vfitoolkit.com/">Website and documentation</a></li>
+        <li><a href="https://github.com/vfitoolkit/VFIToolkit-matlab">Repository and download</a></li>
+        <li><a href="https://discourse.vfitoolkit.com/">Forum: ask for help</a></li>
+        <li><a href="https://www.mathworks.com/matlabcentral/fileexchange/53478-value-function-iteration-vfi-toolkit-for-matlab">MATLAB File Exchange</a></li>
+      </ul>
+    </aside>
+  </div>
+</section>
+
+<section class="facts" aria-label="VFI Toolkit in numbers">
+  <div class="wrap">
+    <div class="facts-row">
+      <div class="fact">
+        <span class="eyebrow">Learning path</span>
+        <p class="fact-value">18 life-cycle models, built up one feature at a time</p>
+      </div>
+      <div class="fact">
+        <span class="eyebrow">Replications</span>
+        <p class="fact-value">26 published papers reproduced, tables and figures side by side</p>
+      </div>
+      <div class="fact">
+        <span class="eyebrow">Preferences</span>
+        <p class="fact-value">Epstein–Zin, quasi-hyperbolic, Gul–Pesendorfer, ambiguity aversion</p>
+      </div>
+      <div class="fact">
+        <span class="eyebrow">Next</span>
+        <p class="fact-value">A Julia version in development, for notebooks and licence-free runs</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap layout">
+
+  <nav class="rail" aria-label="Contents">
+    <div class="rail-head eyebrow">Contents</div>
+    <ul>
+      <li><a href="#introduction" data-navlink="introduction"><span class="n">01</span>Introduction</a></li>
+      <li><a href="#models" data-navlink="models"><span class="n">02</span>Models it solves</a></li>
+      <li><a href="#capabilities" data-navlink="capabilities"><span class="n">03</span>Capabilities</a></li>
+      <li><a href="#learn" data-navlink="learn"><span class="n">04</span>Learn it</a></li>
+      <li><a href="#library" data-navlink="library"><span class="n">05</span>In the library</a></li>
+      <li><a href="#links" data-navlink="links"><span class="n">06</span>Links and help</a></li>
+    </ul>
+  </nav>
+
+  <main class="main" id="main">
+
+    <section class="section" id="introduction" data-spy="introduction">
+      <div class="section-head">
+        <span class="n">01</span>
+        <h2>Introduction</h2>
+      </div>
+      <p class="section-lede">VFI Toolkit takes one approach and makes it fast, general and hard to get wrong: discretise the state space, iterate the Bellman equation, and let the GPU do the work. The result is a toolkit in which the model is a short script and the numerics are somebody else's problem.</p>
+
+      <div class="two-col tk-intro">
+        <div>
+          <h3>You describe the model</h3>
+          <p>A model is a return function, written in MATLAB with the arguments in a fixed order (the decision, next period's endogenous state, this period's state, the shocks, then parameters), together with grids for each state and a transition matrix for each shock. Parameters live in a struct and are passed by name, so the same code solves a calibration or a whole grid of them. Age-dependent parameters, grids and shocks are given once and indexed by age.</p>
+        </div>
+        <div>
+          <h3>The toolkit solves it</h3>
+          <p>One call solves the value function and policy for an infinite-horizon or a finite-horizon problem. Further calls compute the stationary or age-conditional distribution of agents, evaluate any function of the state on that distribution (means, quantiles, Lorenz curves, life-cycle profiles, panel simulations), close the general equilibrium, and solve the transition path between two equilibria. Everything runs on the GPU without the user writing a line of GPU code.</p>
+        </div>
+      </div>
+
+      <div class="panels">
+        <div class="panel">
+          <span class="eyebrow">The design bet</span>
+          <h3>Pure discretisation, then speed-ups where they are safe</h3>
+          <p>Choices are made on grids, so the solver never interpolates a value function or searches a continuous space, and the accuracy of a solution is a question of grid size that the user can check. Speed comes from the GPU, from Howards improvement and relative VFI in infinite horizon, and from two optional layers the toolkit adds when the model allows them: a grid interpolation layer that refines the choice of next period's asset between grid points, and divide-and-conquer, which exploits monotone policies.</p>
+        </div>
+        <div class="panel is-secondary">
+          <span class="eyebrow">Who it is for</span>
+          <h3>Researchers and students who want the model, not the solver</h3>
+          <p>The toolkit grew out of teaching and replication. Its introductions build a life-cycle model and an OLG model up feature by feature, each step a runnable script, and its replication repository reproduces the tables and figures of published papers with notes on where they differ. Users need MATLAB and, for anything beyond illustrations, an NVIDIA GPU.</p>
+        </div>
+      </div>
+
+      <p class="aside-note"><strong>Julia next.</strong> The project is developing a Julia version of the toolkit. It will run models without a MATLAB licence, in Jupyter notebooks as well as scripts, which brings the toolkit's solutions into the same executable form as the library's Python and Julia ones. This page will link it when the project announces it.</p>
+    </section>
+
+    <section class="section" id="models" data-spy="models">
+      <div class="section-head">
+        <span class="n">02</span>
+        <h2>Models it solves</h2>
+      </div>
+      <p class="section-lede">Any model that can be written as a dynamic programming problem over a discretised state space, with one or more agents whose decisions aggregate to prices. In practice, the toolkit's examples and replications cluster in these families.</p>
+
+      <div class="tk-models">
+        <a class="tk-model" href="https://github.com/vfitoolkit/VFItoolkit-matlab-examples/tree/master/HeterogeneousAgentModels">
+          <span class="eyebrow">Infinite horizon</span>
+          <h3>Heterogeneous-agent incomplete markets</h3>
+          <p>Aiyagari and Huggett economies: the stationary equilibrium, the wealth distribution and the transition path after a change in policy or technology. Guerrieri–Lorenzoni's credit crunch is a worked example.</p>
+          <span class="go">Examples ↗</span>
+        </a>
+        <a class="tk-model" href="https://github.com/vfitoolkit/IntroToLifeCycleModels">
+          <span class="eyebrow">Finite horizon</span>
+          <h3>Life-cycle models</h3>
+          <p>Households that age, work, retire and die, with age-dependent income risk, permanent types, bequests, endogenous labour, housing-style assets and portfolio choice over a risky asset. The toolkit's introduction builds one up over eighteen models.</p>
+          <span class="go">Intro to Life-Cycle Models ↗</span>
+        </a>
+        <a class="tk-model" href="https://github.com/vfitoolkit/IntroToOLGModels">
+          <span class="eyebrow">Finite horizon · general equilibrium</span>
+          <h3>Overlapping generations</h3>
+          <p>Life-cycle households closed in general equilibrium, with taxes, pensions and government budgets, demographics, and the transition path between steady states. Auerbach–Kotlikoff, Conesa–Krueger and Huggett (1996) are among the replications.</p>
+          <span class="go">Intro to OLG Models ↗</span>
+        </a>
+        <a class="tk-model" href="https://github.com/vfitoolkit/VFItoolkit-matlab-examples/tree/master/FirmEntryExitModels">
+          <span class="eyebrow">Firm dynamics</span>
+          <h3>Firm entry and exit</h3>
+          <p>Hopenhayn's industry equilibrium, Hopenhayn–Rogerson's labour-market frictions and Restuccia–Rogerson's misallocation, with endogenous exit decisions and a distribution of firms.</p>
+          <span class="go">Examples ↗</span>
+        </a>
+        <a class="tk-model" href="https://github.com/vfitoolkit/VFItoolkit-matlab-examples">
+          <span class="eyebrow">Representative agent</span>
+          <h3>Growth and business cycles</h3>
+          <p>The stochastic neoclassical growth model and a basic real business cycle model, used as the first tutorials: a small problem on which to learn the toolkit's conventions before adding heterogeneity.</p>
+          <span class="go">Examples ↗</span>
+        </a>
+        <a class="tk-model" href="https://github.com/vfitoolkit/vfitoolkit-matlab-replication">
+          <span class="eyebrow">Replications</span>
+          <h3>Twenty-six published papers</h3>
+          <p>From Imrohoroglu (1989) and Huggett (1993) to Guvenen (2007), Kitao (2008) and Guerrieri–Lorenzoni (2017). Each folder reproduces every model-based table and figure and comes with a PDF that sets the originals beside the replication.</p>
+          <span class="go">Replications ↗</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" id="capabilities" data-spy="capabilities">
+      <div class="section-head">
+        <span class="n">03</span>
+        <h2>Capabilities</h2>
+      </div>
+      <p class="section-lede">What the solvers can represent, as the toolkit's documentation names it. Each item is an option on the same few commands rather than a separate solver, so features combine.</p>
+
+      <dl class="tk-caps">
+        <div>
+          <dt>Shocks</dt>
+          <dd>
+            <ul class="chips" aria-label="Shock types">
+              <li>Markov shocks</li>
+              <li>i.i.d. shocks</li>
+              <li>Semi-exogenous shocks that depend on a decision</li>
+              <li>Between-period shocks</li>
+              <li>Age-dependent grids and transitions</li>
+              <li>Correlated shocks and VARs</li>
+            </ul>
+          </dd>
+        </div>
+        <div>
+          <dt>Discretisation</dt>
+          <dd>
+            <ul class="chips" aria-label="Discretisation methods">
+              <li>Tauchen</li>
+              <li>Tauchen–Hussey</li>
+              <li>Rouwenhorst</li>
+              <li>Farmer–Toda</li>
+              <li>Gaussian-mixture and stochastic-volatility innovations</li>
+              <li>Life-cycle AR(1) and VAR(1) processes</li>
+            </ul>
+          </dd>
+        </div>
+        <div>
+          <dt>Preferences</dt>
+          <dd>
+            <ul class="chips" aria-label="Preference types">
+              <li>Time-separable</li>
+              <li>Epstein–Zin</li>
+              <li>Quasi-hyperbolic, naive or sophisticated</li>
+              <li>Gul–Pesendorfer temptation</li>
+              <li>Ambiguity aversion</li>
+              <li>State-dependent discounting</li>
+              <li>Warm-glow bequests</li>
+            </ul>
+          </dd>
+        </div>
+        <div>
+          <dt>States and assets</dt>
+          <dd>
+            <ul class="chips" aria-label="State and asset types">
+              <li>Several endogenous states</li>
+              <li>Risky asset and portfolio choice</li>
+              <li>Experience assets</li>
+              <li>Residual assets</li>
+              <li>Permanent types</li>
+              <li>Endogenous exit</li>
+            </ul>
+          </dd>
+        </div>
+        <div>
+          <dt>Solution</dt>
+          <dd>
+            <ul class="chips" aria-label="Solution methods">
+              <li>Pure discretisation with refinement</li>
+              <li>Grid interpolation layer</li>
+              <li>Divide-and-conquer</li>
+              <li>Howards improvement and policy iteration</li>
+              <li>Relative VFI</li>
+              <li>Low-memory modes</li>
+            </ul>
+          </dd>
+        </div>
+        <div>
+          <dt>Equilibrium and output</dt>
+          <dd>
+            <ul class="chips" aria-label="Equilibrium and output features">
+              <li>Stationary and age-conditional distributions</li>
+              <li>Statistics of any function on the distribution</li>
+              <li>Life-cycle profiles</li>
+              <li>Panel simulation</li>
+              <li>General equilibrium</li>
+              <li>Transition paths</li>
+              <li>Method-of-moments estimation</li>
+            </ul>
+          </dd>
+        </div>
+      </dl>
+
+      <p class="section-note">The toolkit's own <a href="https://github.com/vfitoolkit/VFIToolkit-matlab/tree/master/docs">reference documentation</a> lists every option with its default. CPU mode supports only the basic problem and is meant for illustration; for research use, the project recommends a GPU.</p>
+    </section>
+
+    <section class="section" id="learn" data-spy="learn">
+      <div class="section-head">
+        <span class="n">04</span>
+        <h2>Learn it</h2>
+      </div>
+      <p class="section-lede">The project teaches by example. Each route below is a sequence of runnable scripts, with the economics explained alongside the code.</p>
+
+      <div class="steps tk-learn">
+        <a class="step" href="https://www.vfitoolkit.com/updates-blog/2021/an-introduction-to-life-cycle-models/">
+          <span class="n">01</span>
+          <h3>An Introduction to Life-Cycle Models</h3>
+          <p>Eighteen models, starting from a household that only chooses consumption and adding one feature at a time, with assignments. The project's recommended starting point.</p>
+        </a>
+        <a class="step" href="https://github.com/vfitoolkit/IntroToOLGModels">
+          <span class="n">02</span>
+          <h3>An Introduction to OLG Models</h3>
+          <p>Builds up from a simple overlapping-generations economy to general equilibrium with taxes, pensions and firms, and on to transition paths.</p>
+        </a>
+        <a class="step" href="https://github.com/vfitoolkit/VFItoolkit-matlab-examples">
+          <span class="n">03</span>
+          <h3>Examples</h3>
+          <p>Short scripts for the growth model, the RBC model, Epstein–Zin preferences, Aiyagari with its transition path, and firm entry and exit.</p>
+        </a>
+        <a class="step" href="https://github.com/vfitoolkit/vfitoolkit-matlab-replication">
+          <span class="n">04</span>
+          <h3>Replications</h3>
+          <p>Twenty-six papers reproduced end to end, each with a PDF comparing the original and replicated results and noting any differences.</p>
+        </a>
+      </div>
+
+      <div class="meta-grid">
+        <div>
+          <span class="eyebrow">Workshop</span>
+          <p>The <a href="https://github.com/robertdkirkby/VFIWorkshop2025">2025 workshop</a> teaches the toolkit in recorded sessions, starting from <a href="https://vimeo.com/1099057656">basic life-cycle models</a>; its materials are on GitHub and the project recommends it as an alternative to the written introduction.</p>
+        </div>
+        <div>
+          <span class="eyebrow">Reference</span>
+          <p>The <a href="https://github.com/vfitoolkit/VFIToolkit-matlab/tree/master/docs">command reference</a> in the repository documents each solver's inputs and options; the <a href="https://github.com/vfitoolkit/Pseudocodes">pseudocodes</a> explain what the main commands do, and the <a href="https://github.com/vfitoolkit/vfitoolkit-matlab-docs">docs repository</a> covers exotic preferences and entry and exit in depth.</p>
+        </div>
+        <div>
+          <span class="eyebrow">The paper</span>
+          <p>Kirkby, R. (2017). A Toolkit for Value Function Iteration. <em>Computational Economics</em>, 49(1), 1–15. <a href="https://doi.org/10.1007/s10614-015-9544-1">doi:10.1007/s10614-015-9544-1</a>. Cite it when you use the toolkit.</p>
+        </div>
+        <div>
+          <span class="eyebrow">Getting the code</span>
+          <p>Clone or download the <a href="https://github.com/vfitoolkit/VFIToolkit-matlab">repository</a> and add it to the MATLAB path. The project keeps installation and setup notes on <a href="https://www.vfitoolkit.com/">its website</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="library" data-spy="library">
+      <div class="section-head">
+        <span class="n">05</span>
+        <h2>In the library</h2>
+      </div>
+      <p class="section-lede">Where VFI Toolkit meets the library's baseline set. The project chooses which models to solve and submits each solution in its own notation; this is the library's reading of the fit, from the toolkit's documentation and examples, not a commitment by the project.</p>
+
+      <div class="tk-fit">
+        <div class="tk-fit-row">
+          <div class="tk-fit-model">
+            <h3><a href="../../models/buffer-stock/">Buffer-stock saving</a></h3>
+            <p class="model-class">Consumption–saving under income risk · description v0.1</p>
+          </div>
+          <p class="tk-fit-note">A one-asset, two-shock problem the infinite-horizon solver is built for. The library's <a href="../../#library">buffer-stock slots</a> are open.</p>
+          <span class="tk-fit-status is-open">Slot open</span>
+        </div>
+        <div class="tk-fit-row">
+          <div class="tk-fit-model">
+            <h3>Aiyagari · Krusell–Smith</h3>
+            <p class="model-class">Incomplete-markets heterogeneous agents · description planned</p>
+          </div>
+          <p class="tk-fit-note">Aiyagari (1994) is solved in the toolkit's examples and replications, with its transition path. Krusell–Smith's aggregate shocks are handled by the toolkit's recursive-equilibrium routines.</p>
+          <span class="tk-fit-status is-example">Example exists</span>
+        </div>
+        <div class="tk-fit-row">
+          <div class="tk-fit-model">
+            <h3>A two-asset HANK model</h3>
+            <p class="model-class">Heterogeneous-agent New Keynesian · description planned</p>
+          </div>
+          <p class="tk-fit-note">Two endogenous assets fit the solvers, and transition paths are a core feature. A HANK model would be new ground for the toolkit's examples.</p>
+          <span class="tk-fit-status is-possible">Within reach</span>
+        </div>
+        <div class="tk-fit-row">
+          <div class="tk-fit-model">
+            <h3>A small New Keynesian DSGE model</h3>
+            <p class="model-class">Representative-agent DSGE · description planned</p>
+          </div>
+          <p class="tk-fit-note">Representative-agent models solved by perturbation are not what the toolkit is for, although its growth and RBC examples show the global approach on small problems.</p>
+          <span class="tk-fit-status is-outside">Not its focus</span>
+        </div>
+        <div class="tk-fit-row">
+          <div class="tk-fit-model">
+            <h3>A baseline agent-based macro model</h3>
+            <p class="model-class">Macro from interacting heterogeneous agents · description planned</p>
+          </div>
+          <p class="tk-fit-note">Agent-based simulation is outside the dynamic programming framework the toolkit provides.</p>
+          <span class="tk-fit-status is-outside">Not its focus</span>
+        </div>
+      </div>
+
+      <p class="footnote">A filled slot in <a href="../../#library">the library table</a> links the toolkit's solution, names its submitter and shows the description version it follows. Solutions from the MATLAB toolkit are scripts that need a GPU, so the library accepts them with the author's results and executed outputs rather than re-running them in CI; the <a href="../../contributing/#solution">contributing guide</a> explains what to include. The Julia version, once released, will let solutions be submitted as notebooks that the library can run.</p>
+    </section>
+
+    <section class="section" id="links" data-spy="links">
+      <div class="section-head">
+        <span class="n">06</span>
+        <h2>Links and help</h2>
+      </div>
+      <p class="section-lede">Everything about using the toolkit lives with the project. The library's page is only the introduction.</p>
+
+      <a class="repo-link" href="https://github.com/vfitoolkit/VFIToolkit-matlab">
+        <span class="about">
+          <span class="name">vfitoolkit/VFIToolkit-matlab</span>
+          <span class="desc">The toolkit's source, command reference and download · GPL-3.0</span>
+        </span>
+        <span class="go">repository ↗</span>
+      </a>
+
+      <div class="meta-grid">
+        <div>
+          <span class="eyebrow">Website</span>
+          <p><a href="https://www.vfitoolkit.com/">vfitoolkit.com</a>: documentation, examples, the workshop materials and the updates blog, where new features and releases are announced.</p>
+        </div>
+        <div>
+          <span class="eyebrow">Ask for help</span>
+          <p>The <a href="https://discourse.vfitoolkit.com/">VFI Toolkit forum</a> is where users ask questions and where the maintainer answers them. Bugs can also go to the repository's <a href="https://github.com/vfitoolkit/VFIToolkit-matlab/issues">issue tracker</a>.</p>
+        </div>
+        <div>
+          <span class="eyebrow">Contribute to the toolkit</span>
+          <p>The project welcomes replications of further papers in its <a href="https://github.com/vfitoolkit/vfitoolkit-matlab-replication">replication repository</a>, and pull requests to the toolkit itself.</p>
+        </div>
+        <div>
+          <span class="eyebrow">This page</span>
+          <p>Maintained in the library's <a href="https://github.com/QuantEcon/community-library/blob/main/docs/toolkits/vfi-toolkit/index.html">repository</a>, with the project's agreement. Facts checked against the project's repositories on 27 October 2026; corrections are welcome as issues or pull requests.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<section class="cta">
+  <div class="wrap">
+    <div class="cta-copy">
+      <p class="cta-eyebrow">Take part</p>
+      <h2>Solve a library model with VFI Toolkit.</h2>
+      <p>Anyone can submit a solution, on behalf of the project or as an individual. Start with the buffer-stock description, keep the model and calibration fixed, and bring the method and notation the toolkit gives you.</p>
+    </div>
+    <div class="cta-actions">
+      <a class="btn btn-light" href="../../contributing/#solution">How to submit a solution</a>
+      <a class="btn btn-ghost" href="../">All toolkits in the directory</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <img src="../../assets/quantecon-logo.png" alt="QuantEcon">
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://quantecon.org">QuantEcon</a></li>
+        <li><a href="https://github.com/QuantEcon/community-library">Repository</a></li>
+        <li><a href="https://econ-ark.github.io/sce-wg-1/">SCE WG1</a></li>
+        <li><a href="https://econ-ark.github.io/sce-wg-1/code-of-conduct.html">Code of conduct</a></li>
+      </ul>
+    </div>
+    <p class="footer-note">The Community Library is hosted by QuantEcon. It is run in collaboration with SCE Working Group 1 on Language and Semantics, which publishes the baseline set and its model descriptions and leads the semantics track alongside Econ-ARK. VFI Toolkit is an independent project; its name and code belong to it.</p>
+    <p class="footer-legal">© 2026 QuantEcon · CC-BY on text, OSI-approved licences on code</p>
+  </div>
+</footer>
+
+</body>
+</html>

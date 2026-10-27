@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QuantEcon Community Library · Baseline models across toolkits</title>
+<meta name="description" content="A community library of the field's baseline models, implemented and documented across the toolkits that can solve them — same model, multiple toolkits, side by side. Hosted by QuantEcon.">
+<meta property="og:title" content="QuantEcon Community Library · Baseline models across toolkits">
+<meta property="og:description" content="Same model, multiple toolkits, side by side. Each solution authored and maintained by its submitters, whether a toolkit's project or individual contributors.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://quantecon.github.io/community-library/">
+<meta property="og:image" content="https://quantecon.github.io/community-library/assets/quantecon-logo.png">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://quantecon.github.io/community-library/">
+<link rel="icon" href="assets/quantecon-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&family=Source+Sans+Pro:wght@300;400;600;700&family=Source+Code+Pro:wght@400;500&display=swap">
+<link rel="stylesheet" href="site.css">
+<script src="site.js" defer></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="https://quantecon.org">
+      <img src="assets/quantecon-logo.png" alt="QuantEcon">
+      <span class="brand-rule" aria-hidden="true"></span>
+      <span class="brand-label">Community Library</span>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="topnav">
+        <li><a href="#library">The library</a></li>
+        <li><a href="toolkits/">Toolkits</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#governance">Governance</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#presentations">Presentations</a></li>
+        <li><a href="contributing/">Contributing</a></li>
+        <li class="topnav-gh"><a class="gh" href="https://github.com/QuantEcon/community-library">GitHub&nbsp;↗</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-main">
+      <p class="hero-eyebrow">QuantEcon · Community Library</p>
+      <h1>A community library of baseline economic models.</h1>
+      <p class="hero-lede">The canonical models of the field, implemented and documented across the toolkits that can solve them. Same model, multiple tools, side-by-side notation, honest commentary on tradeoffs — each solution authored and maintained by its submitters, whether a toolkit's project or individual contributors.</p>
+      <div class="hero-actions">
+        <a class="btn btn-solid" href="#library">Browse the library</a>
+        <a class="btn btn-outline" href="#contribute">Bring your toolkit</a>
+      </div>
+      <p class="hero-credit">Coordinated by <strong>Matt McKay</strong>, QuantEcon. Proposed at the <a href="https://econ-ark.github.io/cef_venice_2026/">CEF 2026 pre-conference</a>, Venice, 28 June 2026 — <a href="https://github.com/QuantEcon/conference-cef2026">slides and pitch</a>. Introduced to SCE Working Group 1 at its first full-group meeting, 1&nbsp;October&nbsp;2026 — <a href="sce-wg1-2026-10-01.html">slides</a>.</p>
+    </div>
+
+    <div class="host-card">
+      <img src="assets/quantecon-logo.png" alt="QuantEcon">
+      <h2>Hosted by QuantEcon</h2>
+      <p>QuantEcon publishes the library, maintains its shared tooling, and curates what goes in. Each solution stays with the people and projects that write it.</p>
+      <div class="host-rule" aria-hidden="true"></div>
+      <span class="eyebrow">Working alongside</span>
+      <ul class="alongside">
+        <li><strong>SCE Working Group 1</strong> — publishes the baseline set and its model descriptions.</li>
+        <li class="is-secondary"><strong><a href="toolkits/">Toolkit directory</a></strong> — a page for each toolkit taking part: what it does, the models it solves, where its documentation lives.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="facts" aria-label="Project at a glance">
+  <div class="wrap">
+    <div class="facts-row">
+      <div class="fact">
+        <span class="eyebrow">Phase 1</span>
+        <p class="fact-value">6–12 months to first publication</p>
+      </div>
+      <div class="fact">
+        <span class="eyebrow">Scope</span>
+        <p class="fact-value">3–4 models in 2–3 toolkits each</p>
+      </div>
+      <div class="fact">
+        <span class="eyebrow">Commitment</span>
+        <p class="fact-value">One model solved by end of 2026</p>
+      </div>
+      <div class="fact">
+        <span class="eyebrow">Licensing</span>
+        <p class="fact-value">CC-BY text · OSI-approved code</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap layout">
+
+  <nav class="rail" aria-label="Contents">
+    <div class="rail-head eyebrow">Contents</div>
+    <ul>
+      <li><a href="#why" data-navlink="why"><span class="n">01</span>Why</a></li>
+      <li><a href="#library" data-navlink="library"><span class="n">02</span>The library</a></li>
+      <li><a href="#how" data-navlink="how"><span class="n">03</span>How it works</a></li>
+      <li><a href="#descriptions" data-navlink="descriptions"><span class="n">04</span>Descriptions</a></li>
+      <li><a href="#ask" data-navlink="ask"><span class="n">05</span>The ask</a></li>
+      <li><a href="#governance" data-navlink="governance"><span class="n">06</span>Who does what</a></li>
+      <li><a href="#roadmap" data-navlink="roadmap"><span class="n">07</span>Roadmap</a></li>
+      <li><a href="#presentations" data-navlink="presentations"><span class="n">08</span>Presentations</a></li>
+      <li><a href="#contribute" data-navlink="contribute"><span class="n">09</span>Contribute</a></li>
+    </ul>
+  </nav>
+
+  <main class="main" id="main">
+
+    <section class="section" id="why" data-spy="why">
+      <div class="section-head why-head">
+        <span class="n">01</span>
+        <h2>Why</h2>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3>Strong toolkits, siloed communities</h3>
+          <p>Computational economics has more than a dozen serious open-source toolkits across MATLAB, Python and Julia, each with distinct strengths — and no easy way to compare them, no shared library of canonical models, no on-ramp to the ecosystem as a whole. Users stay with the first tool they learn, and the projects themselves have no standing channel connecting them.</p>
+        </div>
+        <div>
+          <h3>Community first, corpus second</h3>
+          <p>The first thing this project builds is the community: the toolkit projects united in one group, with common pathways of communication and a shared library of tooling maintained together. The corpus of baseline models is the goal, but it is the community that produces it and keeps it alive.</p>
+        </div>
+      </div>
+      <div class="payoffs">
+        <span class="eyebrow">What the shared corpus buys us</span>
+        <dl class="payoff-grid">
+          <div>
+            <dt>A community resource, built together</dt>
+            <dd>The field's first cross-toolkit reference — an on-ramp for new users and a showcase for the projects behind the tools.</dd>
+          </div>
+          <div>
+            <dt>A test corpus for the semantics track</dt>
+            <dd>When toolkit teams state formally what their model files mean, a curated set of worked models is what those statements have to account for.</dd>
+          </div>
+          <div>
+            <dt>Substrate for AI assistance</dt>
+            <dd>Exactly the corpus an assistant needs to answer <em class="term">which tool fits my problem?</em> and <em class="term">translate my model from X to Y</em>.</dd>
+          </div>
+          <div>
+            <dt>A proving ground for standards</dt>
+            <dd>Shared schemas — steady states, IRFs, Jacobians — demonstrated in working code rather than prose.</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="section" id="library" data-spy="library">
+      <div class="section-head">
+        <span class="n">02</span>
+        <h2>The library</h2>
+      </div>
+      <p class="section-lede">The working group publishes a set of baseline models. Each project chooses as many as its toolkit can solve — several or just one — and submits a tutorial for each. Buffer-stock saving comes first; four more are proposed.</p>
+
+      <div class="models">
+        <div class="models-head">
+          <span class="eyebrow">Baseline set · v0 proposal</span>
+          <span class="eyebrow">Implementations</span>
+        </div>
+
+        <div class="model">
+          <div class="model-name">
+            <h3>Buffer-stock saving</h3>
+            <p class="model-class">Consumption–saving under income risk</p>
+            <p class="model-description"><a class="btn btn-solid btn-small" href="models/buffer-stock/" data-model-description="buffer-stock" data-version="0.1" data-verified="false">Model description · v0.1 draft</a> <a href="models/buffer-stock/model-description.pdf">Download PDF</a></p>
+          </div>
+          <div class="slots" aria-label="Three implementation slots: HARK, and two open">
+            <a class="slot is-filled" href="https://github.com/QuantEcon/community-library/blob/main/solutions/buffer-stock/001-hark-egm/tutorial.ipynb" data-solution="solutions/buffer-stock/001-hark-egm" data-version="0.1" data-verified="false" title="001-hark-egm: HARK, by Econ-ARK (Akshay Shanker) · follows description v0.1 · AI-assisted · not yet verified">HARK · EGM · Econ-ARK · v0.1<span class="ai-chip" data-level="2">AI-assisted</span><span class="sr-only">, not yet verified</span></a>
+            <span class="slot">open</span>
+            <span class="slot">open</span>
+          </div>
+        </div>
+
+        <div class="models-planned">
+          <span class="eyebrow">Planned · descriptions in preparation</span>
+        </div>
+        <ul class="planned-list">
+          <li><h3>Aiyagari · Krusell–Smith</h3><span class="model-class">Incomplete-markets heterogeneous agents</span></li>
+          <li><h3>A two-asset HANK model</h3><span class="model-class">Heterogeneous-agent New Keynesian</span></li>
+          <li><h3>A small New Keynesian DSGE model</h3><span class="model-class">Representative-agent DSGE</span></li>
+          <li><h3>A baseline agent-based macro model</h3><span class="model-class">Macro from interacting heterogeneous agents</span></li>
+        </ul>
+
+        <a class="models-cta" href="contributing/#propose">
+          <span>Know a model well? Propose it — the set is a starting proposal, not a ceiling.</span>
+          <span class="go">how to propose a model →</span>
+        </a>
+      </div>
+      <p class="footnote">Each model description states the shared assumptions and calibration. Each project chooses how to present its implementation. A filled slot names the solution's toolkit, method and submitter, and shows the description version it follows and its <a href="contributing/#ai">AI-assistance category</a>: No AI, AI-edited, AI-assisted or AI-generated; a Verified badge means a person has checked it end to end against the current version.</p>
+    </section>
+
+    <section class="section" id="how" data-spy="how">
+      <div class="section-head">
+        <span class="n">03</span>
+        <h2>How it works</h2>
+      </div>
+      <p class="section-lede">Each participating project makes two contributions. The first makes the toolkits comparable; the second lets each project show what it is actually best at.</p>
+      <div class="cards">
+        <div class="card">
+          <span class="eyebrow">Contribution 1</span>
+          <h3>Baselines from the shared set</h3>
+          <p>Each project solves its chosen baseline models at the shared calibration, reports the results the model description lists, and explains its numerical approach in its own words.</p>
+        </div>
+        <div class="card is-secondary">
+          <span class="eyebrow">Contribution 2</span>
+          <h3>An author's-choice showcase</h3>
+          <p>A tutorial of the project's own choosing, on the problems its toolkit was built for. A common baseline alone would flatten the differences that matter; this is where each project argues its own case.</p>
+        </div>
+      </div>
+      <p class="aside-note">Both tutorials use the toolkit's own notation and include the authors, software versions and numerical settings needed to reproduce the results. Authors explain their method and any differences from the shared model.</p>
+    </section>
+
+    <section class="section" id="descriptions" data-spy="descriptions">
+      <div class="section-head">
+        <span class="n">04</span>
+        <h2>Model descriptions and implementations</h2>
+      </div>
+      <p class="section-lede">Shared model descriptions belong in <code>models/&lt;model&gt;/</code>, with theory, calibration and numerical solution. Runnable solutions belong in <code>solutions/&lt;model&gt;/</code>, each in a directory numbered in submission order, such as <code>001-hark-egm</code>; each submitter chooses the prose, method and format, such as a notebook or MyST document. Read the <a href="models/buffer-stock/">buffer stock description</a> and run the <a href="https://github.com/QuantEcon/community-library/blob/main/solutions/buffer-stock/001-hark-egm/tutorial.ipynb">HARK example</a>.</p>
+
+      <div class="steps">
+        <div class="step">
+          <span class="n">01</span>
+          <h3>Read the model</h3>
+          <p>The model description states the equations, common calibration and numerical solution.</p>
+        </div>
+        <div class="step">
+          <span class="n">02</span>
+          <h3>Write a runnable implementation</h3>
+          <p>Keep the model and calibration fixed while choosing the method, prose and format.</p>
+        </div>
+        <div class="step">
+          <span class="n">03</span>
+          <h3>Report and check the results</h3>
+          <p>Report the results the model description lists, in any format, and explain the numerical checks used to assess the solution. Optional comparison tables are provided with the HARK example.</p>
+        </div>
+        <div class="step">
+          <span class="n">04</span>
+          <h3>Submit your tutorial</h3>
+          <p>Add your runnable files, instructions and <code>metadata.yml</code> in a numbered directory under <code>solutions/&lt;model&gt;/</code>.</p>
+        </div>
+      </div>
+
+      <div class="panels">
+        <div class="panel">
+          <span class="eyebrow">What all submissions share</span>
+          <ul>
+            <li>The model specifies functional forms, timing and normalisation.</li>
+            <li>The calibration states parameter values and their sources.</li>
+            <li>The income specification states the distribution and required moments.</li>
+            <li>The model description lists the results each implementation reports.</li>
+          </ul>
+        </div>
+        <div class="panel is-secondary">
+          <span class="eyebrow">What each author chooses</span>
+          <ul>
+            <li>Choose the solution method and algorithm.</li>
+            <li>Choose the grids or other function approximations.</li>
+            <li>Choose how to approximate the shock distributions.</li>
+            <li>Use the toolkit's language and notation.</li>
+            <li>Choose the prose and runnable format.</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="section-note">Every implementation reports the results the model description lists. The submission guide offers optional formats for result tables and metadata, together with draft comparison tolerances; projects can use them or present the results in another form. Explain any part of the stated model that the toolkit cannot represent. <strong class="flag">Phase 1 publishes no timings and no ranking of toolkits.</strong></p>
+    </section>
+
+    <section class="section" id="ask" data-spy="ask">
+      <div class="section-head">
+        <span class="n">05</span>
+        <h2>The ask</h2>
+      </div>
+      <div class="two-col ask">
+        <div>
+          <h3>What each project provides</h3>
+          <ul class="ask-list">
+            <li>Agreement in principle to take part.</li>
+            <li>By <strong class="flag">end of 2026</strong>, at least one baseline model solved using the shared description and calibration, so results line up side by side.</li>
+            <li>An author's-choice showcase tutorial highlighting where the toolkit is strongest.</li>
+            <li>Both contributions authored and maintained by the project — CC-BY for text, an OSI-approved licence for code.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>What each project keeps</h3>
+          <ul class="ask-list">
+            <li>Authorship credit for its contributions.</li>
+            <li>Editorial control over how its tool is presented.</li>
+            <li>The right to update or withdraw contributions at any time.</li>
+          </ul>
+          <p class="callout">QuantEcon curates and publishes; it does not own anyone's work or rank the toolkits.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="governance" data-spy="governance">
+      <div class="section-head">
+        <span class="n">06</span>
+        <h2>Who does what</h2>
+      </div>
+      <div class="roles">
+        <div class="role is-host">
+          <span class="eyebrow">Host</span>
+          <h3>QuantEcon</h3>
+          <p>Publishes and maintains the library, sets editorial standards for what goes in, and develops shared tooling in consultation with the projects, as part of <a href="https://quantecon.org/infrastructure/">QuantEcon's open-source infrastructure</a>.</p>
+        </div>
+        <div class="role">
+          <span class="eyebrow">Authors</span>
+          <h3>Projects and contributors</h3>
+          <p>Toolkit projects and individual contributors author and maintain their own solutions and tutorials. A solution stays theirs, and changes to it need its maintainers' approval.</p>
+        </div>
+        <div class="role">
+          <span class="eyebrow">Baseline set</span>
+          <h3>SCE Working Group 1</h3>
+          <p>Builds and releases the baseline set and its model descriptions. The library is run in collaboration with the group; QuantEcon attends as a member to see where it can assist the group's semantics work.</p>
+        </div>
+        <div class="role">
+          <span class="eyebrow">Semantics</span>
+          <h3>Project A</h3>
+          <p><a href="https://econ-ark.github.io/sce-wg-1/">The Semantics of Economic Models</a> — the working group's companion track, in which toolkit maintainers write a solver-independent account of what their model files mean, published as a journal special issue. The library's worked models are the corpus those accounts have to account for.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="roadmap" data-spy="roadmap">
+      <div class="section-head">
+        <span class="n">07</span>
+        <h2>Roadmap</h2>
+      </div>
+      <div class="phases">
+        <div class="phase">
+          <div class="phase-head">
+            <h3>Phase 1 · Community library</h3>
+            <span class="phase-term">6–12 mo</span>
+          </div>
+          <ul>
+            <li>3–4 canonical models in 2–3 toolkits each, published on a static JupyterBook site.</li>
+            <li>Open-source repository, PRs welcome.</li>
+            <li>Per-project tutorials and per-model metadata.</li>
+            <li>CI runs the implementations and flags breakage.</li>
+          </ul>
+        </div>
+        <div class="phase is-later">
+          <div class="phase-head">
+            <h3>Phase 2 · Reference standard</h3>
+            <span class="phase-term">12–24 mo</span>
+          </div>
+          <ul>
+            <li>Shared output schemas and a queryable index.</li>
+            <li>Cross-toolkit validation reports: where do the same model's outputs diverge?</li>
+            <li>Library models expressed in a shared semantic representation, building on Econ-ARK's DP schema.</li>
+            <li>Documentation of that design, plus a how-to tutorial.</li>
+            <li>Exploring an AI advisor built on the corpus.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="presentations" data-spy="presentations">
+      <div class="section-head">
+        <span class="n">08</span>
+        <h2>Presentations</h2>
+      </div>
+      <p class="section-lede">Talks introducing the library, newest first.</p>
+
+      <div class="meta-grid">
+        <div>
+          <span class="eyebrow">1 October 2026</span>
+          <p><strong>SCE Working Group 1</strong>, first full-group meeting. The six-minute introduction to Project B: <a href="sce-wg1-2026-10-01.html">slides</a>.</p>
+        </div>
+        <div>
+          <span class="eyebrow">28 June 2026</span>
+          <p><strong><a href="https://econ-ark.github.io/cef_venice_2026/">CEF 2026 pre-conference</a></strong>, Venice. Where the library was proposed: <a href="https://github.com/QuantEcon/conference-cef2026">slides and pitch</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contribute" data-spy="contribute">
+      <div class="section-head">
+        <span class="n">09</span>
+        <h2>Contribute</h2>
+      </div>
+      <p class="section-lede">Start with the <a href="https://github.com/QuantEcon/community-library/blob/main/models/buffer-stock/README.md#what-to-submit">buffer stock submission guide</a>. Keep the model and calibration fixed, submit a runnable implementation in your chosen format, and report the results the model description lists. Document the numerical settings and commands needed to reproduce the results, and include a short <code>metadata.yml</code> recording the authors, the description version followed and the AI disclosure, as the <a href="contributing/">contributing guide</a> explains; the output format is your choice.</p>
+      <p>Anyone can submit a pull request, on behalf of a toolkit's project or as an individual. Add your files under <code>solutions/&lt;model&gt;/</code>, in a directory named <code>&lt;NNN&gt;-&lt;toolkit&gt;-&lt;method&gt;</code> with the next free number; the <a href="https://github.com/QuantEcon/community-library/tree/main/solutions/buffer-stock/001-hark-egm">HARK buffer-stock example</a> is <code>solutions/buffer-stock/001-hark-egm/</code>. Changes to an existing solution need its maintainers' approval.</p>
+
+      <a class="repo-link" href="https://github.com/QuantEcon/community-library">
+        <span class="about">
+          <span class="name">QuantEcon/community-library</span>
+          <span class="desc">Hosted and published by QuantEcon · shared model descriptions in models/, submitted solutions in solutions/</span>
+        </span>
+        <span class="go">clone ↗</span>
+      </a>
+
+      <div class="meta-grid">
+        <div>
+          <span class="eyebrow">Model and example</span>
+          <p>Read the <a href="models/buffer-stock/">buffer stock description</a> or its <a href="models/buffer-stock/model-description.pdf">PDF</a>, then open the runnable <a href="https://github.com/QuantEcon/community-library/blob/main/solutions/buffer-stock/001-hark-egm/tutorial.ipynb">HARK notebook</a>.</p>
+        </div>
+        <div>
+          <span class="eyebrow">Licensing</span>
+          <p>CC-BY on text; an OSI-approved licence on code.</p>
+        </div>
+        <div>
+          <span class="eyebrow">Discussion</span>
+          <p>Open questions on model descriptions and the baseline set are settled in the <a href="https://github.com/econ-ark/sce-wg-1/issues">working group issue tracker</a>.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<section class="cta">
+  <div class="wrap">
+    <div class="cta-copy">
+      <p class="cta-eyebrow">Take part</p>
+      <h2>Bring your toolkit into the library.</h2>
+      <p>If your toolkit can solve any of the baseline models, register it — agreement in principle is all it takes to start.</p>
+    </div>
+    <div class="cta-actions">
+      <a class="btn btn-light" href="https://github.com/econ-ark/sce-wg-1/issues/new?template=register-toolkit.yml">Register here</a>
+      <a class="btn btn-ghost" href="https://github.com/QuantEcon/community-library">Read the repository</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <img src="assets/quantecon-logo.png" alt="QuantEcon">
+      </div>
+      <ul class="footer-links">
+        <li><a href="https://quantecon.org">QuantEcon</a></li>
+        <li><a href="https://github.com/QuantEcon/community-library">Repository</a></li>
+        <li><a href="https://econ-ark.github.io/sce-wg-1/">SCE WG1</a></li>
+        <li><a href="https://econ-ark.github.io/cef_venice_2026/">CEF 2026</a></li>
+        <li><a href="https://econ-ark.github.io/sce-wg-1/code-of-conduct.html">Code of conduct</a></li>
+      </ul>
+    </div>
+    <p class="footer-note">The Community Library is hosted by QuantEcon. It is run in collaboration with SCE Working Group 1 on Language and Semantics, which publishes the baseline set and its model descriptions and leads the semantics track alongside Econ-ARK.</p>
+    <p class="footer-legal">© 2026 QuantEcon · CC-BY on text, OSI-approved licences on code</p>
+  </div>
+</footer>
+
+</body>
+</html>
