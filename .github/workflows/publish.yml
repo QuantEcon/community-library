@@ -13,12 +13,11 @@
 # reviewers, and the people a page is about, can read it before it merges. The
 # address is the same for every push and is posted as a comment on the pull
 # request. Previews live outside the repository, so they add nothing to its
-# size. This uses QuantEcon's shared action and needs, once:
-#   a Cloudflare Pages project named as PREVIEW_PROJECT below, created by
-#     direct upload (docs/user/actions/preview-cloudflare.md in
-#     QuantEcon/actions walks through it);
-#   the repository secrets CLOUDFLARE_API_TOKEN (Account: Cloudflare Pages:
-#     Edit) and CLOUDFLARE_ACCOUNT_ID.
+# size. This uses QuantEcon's shared action and needs, once, the repository
+# secrets CLOUDFLARE_API_TOKEN (Account: Cloudflare Pages: Edit) and
+# CLOUDFLARE_ACCOUNT_ID. The Pages project named as PREVIEW_PROJECT below is
+# created on the first run if the account does not have it; a Worker of the
+# same name is a different thing and does not count.
 # A pull request from a fork gets no secrets, so the action skips it and the
 # built site is attached as a workflow artifact instead.
 
@@ -142,6 +141,21 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+
+      # The preview action deploys to an existing Pages project. Create it
+      # the first time, so that setup is the two secrets and nothing else.
+      - name: Create the Pages project if it is missing
+        if: github.event_name == 'pull_request' && env.PREVIEW_CONFIGURED == 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          if npx --yes wrangler@4 pages project list | grep -qw "$PREVIEW_PROJECT"; then
+            echo "Pages project $PREVIEW_PROJECT exists"
+          else
+            npx --yes wrangler@4 pages project create "$PREVIEW_PROJECT" --production-branch main
+          fi
 
       # lectures-dir is empty because this is not a lecture site: the comment
       # then carries the preview address alone.
