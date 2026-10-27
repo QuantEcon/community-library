@@ -90,7 +90,7 @@ jobs:
         run: |
           set -euo pipefail
           cd docs
-          for f in index.html contributing/index.html; do
+          for f in $(grep -rl 'data-spy=' --include='*.html' . | sed 's#^\./##' | sort); do
             grep -oE 'data-navlink="[^"]+"' "$f" | sed 's/.*="//;s/"//' | sort -u > /tmp/navlinks
             grep -oE 'data-spy="[^"]+"'     "$f" | sed 's/.*="//;s/"//' | sort -u > /tmp/spies
             if ! diff -q /tmp/navlinks /tmp/spies >/dev/null; then
