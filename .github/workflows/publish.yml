@@ -37,6 +37,9 @@ env:
   # The Cloudflare Pages project the previews deploy to; its name is in every
   # preview address.
   PREVIEW_PROJECT: community-library
+  # Until the secrets exist, the preview steps are skipped rather than failing
+  # the checks. (A step's `if` cannot read secrets; an env value can.)
+  PREVIEW_CONFIGURED: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
 
 jobs:
   build:
@@ -135,7 +138,7 @@ jobs:
 
       # The preview action runs wrangler, which needs Node 22 or later.
       - name: Set up Node for the preview
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && env.PREVIEW_CONFIGURED == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -143,7 +146,7 @@ jobs:
       # lectures-dir is empty because this is not a lecture site: the comment
       # then carries the preview address alone.
       - name: Deploy the pull request's preview
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' && env.PREVIEW_CONFIGURED == 'true'
         uses: quantecon/actions/preview-cloudflare@v0.12.0
         with:
           cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -151,6 +154,11 @@ jobs:
           project-name: ${{ env.PREVIEW_PROJECT }}
           build-dir: docs
           lectures-dir: ''
+
+      - name: Say why there is no preview
+        if: github.event_name == 'pull_request' && env.PREVIEW_CONFIGURED != 'true'
+        run: |
+          echo "::notice::No preview: add the CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID secrets to deploy pull requests to Cloudflare Pages."
 
       - name: Package the site for Pages
         if: github.event_name != 'pull_request'
