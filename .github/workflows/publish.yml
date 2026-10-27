@@ -1,4 +1,4 @@
-# Publishes docs/ to GitHub Pages.
+# Publishes docs/ to GitHub Pages, and a live preview of each pull request.
 #
 # The landing page is hand-written static HTML. The one build step renders each
 # model description into a page under docs/models/; the rest of the job is
@@ -7,6 +7,19 @@
 #
 # Pages must be set to build from GitHub Actions for this to take effect:
 # Settings -> Pages -> Build and deployment -> Source: GitHub Actions.
+#
+# A pull request from a branch of this repository is also deployed to
+# Cloudflare Pages, at https://pr-<number>.<project>.pages.dev, so that
+# reviewers, and the people a page is about, can read it before it merges. The
+# address is the same for every push and is posted as a comment on the pull
+# request. Previews live outside the repository, so they add nothing to its
+# size. This uses QuantEcon's shared action and needs, once, the repository
+# secrets CLOUDFLARE_API_TOKEN (Account: Cloudflare Pages: Edit) and
+# CLOUDFLARE_ACCOUNT_ID. The Pages project named as PREVIEW_PROJECT below is
+# created on the first run if the account does not have it; a Worker of the
+# same name is a different thing and does not count.
+# A pull request from a fork gets no secrets, so the action skips it and the
+# built site is attached as a workflow artifact instead.
 
 name: Publish
 
@@ -19,9 +32,20 @@ on:
 permissions:
   contents: read
 
+env:
+  # The Cloudflare Pages project the previews deploy to; its name is in every
+  # preview address.
+  PREVIEW_PROJECT: community-library
+  # Until the secrets exist, the preview steps are skipped rather than failing
+  # the checks. (A step's `if` cannot read secrets; an env value can.)
+  PREVIEW_CONFIGURED: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write   # the preview's comment
     steps:
       - uses: actions/checkout@v4
 
@@ -90,7 +114,7 @@ jobs:
         run: |
           set -euo pipefail
           cd docs
-          for f in index.html contributing/index.html; do
+          for f in $(grep -rl 'data-spy=' --include='*.html' . | sed 's#^\./##' | sort); do
             grep -oE 'data-navlink="[^"]+"' "$f" | sed 's/.*="//;s/"//' | sort -u > /tmp/navlinks
             grep -oE 'data-spy="[^"]+"'     "$f" | sed 's/.*="//;s/"//' | sort -u > /tmp/spies
             if ! diff -q /tmp/navlinks /tmp/spies >/dev/null; then
@@ -101,8 +125,8 @@ jobs:
             echo "ok — $f: $(wc -l < /tmp/spies | tr -d ' ') sections wired to the rail"
           done
 
-      # Fork PRs get a read-only token and cannot deploy, so the site is
-      # attached instead — the author can see the rendered result.
+      # Fork PRs get a read-only token and no secrets, so the site is
+      # attached as well — the author can see the rendered result.
       - name: Upload the built site for review
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
@@ -110,6 +134,45 @@ jobs:
           name: site-preview
           path: docs
           retention-days: 14
+
+      # The preview action runs wrangler, which needs Node 22 or later.
+      - name: Set up Node for the preview
+        if: github.event_name == 'pull_request' && env.PREVIEW_CONFIGURED == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # The preview action deploys to an existing Pages project. Create it
+      # the first time, so that setup is the two secrets and nothing else.
+      - name: Create the Pages project if it is missing
+        if: github.event_name == 'pull_request' && env.PREVIEW_CONFIGURED == 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          if npx --yes wrangler@4 pages project list | grep -qw "$PREVIEW_PROJECT"; then
+            echo "Pages project $PREVIEW_PROJECT exists"
+          else
+            npx --yes wrangler@4 pages project create "$PREVIEW_PROJECT" --production-branch main
+          fi
+
+      # lectures-dir is empty because this is not a lecture site: the comment
+      # then carries the preview address alone.
+      - name: Deploy the pull request's preview
+        if: github.event_name == 'pull_request' && env.PREVIEW_CONFIGURED == 'true'
+        uses: quantecon/actions/preview-cloudflare@v0.12.0
+        with:
+          cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          cloudflare-account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          project-name: ${{ env.PREVIEW_PROJECT }}
+          build-dir: docs
+          lectures-dir: ''
+
+      - name: Say why there is no preview
+        if: github.event_name == 'pull_request' && env.PREVIEW_CONFIGURED != 'true'
+        run: |
+          echo "::notice::No preview: add the CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID secrets to deploy pull requests to Cloudflare Pages."
 
       - name: Package the site for Pages
         if: github.event_name != 'pull_request'

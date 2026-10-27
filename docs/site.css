@@ -1298,6 +1298,228 @@ a.card .go {
 
 .verify-states { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 10px; }
 
+/* Toolkit directory -------------------------------------------------------- */
+
+/* docs/toolkits/ lists the toolkits taking part, and each has a page under
+   it, docs/toolkits/<toolkit>/, built from the landing page's parts (the
+   hero and its side card, the facts strip, the rail, panels, steps, the
+   meta grid) plus the few below. AGENTS.md says how to add a page. */
+
+/* A typographic mark stands in for a logo: the library does not reproduce
+   projects' branding, and the pages read the same with or without one. */
+.tk-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border: 1.5px solid var(--ink);
+  border-radius: 5px;
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: .04em;
+  color: var(--ink);
+  background: #fff;
+}
+
+.hero-eyebrow a { color: inherit; }
+.hero-eyebrow a:hover { color: var(--qe-blue); text-decoration: none; }
+
+/* The at-a-glance card: the host card's shell, with a fact list and links. */
+.tk-card .tk-mark { margin-bottom: 20px; }
+.tk-facts {
+  margin: 14px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.tk-facts > div {
+  display: grid;
+  grid-template-columns: 82px 1fr;
+  gap: 12px;
+  font-size: .9rem;
+  line-height: 1.5;
+}
+.tk-facts dt {
+  font-family: var(--mono);
+  font-size: .68rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--dim);
+  padding-top: 3px;
+}
+.tk-facts dd { margin: 0; color: var(--body-soft); }
+.tk-facts dd em { font-style: italic; }
+.tk-links { display: flex; flex-direction: column; gap: 8px; font-size: .9rem; }
+.tk-links a::after { content: " ↗"; font-family: var(--mono); font-size: .75em; opacity: .7; }
+
+.tk-intro { margin-top: 34px; }
+
+/* The families of models a toolkit solves: one card each, linking to the
+   project's example, with the horizon as the eyebrow. */
+.tk-models {
+  margin-top: 34px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.tk-model {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--qe-blue);
+  border-radius: 5px;
+  padding: 24px 26px;
+  color: var(--body-soft);
+  transition: border-color .15s linear;
+}
+.tk-model:visited { color: var(--body-soft); }
+.tk-model:hover { border-color: var(--ink); border-top-color: var(--qe-blue); text-decoration: none; }
+.tk-model .eyebrow { display: block; margin-bottom: 12px; }
+.tk-model h3 {
+  font-family: var(--serif);
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 1.14rem;
+  margin-bottom: 8px;
+}
+.tk-model p { flex: 1; font-size: .93rem; color: var(--muted); line-height: 1.6; }
+.tk-model .go {
+  margin-top: 18px;
+  font-family: var(--mono);
+  font-size: .76rem;
+  color: var(--qe-blue);
+}
+
+/* Capabilities, grouped: the group's name down the left, its chips beside. */
+.tk-caps {
+  margin: 34px 0 0;
+  border-top: 1px solid var(--line);
+}
+.tk-caps > div {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 16px 32px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.tk-caps dt {
+  font-size: .98rem;
+  font-weight: 600;
+  color: var(--ink);
+  padding-top: 5px;
+}
+.tk-caps dd { margin: 0; }
+.tk-caps .chips li { font-size: .86rem; }
+
+/* The learning routes: the landing page's steps, each one a link. */
+.tk-learn a.step { color: inherit; transition: background .15s linear; }
+.tk-learn a.step:hover { background: #f5f9fc; text-decoration: none; }
+.tk-learn a.step:hover h3 { color: var(--qe-blue); }
+
+/* The baseline set against the toolkit: one row per model, with the
+   library's reading of the fit as a neutral outlined chip. The chips say
+   what exists, not how good anything is. */
+.tk-fit {
+  margin-top: 30px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.tk-fit-row {
+  display: grid;
+  grid-template-columns: minmax(200px, 1.1fr) minmax(240px, 2fr) auto;
+  gap: 12px 28px;
+  align-items: start;
+  padding: 18px 26px;
+}
+.tk-fit-row + .tk-fit-row { border-top: 1px solid var(--line-soft); }
+.tk-fit-model h3 {
+  font-family: var(--serif);
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+.tk-fit-note { font-size: .92rem; color: var(--muted); line-height: 1.55; }
+.tk-fit-status {
+  justify-self: end;
+  white-space: nowrap;
+  padding: 4px 11px;
+  border: 1px solid #c9c9c9;
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: .7rem;
+  color: #777;
+}
+.tk-fit-status.is-open { border-style: dashed; }
+.tk-fit-status.is-example { border-color: var(--qe-blue); color: var(--qe-blue); }
+.tk-fit-status.is-possible { border-color: var(--ink); color: var(--ink); }
+
+/* The directory page: one entry per toolkit. */
+.tk-directory { padding: 56px 0 96px; }
+.tk-directory-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.tk-cards { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+.tk-entry {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  padding: 26px 28px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  color: var(--body-soft);
+  transition: border-color .15s linear;
+}
+.tk-entry:visited { color: var(--body-soft); }
+.tk-entry:hover { border-color: var(--ink); text-decoration: none; }
+.tk-entry .tk-mark { flex-shrink: 0; }
+.tk-entry-body { flex: 1 1 360px; min-width: 0; }
+.tk-entry-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 16px;
+  margin-bottom: 8px;
+}
+.tk-entry h2 {
+  font-family: var(--serif);
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 1.4rem;
+}
+.tk-lang { font-family: var(--mono); font-size: .72rem; color: var(--dim); letter-spacing: .04em; }
+.tk-entry p { font-size: .96rem; line-height: 1.6; max-width: 64ch; }
+.tk-entry-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.tk-entry-tags span {
+  padding: 3px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: .8rem;
+  color: var(--muted);
+}
+.tk-entry .go {
+  align-self: center;
+  font-family: var(--mono);
+  font-size: .76rem;
+  color: var(--qe-blue);
+}
+.tk-directory .help { margin-top: 40px; }
+.tk-directory .footnote { margin-top: 20px; }
+
+@media (max-width: 820px) {
+  .tk-facts > div { grid-template-columns: 1fr; gap: 2px; }
+  .tk-caps > div { grid-template-columns: 1fr; gap: 10px; }
+  .tk-fit-row { grid-template-columns: 1fr; gap: 8px; }
+  .tk-fit-status { justify-self: start; }
+  .tk-directory { padding: 40px 0 72px; }
+}
+
 /* Responsive --------------------------------------------------------------- */
 
 /* Below this the contents rail and the main column can no longer share a row

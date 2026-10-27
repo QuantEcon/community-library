@@ -35,6 +35,14 @@ instructions and tutorials, and the place where its users ask for help. The
 issue is public, so leave out email addresses. To change the details later,
 edit the issue.
 
+The directory is at [`docs/toolkits/`](docs/toolkits/), and each page at
+`docs/toolkits/<toolkit>/`; [VFI Toolkit's](docs/toolkits/vfi-toolkit/index.html)
+is the example. A page introduces the toolkit, the models it solves and its
+capabilities, and links the project's own site and documentation rather than
+repeating them. The project keeps editorial control over its page: the
+library team writes it from the registration with the project's agreement,
+and changes to it need the project's approval.
+
 ## Submitting a solution
 
 Put the solution in its own directory under `solutions/<model>/`, using the
